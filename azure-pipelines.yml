@@ -32,3 +32,23 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Pay-As-You-Go Dev/Test(e68c9268-bcb9-4212-afe1-f6d79a893042)'
+    appType: 'webApp'
+    WebAppName: 'MD-ERP'
+    deployToSlotOrASE: true
+    ResourceGroupName: 'MD-POC'
+    SlotName: 'production'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/md-accountella/bin/Release/netcoreapp3.0'
+    AppSettings: |
+      {
+        "Logging": {
+            "LogLevel": {
+              "Default": "Warning"
+            }
+          },
+      "AllowedHosts": "*"
+      }
