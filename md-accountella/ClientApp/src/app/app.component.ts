@@ -8,6 +8,7 @@ import { CustomClarityIcons } from './shared';
 })
 export class AppComponent {
   title = 'app';
+  isCollapsible = true;
 
   constructor(private clIcons: CustomClarityIcons) {
     this.clIcons.load();

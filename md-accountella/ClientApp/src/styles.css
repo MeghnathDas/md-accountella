@@ -14,3 +14,14 @@ code {
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
+
+body, body p {
+  color: #666;
+  color: var(--clr-p1-color,#666);
+  font-weight: 400;
+  font-weight: var(--clr-p1-font-weight,400);
+  font-size: .7rem;
+  letter-spacing: normal;
+  line-height: 1.2rem;
+  margin-bottom: 0;
+}
