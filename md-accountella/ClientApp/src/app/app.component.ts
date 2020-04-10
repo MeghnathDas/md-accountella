@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ClarityIcons } from '@clr/icons';
+import { CustomClarityIcons } from './shared';
 
 @Component({
   selector: 'app-root',
@@ -6,4 +8,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+
+  constructor(private clIcons: CustomClarityIcons) {
+    this.clIcons.load();
+  }
+
 }

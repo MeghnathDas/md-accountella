@@ -11,6 +11,7 @@ import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { ClarityModule } from '@clr/angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CustomClarityIcons } from './shared';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ClarityModule,
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [CustomClarityIcons],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

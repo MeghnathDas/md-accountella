@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-nav-menu',
@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 })
 export class NavMenuComponent {
   isExpanded = false;
-  appName = 'MD - Accountella';
+  appName = 'Accountella';
 
   collapse() {
     this.isExpanded = false;
