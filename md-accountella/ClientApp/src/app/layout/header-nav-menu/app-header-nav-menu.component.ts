@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-nav-menu',
-  templateUrl: './nav-menu.component.html',
-  styleUrls: ['./nav-menu.component.css']
+  selector: 'app-header-nav-menu',
+    templateUrl: './app-header-nav-menu.component.html',
+    styleUrls: ['./app-header-nav-menu.component.css']
 })
-export class NavMenuComponent {
+export class HeaderNavMenuComponent {
   isExpanded = false;
   appName = 'Accountella';
 
@@ -17,3 +17,4 @@ export class NavMenuComponent {
     this.isExpanded = !this.isExpanded;
   }
 }
+

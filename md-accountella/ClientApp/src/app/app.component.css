@@ -1,0 +1,13 @@
+.content-area .card {
+  height: 100%;
+}
+.main-container {
+  display: flex;
+  flex-direction: row;
+  /* background: #f0f2f5; */
+}
+.md-drawer {
+  display: flex;
+  flex-direction: column;
+}
+
