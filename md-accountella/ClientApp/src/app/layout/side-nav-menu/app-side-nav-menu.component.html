@@ -1,0 +1,54 @@
+<clr-vertical-nav [clrVerticalNavCollapsible]="true" [clr-nav-level]="1">
+  <clr-vertical-nav-group routerLinkActive="active">
+    <clr-icon shape="user" clrVerticalNavIcon></clr-icon>
+    Normal
+    <clr-vertical-nav-group-children>
+      <a clrVerticalNavLink routerLink="./normal/pidgey" routerLinkActive="active">
+        Pidgey
+      </a>
+      <a clrVerticalNavLink routerLink="./normal/snorlax" routerLinkActive="active">
+        Snorlax
+      </a>
+    </clr-vertical-nav-group-children>
+  </clr-vertical-nav-group>
+  <clr-vertical-nav-group routerLinkActive="active">
+    <clr-icon shape="flame" clrVerticalNavIcon></clr-icon>
+    Fire
+    <clr-vertical-nav-group-children>
+      <a clrVerticalNavLink routerLink="./fire/charmander" routerLinkActive="active">
+        Charmander
+      </a>
+      <a clrVerticalNavLink routerLink="./fire/charizard" routerLinkActive="active">
+        Charizard
+      </a>
+    </clr-vertical-nav-group-children>
+  </clr-vertical-nav-group>
+  <clr-vertical-nav-group routerLinkActive="active">
+    <clr-icon shape="bolt" clrVerticalNavIcon></clr-icon>
+    Electric
+    <clr-vertical-nav-group-children>
+      <a clrVerticalNavLink routerLink="./electric/pikachu" routerLinkActive="active">
+        Pikachu
+      </a>
+      <a clrVerticalNavLink routerLink="./electric/raichu" routerLinkActive="active">
+        Raichu
+      </a>
+    </clr-vertical-nav-group-children>
+  </clr-vertical-nav-group>
+  <a clrVerticalNavLink routerLinkActive="active" routerLink="./credit" >
+    <clr-icon shape="certificate" clrVerticalNavIcon></clr-icon>
+    Credit
+  </a>
+  <a clrVerticalNavLink routerLink="./poison" routerLinkActive="active">
+    <clr-icon clrVerticalNavIcon shape="sad-face"></clr-icon>
+    Poison
+  </a>
+  <a clrVerticalNavLink routerLink="./grass" routerLinkActive="active">
+    <clr-icon clrVerticalNavIcon shape="bug"></clr-icon>
+    Grass
+  </a>
+  <a clrVerticalNavLink routerLink="./fighting" routerLinkActive="active">
+    <clr-icon clrVerticalNavIcon shape="shield"></clr-icon>
+    Fighting
+  </a>
+</clr-vertical-nav>

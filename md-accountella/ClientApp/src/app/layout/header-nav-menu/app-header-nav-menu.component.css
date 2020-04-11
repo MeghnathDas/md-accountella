@@ -13,6 +13,10 @@ html {
   }
 }
 
-.box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+.header {
+  box-shadow: 0 2px 6px rgba(0, 10, 19, 0.7);
+}
+
+:host {
+  z-index: 4;
 }
