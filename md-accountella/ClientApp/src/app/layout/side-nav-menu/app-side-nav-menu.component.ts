@@ -12,7 +12,7 @@ export class SideNavMenuComponent {
       id: 1,
       label: 'Dashboard',
       icon: 'dashboard',
-      route: '/',
+      route: 'dashboard',
       nodes: []
     },
     {

@@ -1,13 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { TitleService } from 'src/app/core/title-service/title.service';
 
 @Component({
   selector: 'app-header-nav-menu',
-    templateUrl: './app-header-nav-menu.component.html',
-    styleUrls: ['./app-header-nav-menu.component.css']
+  templateUrl: './app-header-nav-menu.component.html',
+  styleUrls: ['./app-header-nav-menu.component.css']
 })
 export class HeaderNavMenuComponent {
   isExpanded = false;
-  appName = 'Accountella';
+
+  @Input()
+  caption = '';
 
   collapse() {
     this.isExpanded = false;
