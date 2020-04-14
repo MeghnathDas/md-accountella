@@ -1,54 +1,29 @@
 <clr-vertical-nav [clrVerticalNavCollapsible]="true" [clr-nav-level]="1">
-  <clr-vertical-nav-group routerLinkActive="active">
-    <clr-icon shape="user" clrVerticalNavIcon></clr-icon>
-    Normal
-    <clr-vertical-nav-group-children>
-      <a clrVerticalNavLink routerLink="./normal/pidgey" routerLinkActive="active">
-        Pidgey
-      </a>
-      <a clrVerticalNavLink routerLink="./normal/snorlax" routerLinkActive="active">
-        Snorlax
-      </a>
-    </clr-vertical-nav-group-children>
-  </clr-vertical-nav-group>
-  <clr-vertical-nav-group routerLinkActive="active">
-    <clr-icon shape="flame" clrVerticalNavIcon></clr-icon>
-    Fire
-    <clr-vertical-nav-group-children>
-      <a clrVerticalNavLink routerLink="./fire/charmander" routerLinkActive="active">
-        Charmander
-      </a>
-      <a clrVerticalNavLink routerLink="./fire/charizard" routerLinkActive="active">
-        Charizard
-      </a>
-    </clr-vertical-nav-group-children>
-  </clr-vertical-nav-group>
-  <clr-vertical-nav-group routerLinkActive="active">
-    <clr-icon shape="bolt" clrVerticalNavIcon></clr-icon>
-    Electric
-    <clr-vertical-nav-group-children>
-      <a clrVerticalNavLink routerLink="./electric/pikachu" routerLinkActive="active">
-        Pikachu
-      </a>
-      <a clrVerticalNavLink routerLink="./electric/raichu" routerLinkActive="active">
-        Raichu
-      </a>
-    </clr-vertical-nav-group-children>
-  </clr-vertical-nav-group>
-  <a clrVerticalNavLink routerLinkActive="active" routerLink="./credit" >
-    <clr-icon shape="certificate" clrVerticalNavIcon></clr-icon>
-    Credit
-  </a>
-  <a clrVerticalNavLink routerLink="./poison" routerLinkActive="active">
-    <clr-icon clrVerticalNavIcon shape="sad-face"></clr-icon>
-    Poison
-  </a>
-  <a clrVerticalNavLink routerLink="./grass" routerLinkActive="active">
-    <clr-icon clrVerticalNavIcon shape="bug"></clr-icon>
-    Grass
-  </a>
-  <a clrVerticalNavLink routerLink="./fighting" routerLinkActive="active">
-    <clr-icon clrVerticalNavIcon shape="shield"></clr-icon>
-    Fighting
-  </a>
+
+  <ng-container *ngFor="let mnu of menus">
+    <ng-container [ngTemplateOutlet]="mnu.nodes && mnu.nodes.length > 0 ? menuWithChild : menuWithoutChild"
+      [ngTemplateOutletContext]="{navItemData:mnu}">
+    </ng-container>
+  </ng-container>
+
+  <ng-template #menuWithChild let-navItemData="navItemData">
+    <clr-vertical-nav-group routerLinkActive="active">
+      <clr-icon *ngIf="navItemData.icon" [attr.shape]="navItemData.icon" clrVerticalNavIcon></clr-icon>
+      {{navItemData.label}}
+      <clr-vertical-nav-group-children>
+        <ng-container *ngFor="let mnu of navItemData.nodes">
+          <ng-container [ngTemplateOutlet]="menuWithoutChild" [ngTemplateOutletContext]="{navItemData:mnu}">
+          </ng-container>
+        </ng-container>
+      </clr-vertical-nav-group-children>
+    </clr-vertical-nav-group>
+  </ng-template>
+
+  <ng-template #menuWithoutChild let-navItemData="navItemData">
+    <a clrVerticalNavLink routerLink="./poison" routerLinkActive="active">
+      <clr-icon *ngIf="navItemData.icon" clrVerticalNavIcon [attr.shape]="navItemData.icon"></clr-icon>
+      {{navItemData.label}}
+    </a>
+  </ng-template>
+  
 </clr-vertical-nav>

@@ -11,46 +11,118 @@ export class SideNavMenuComponent {
     {
       id: 1,
       label: 'Dashboard',
-      icon: 'sad-face',
+      icon: 'dashboard',
       route: '/',
       nodes: []
     },
     {
-      id: 2,
-      label: 'Accounts',
-      icon: 'sad-face',
-      route: '',
+      id: 3,
+      label: 'Sales',
+      icon: 'shopping-cart',
+      route: 'sale',
       nodes: [
         {
-          id: 21,
+          id: 31,
+          label: 'Invoices',
+          icon: '',
+          route: 'sale/invoices',
+          nodes: []
+        },
+        {
+          id: 31,
+          label: 'Receipt / Income',
+          icon: '',
+          route: 'sale/receipts',
+          nodes: []
+        },
+        {
+          id: 33,
+          label: 'Credit Note',
+          icon: '',
+          route: 'sale/cr-notes',
+          nodes: []
+        },
+        {
+          id: 34,
+          label: 'Customers',
+          icon: '',
+          route: 'sale/customers',
+          nodes: []
+        },
+        {
+          id: 35,
+          label: 'Items',
+          icon: '',
+          route: 'sale/items',
+          nodes: []
+        }
+      ]
+    },
+    {
+      id: 4,
+      label: 'Purchases',
+      icon: 'shopping-bag',
+      route: '/',
+      nodes: [
+        {
+          id: 41,
+          label: 'Bills',
+          icon: '',
+          route: 'pruchase/bills',
+          nodes: []
+        },
+        {
+          id: 42,
+          label: 'Payment / Expence',
+          icon: '',
+          route: 'pruchase/payments',
+          nodes: []
+        },
+        {
+          id: 43,
+          label: 'Vendors',
+          icon: '',
+          route: 'pruchase/vendors',
+          nodes: []
+        }
+      ]
+    },
+    {
+      id: 5,
+      label: 'Accounts',
+      icon: 'calculator',
+      route: 'accounts',
+      nodes: [
+        {
+          id: 51,
           label: 'Ledgers',
           icon: '',
           route: 'accounts/ledgers',
           nodes: []
         },
         {
-          id: 22,
+          id: 52,
           label: 'Categories',
           icon: '',
           route: 'accounts/categories',
           nodes: []
         },
         {
-          id: 23,
+          id: 53,
           label: 'Cash Book',
           icon: '',
           route: 'accounts/cash-book',
           nodes: []
         },
         {
-          id: 24,
+          id: 54,
           label: 'Day Book',
           icon: '',
           route: 'accounts/day-book',
           nodes: []
         },
         {
-          id: 25,
+          id: 55,
           label: 'Account Manager',
           icon: '',
           route: 'accounts/manager',
@@ -59,63 +131,27 @@ export class SideNavMenuComponent {
       ]
     },
     {
-      id: 3,
-      label: 'Transaction',
-      icon: 'sad-face',
-      route: '/',
-      nodes: [
-        {
-          id: 31,
-          label: 'Receipt / Income',
-          icon: '',
-          route: 'transaction/receipt',
-          nodes: []
-        },
-        {
-          id: 32,
-          label: 'Payment / Expence',
-          icon: '',
-          route: 'transaction/payment',
-          nodes: []
-        },
-        {
-          id: 33,
-          label: 'Credit Note',
-          icon: '',
-          route: 'transaction/cr-note',
-          nodes: []
-        },
-        {
-          id: 34,
-          label: '',
-          icon: '',
-          route: 'transaction/dr-note',
-          nodes: []
-        }
-      ]
-    },
-    {
-      id: 4,
+      id: 6,
       label: 'Reports',
-      icon: 'sad-face',
+      icon: 'bar-chart',
       route: '/',
       nodes: [
         {
-          id: 41,
+          id: 61,
           label: 'Profit & Loss',
           icon: '',
           route: 'reports/profit-loss',
           nodes: []
         },
         {
-          id: 42,
+          id: 62,
           label: 'Trial Balance',
           icon: '',
           route: 'reports/trial-balance',
           nodes: []
         },
         {
-          id: 43,
+          id: 63,
           label: 'Balance Sheet',
           icon: '',
           route: 'reports/balance-sheet',
