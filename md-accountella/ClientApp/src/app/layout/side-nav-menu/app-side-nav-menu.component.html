@@ -20,7 +20,7 @@
   </ng-template>
 
   <ng-template #menuWithoutChild let-navItemData="navItemData">
-    <a clrVerticalNavLink routerLink="./poison" routerLinkActive="active">
+    <a clrVerticalNavLink [routerLink]="navItemData.route" routerLinkActive="active">
       <clr-icon *ngIf="navItemData.icon" clrVerticalNavIcon [attr.shape]="navItemData.icon"></clr-icon>
       {{navItemData.label}}
     </a>

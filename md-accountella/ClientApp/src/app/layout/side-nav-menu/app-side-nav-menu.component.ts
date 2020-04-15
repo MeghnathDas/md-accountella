@@ -25,35 +25,35 @@ export class SideNavMenuComponent {
           id: 31,
           label: 'Invoices',
           icon: '',
-          route: 'sale/invoices',
+          route: 'sales/invoices',
           nodes: []
         },
         {
           id: 31,
           label: 'Receipt / Income',
           icon: '',
-          route: 'sale/receipts',
+          route: 'sales/receipts',
           nodes: []
         },
         {
           id: 33,
           label: 'Credit Note',
           icon: '',
-          route: 'sale/cr-notes',
+          route: 'sales/cr-notes',
           nodes: []
         },
         {
           id: 34,
           label: 'Customers',
           icon: '',
-          route: 'sale/customers',
+          route: 'sales/customers',
           nodes: []
         },
         {
           id: 35,
           label: 'Items',
           icon: '',
-          route: 'sale/items',
+          route: 'sales/items',
           nodes: []
         }
       ]

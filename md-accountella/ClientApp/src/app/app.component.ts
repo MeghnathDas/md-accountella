@@ -1,8 +1,8 @@
 import { Component, OnInit, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
-import { CustomClarityIcons } from './shared';
 import { Router, NavigationEnd, Event, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { TitleService } from './core/title-service/title.service';
+import { CustomClarityIcons } from './core';
 
 @Component({
   selector: 'app-root',
