@@ -33,8 +33,8 @@ import { CoreModule } from './core/core.module';
         loadChildren: () => import('./app-features').then(m => m.SalesModule)
       }
     ]),
-    ClarityModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ClarityModule
   ],
   providers: [],
   bootstrap: [AppComponent]

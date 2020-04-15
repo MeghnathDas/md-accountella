@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-base-landing',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./base-landing.component.css']
 })
 export class BaseLandingComponent implements OnInit {
+  @Input()
+  caption: string;
 
   constructor() { }
 

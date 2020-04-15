@@ -1,1 +1,7 @@
-<p>base-landing works!</p>
+<div class="card-header">
+    {{caption}}
+    <ng-content select="header-actions"></ng-content>
+</div>
+<div class="card-block">
+    <ng-content></ng-content>
+</div>

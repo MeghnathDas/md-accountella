@@ -1,23 +1,21 @@
-<body>
-  <clr-main-container class="main-container">
-    <!-- <div class="alert alert-app-level">
+<clr-main-container class="main-container">
+  <!-- <div class="alert alert-app-level">
     </div> -->
-    <!-- <nav class="subnav">
+  <!-- <nav class="subnav">
     </nav> -->
-    <app-side-nav-menu></app-side-nav-menu>
-    <div class="content-container md-drawer">
-      <app-header-nav-menu [caption]="appNme"></app-header-nav-menu>
-      <div class="content-area">
-        <div class="card">
-          <div class="card-header">
+  <app-side-nav-menu></app-side-nav-menu>
+  <div class="content-container md-drawer">
+    <app-header-nav-menu [caption]="appNme"></app-header-nav-menu>
+    <div class="content-area">
+      <div class="card">
+        <!-- <div class="card-header">
             {{currentTask}}
           </div>
-          <div class="card-block">
-            <router-outlet></router-outlet>
-          </div>
-          <!-- <small>Powered by</small>&nbsp;<a href="http://meghnathdas.github.io/" target="_blank">MD</a> -->
-        </div>
+          <div class="card-block"> -->
+        <router-outlet></router-outlet>
+        <!-- </div>
+          <small>Powered by</small>&nbsp;<a href="http://meghnathdas.github.io/" target="_blank">MD</a>-->
       </div>
     </div>
-  </clr-main-container>
-</body>
+  </div>
+</clr-main-container>

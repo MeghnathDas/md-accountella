@@ -1,0 +1,9 @@
+<clr-datagrid [(clrDgSingleSelected)]="selected" (clrDgSingleSelectedChange)="selectionChanged($event)">
+  <clr-dg-column *ngFor="let column of columnSpecs" [clrDgField]="column.key">{{column.value}}</clr-dg-column>
+  <clr-dg-placeholder>Couldn't find any item!</clr-dg-placeholder>
+  <clr-dg-row *ngFor="let record of dataSource" [clrDgItem]="record">
+      <clr-dg-cell *ngFor="let column of columnSpecs">
+        {{record[column.key]}}
+      </clr-dg-cell>
+  </clr-dg-row>
+</clr-datagrid>
