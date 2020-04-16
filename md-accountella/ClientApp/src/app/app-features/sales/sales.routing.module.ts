@@ -5,6 +5,8 @@ import { InvoiceManagerComponent } from './invoice-manager/invoice-manager.compo
 import { ReceiptManagerComponent } from './receipt-manager/receipt-manager.component';
 import { CreditNoteManagerComponent } from './credit-note-manager/credit-note-manager.component';
 import { CommonMasterComponent } from './sales-common-master/sales-common-master.component';
+import { CustomerManagerComponent } from './customer-manager/customer-manager.component';
+import { ItemManagerComponent } from './item-manager/item-manager.component';
 
 const salesRoutes: Routes = [
     { path: '', redirectTo: 'invoices', pathMatch: 'full' },
@@ -79,8 +81,24 @@ const salesRoutes: Routes = [
             }
         }]
     },
-    { path: 'customers/create-new', component: CreditNoteManagerComponent },
-    { path: 'customers/:id', component: CreditNoteManagerComponent }
+    { path: 'customers/create-new', component: CustomerManagerComponent },
+    { path: 'customers/:id', component: CustomerManagerComponent },
+
+    {
+        path: 'items', component: CommonMasterComponent, data: [{
+            entity: <MasterEntityInfoModel>{
+                caption: 'Sale Item',
+                visibleColumns: [
+                    { key: 'name', value: 'Name' },
+                    { key: 'catg', value: 'Category' },
+                    { key: 'salePrice', value: 'Price' },
+                    { key: 'createdOn', value: 'Added On' }
+                ]
+            }
+        }]
+    },
+    { path: 'items/create-new', component: ItemManagerComponent },
+    { path: 'items/:id', component: ItemManagerComponent }
 ];
 
 @NgModule({
