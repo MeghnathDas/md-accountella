@@ -1,25 +1,24 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SalesComponent } from './sales.component';
 import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from '../shared';
-import { InvoicesComponent } from './invoices/invoices.component';
+import { InvoiceMasterComponent, InvoiceManagerComponent } from './invoices';
 
 const salesRoutes: Routes = [
-  { path: '', redirectTo: 'invoices' },
-  {
-    path: 'invoices',
-    component: InvoicesComponent,
-    children: [
-
-    ]
-  },
-
+  { path: '', redirectTo: 'invoices', pathMatch: 'full' },
+  // {
+  //   path: 'invoices',
+  //   loadChildren: () => import('./invoices').then(m => m.InvoicesModule)
+  // }
+  {path: 'invoices', component: InvoiceMasterComponent},
+  {path: 'invoices/create-new', component: InvoiceManagerComponent},
+  {path: 'invoices/:id', component: InvoiceManagerComponent},
 ];
 
 @NgModule({
-  declarations: [SalesComponent, InvoicesComponent],
+  declarations: [InvoiceMasterComponent, InvoiceManagerComponent],
   imports: [
+    CommonModule,
     SharedModule,
     RouterModule.forChild(salesRoutes)
   ],
