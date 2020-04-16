@@ -11,12 +11,11 @@ export class GridDataSource {
   styleUrls: ['./base-collection.component.css']
 })
 export class BaseCollectionComponent implements OnInit, AfterViewChecked {
-  selected: any;
-  @Input()
-  columnSpecs: KeyValue<string, string>[];
-  @Input()
-  data: any[];
+  @Input() columnSpecs: KeyValue<string, string>[];
+  @Input() data: any[];
+
   dataSource: any[];
+  selected: any;
 
   @Output() selectionchanged: EventEmitter<any> = new EventEmitter<any>();
 

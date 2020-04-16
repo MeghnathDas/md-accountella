@@ -1,0 +1,40 @@
+<app-base-landing [caption]="caption">
+    <header-actions>
+        <div *ngIf="invoiceId" class="btn-group btn-primary">
+            <button class="btn btn-success">
+                <clr-icon shape="printer"></clr-icon>
+                Print
+            </button>
+            <div class="btn-group-overflow open">
+                <button class="btn dropdown-toggle">
+                    <!-- <clr-icon shape="ellipsis-horizontal"></clr-icon> -->
+                    <clr-icon shape="export"></clr-icon>
+                    Export
+                </button>
+            </div>            
+            <ng-container [ngTemplateOutlet]="viewAllButton"></ng-container>
+        </div>
+        <div *ngIf="!invoiceId" class="btn-group btn-primary">
+            <ng-container [ngTemplateOutlet]="viewAllButton"></ng-container>
+        </div>
+        <ng-template #viewAllButton>
+            <button class="btn btn-success" routerLink="../">
+                <clr-icon shape="view-list"></clr-icon>
+                View All
+            </button>
+        </ng-template>
+    </header-actions>
+    <div *ngIf="invoiceId">Invoice ID: {{invoiceId}}</div>
+    <form class="clr-form">
+        <div class="clr-form-control">
+            <label for="example" class="clr-control-label">Label</label>
+            <div class="clr-control-container">
+                <div class="clr-input-wrapper">
+                    <input type="text" id="example" placeholder="Example Input" class="clr-input">
+                    <clr-icon class="clr-validate-icon" shape="exclamation-circle"></clr-icon>
+                </div>
+                <span class="clr-subtext">Helper Text</span>
+            </div>
+        </div>
+    </form>
+</app-base-landing>

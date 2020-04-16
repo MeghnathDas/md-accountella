@@ -3,13 +3,13 @@ import { ActivatedRoute } from '@angular/router';
 import { TitleService } from 'src/app/core';
 
 @Component({
-  selector: 'app-invoice-manager',
-  templateUrl: './invoice-manager.component.html',
-  styleUrls: ['./invoice-manager.component.css']
+  selector: 'app-receipt-manager',
+  templateUrl: './receipt-manager.component.html',
+  styleUrls: ['./receipt-manager.component.css']
 })
-export class InvoiceManagerComponent implements OnInit {
+export class ReceiptManagerComponent implements OnInit {
   invoiceId: number;
-  caption = 'Create Invoice';
+  caption = 'Create Receipt';
 
   constructor(private activatedRoute: ActivatedRoute,
               private titleServ: TitleService) { }
@@ -17,7 +17,7 @@ export class InvoiceManagerComponent implements OnInit {
   ngOnInit(): void {
     this.invoiceId = Number(this.activatedRoute.snapshot.params.id);
     if (this.invoiceId) {
-      this.caption = 'Invoice';
+      this.caption = 'Receipt';
     }
     this.titleServ.updateTitleWithSuffix(this.caption);
   }
