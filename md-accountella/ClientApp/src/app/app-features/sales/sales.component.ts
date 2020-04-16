@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TitleService } from '../shared';
-import { MasterEntityInfoModel } from '../shared/models/master-entity-info.model';
+import { MasterEntityInfoModel } from '../models';
 
 @Component({
   selector: 'app-sales',

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, AfterViewChecked } from '@angular/core';
 import { KeyValue } from '@angular/common';
-import { MasterEntityInfoModel } from '../models/master-entity-info.model';
+import { MasterEntityInfoModel } from '../../models';
 
 export class GridDataSource {
   constructor(private data: any[]) {
