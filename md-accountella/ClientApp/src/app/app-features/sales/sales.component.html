@@ -24,5 +24,6 @@
             </div>
         </div>
     </header-actions>
-    <app-base-collection [columnSpecs]="invDataColumns"></app-base-collection>
+    <app-base-collection [entity]="currentEntity"></app-base-collection>
 </app-base-landing>
+<router-outlet></router-outlet>
