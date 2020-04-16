@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BaseLandingComponent } from './base-landing/base-landing.component';
 import { BaseCollectionComponent } from './base-collection/base-collection.component';
 import { ClarityModule } from '@clr/angular';

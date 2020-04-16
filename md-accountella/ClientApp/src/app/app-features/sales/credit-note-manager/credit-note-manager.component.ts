@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TitleService } from 'src/app/core';
+import { TitleService } from '../../../core';
 
 @Component({
   selector: 'app-credit-note-manager',
