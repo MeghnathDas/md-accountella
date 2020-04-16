@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ReceiptManagerComponent } from './receipt-manager.component';
 
-describe('NewInvoiceComponent', () => {
+describe('ReceiptManagerComponent', () => {
   let component: ReceiptManagerComponent;
   let fixture: ComponentFixture<ReceiptManagerComponent>;
 

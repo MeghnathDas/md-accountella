@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from '../shared';
 import { InvoiceMasterComponent, InvoiceManagerComponent } from './invoices';
 import { ReceiptMasterComponent, ReceiptManagerComponent } from './receipt';
+import { CreditNoteMasterComponent, CreditNoteManagerComponent } from './credit-note';
 
 const salesRoutes: Routes = [
   { path: '', redirectTo: 'invoices', pathMatch: 'full' },
@@ -16,12 +17,17 @@ const salesRoutes: Routes = [
   { path: 'receipts/create-new', component: ReceiptManagerComponent },
   { path: 'receipts/:id', component: ReceiptManagerComponent },
 
+  { path: 'cr-notes', component: CreditNoteMasterComponent },
+  { path: 'cr-notes/create-new', component: CreditNoteManagerComponent },
+  { path: 'cr-notes/:id', component: CreditNoteManagerComponent },
+
 ];
 
 @NgModule({
   declarations: [
     InvoiceMasterComponent, InvoiceManagerComponent,
-    ReceiptMasterComponent, ReceiptManagerComponent
+    ReceiptMasterComponent, ReceiptManagerComponent,
+    CreditNoteMasterComponent, CreditNoteManagerComponent
   ],
   imports: [
     CommonModule,
