@@ -1,14 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title></title>
-    <base href="/" />
 
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/x-icon" href="favicon.ico" />
-  </head>
-  <body>
-    <app-root>Loading...</app-root>
-  </body>
+<head>
+  <meta charset="utf-8" />
+  <title></title>
+  <base href="/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+</head>
+
+<body>
+  <app-root>
+    <div>
+      <style>
+        body {
+          padding: 0;
+          margin: 0;
+        }
+
+        .md-pre-app-container {
+          margin: 0;
+          height: 100vh;
+          width: 100vw;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          align-content: center;
+        }
+
+        .md-pre-app-loader {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          margin: 5px 0 0 5px;
+        }
+
+        .md-pre-app-loader>*:not(:last-child) {
+          margin-right: 8px;
+        }
+
+        .md-pre-app-loader .loader {
+          border: 2px solid #f3f3f3;
+          border-radius: 50%;
+          border-top: 2px solid #336699;
+          width: 20px;
+          height: 20px;
+          -webkit-animation: spin 1s linear infinite;
+          /* Safari */
+          animation: spin 1s linear infinite;
+        }
+
+        /* Safari */
+        @-webkit-keyframes spin {
+          0% {
+            -webkit-transform: rotate(0deg);
+          }
+
+          100% {
+            -webkit-transform: rotate(360deg);
+          }
+        }
+
+        @keyframes spin {
+          0% {
+            transform: rotate(0deg);
+          }
+
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+      </style>
+      <div class="md-pre-app-container">
+        <div class="md-pre-app-loader">
+          <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="25pt" height="25pt"
+            viewBox="0 0 138.000000 138.000000" preserveAspectRatio="xMidYMid meet">
+            <metadata>
+              Author: Meghnath Das
+            </metadata>
+            <g transform="translate(0.000000,138.000000) scale(0.100000,-0.100000)" fill="black" stroke="none">
+              <path d="M90 690 l0 -610 605 0 605 0 0 610 0 610 -605 0 -605 0 0 -610z m345
+         108 c27 -37 52 -67 55 -67 3 -1 28 31 55 69 47 66 52 70 85 68 l35 -3 0 -180
+         0 -180 -30 0 -30 0 -5 119 -5 119 -48 -62 c-27 -33 -52 -61 -56 -61 -12 0
+         -181 224 -181 239 0 8 13 11 37 9 33 -3 43 -11 88 -70z m532 61 c93 -35 138
+         -158 94 -255 -36 -79 -99 -107 -226 -102 l-80 3 -3 33 -3 32 86 0 c117 0 159
+         23 165 90 5 55 -1 80 -24 107 -23 26 -30 28 -123 33 l-98 5 -3 33 -3 32 95 0
+         c52 0 107 -5 123 -11z" />
+            </g>
+          </svg>
+          <span>App loading</span>
+          <div class="loader"></div>
+        </div>
+      </div>
+    </div>
+  </app-root>
+</body>
+
 </html>

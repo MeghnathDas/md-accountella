@@ -1,6 +1,6 @@
 <clr-vertical-nav [clrVerticalNavCollapsible]="true" [clr-nav-level]="1">
 
-  <ng-container *ngFor="let mnu of menus">
+  <ng-container *ngFor="let mnu of data">
     <ng-container [ngTemplateOutlet]="mnu.nodes && mnu.nodes.length > 0 ? menuWithChild : menuWithoutChild"
       [ngTemplateOutletContext]="{navItemData:mnu}">
     </ng-container>

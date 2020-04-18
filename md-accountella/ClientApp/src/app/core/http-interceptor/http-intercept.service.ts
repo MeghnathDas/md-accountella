@@ -1,37 +1,42 @@
-// import { Injectable } from '@angular/core';
-// import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpHeaders, HttpEvent } from '@angular/common/http';
+import { BlockInteractionService } from '../block-interaction/block-interaction.service';
+import { catchError, finalize, map } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
 
-// import {
-//   HttpInterceptor,
-//   HttpRequest,
-//   HttpHeaders,
-//   HttpEvent,
-//   HttpHandler} from '@angular/common/http';
+@Injectable()
+export class HttpInterceptorService implements HttpInterceptor {
+    constructor(private blockerserv: BlockInteractionService) {
+    }
 
-// import { catchError, finalize, map } from 'rxjs/operators';
+    intercept(request: HttpRequest<any>, next: HttpHandler) {
+        this.blockerserv.start();
+        return next.handle(request.clone())
+            .pipe(map(event => {
+                return event;
+            }),
+                catchError(error => {
+                    return this.handleError(error);
+                }),
+                finalize(() => {
+                    this.blockerserv.stop();
+                })
+            );
+    }
 
-
-
-// @Injectable()
-// export class HttpInterceptorService implements HttpInterceptor {
-
-//   constructor() { }
-
-//   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-//     const headers = new HttpHeaders()
-//       .set('Accept-Language', 'en')
-//       .set('Content-Type', 'application/json');
-//     request = request.clone({ headers: headers, withCredentials: true });
-//     return next.handle(request)
-//       .pipe(map(event => {
-//         return event;
-//       }),
-//         catchError(error => {
-//           return this.errorHandler.handleError(error);
-//         }),
-//         finalize(() => {
-//           this.spinner.show(false);
-//         })
-//       );
-//   }
-// }
+    private handleError(httpError: any): Observable<HttpEvent<any>> {
+        let errorMessage = `An error occurred:' ${httpError.status} - ${
+            httpError.statusText
+            }`;
+        if (httpError.error) {
+            if (httpError.error.ExceptionMessage) {
+                errorMessage = `${errorMessage} - ${httpError.error.ExceptionMessage}`;
+            } else {
+                console.log(httpError);
+                return throwError(httpError);
+            }
+        }
+        console.log(errorMessage);
+        return throwError(errorMessage);
+    }
+}

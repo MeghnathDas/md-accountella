@@ -3,7 +3,7 @@
     </div> -->
   <!-- <nav class="subnav">
     </nav> -->
-  <app-side-nav-menu></app-side-nav-menu>
+  <app-side-nav-menu [data]="navData"></app-side-nav-menu>
   <div class="content-container md-drawer">
     <app-header-nav-menu [caption]="appNme"></app-header-nav-menu>
     <div class="content-area">
@@ -16,6 +16,13 @@
         <!-- </div>
           <small>Powered by</small>&nbsp;<a href="http://meghnathdas.github.io/" target="_blank">MD</a>-->
       </div>
+    </div>
+  </div>
+  <div class="spinner-window" *ngIf="interactionBlocker.visible">
+    <div class="spinner-area">
+      <span class="spinner">
+        Loading...
+      </span>
     </div>
   </div>
 </clr-main-container>
