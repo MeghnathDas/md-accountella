@@ -3,3 +3,5 @@
 ################################################################################
 
 /.vs/md-accountella
+/MD.Accountella.DataTransferObjects/obj
+/MD.Accountella.BL/obj

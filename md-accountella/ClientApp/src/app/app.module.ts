@@ -10,6 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderNavMenuComponent } from './layout/header-nav-menu/app-header-nav-menu.component';
 import { SideNavMenuComponent } from './layout/side-nav-menu/app-side-nav-menu.component';
 import { CoreModule } from './core/core.module';
+import { NavMenuService } from './services';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,7 @@ import { CoreModule } from './core/core.module';
     BrowserAnimationsModule,
     ClarityModule
   ],
-  providers: [],
+  providers: [NavMenuService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

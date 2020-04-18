@@ -11,12 +11,12 @@ export class BlockInteractionService {
   private startCounter = 0;
   private stopCounter = 0;
 
-  start(msg: string) {
+  start(msg: string = '') {
     this.act({ key: true, value: msg });
   }
   stop() {
     this.act({
-      key: true,
+      key: false,
       value: this._changeData.value ? this._changeData.value.value : undefined
     });
   }
