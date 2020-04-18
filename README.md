@@ -1,4 +1,5 @@
 # Accountella
+A basic accounting application
 ###### Author: Meghnath Das
 
 ### Tools & Technologies Used
