@@ -21,10 +21,10 @@ namespace MD.Accountella.BL
                 route = "dashboard"
             });
 
-            permissibleNodes.Add(getSalesModuleNode());
-            permissibleNodes.Add(getPurchaseModuleNode());
+            //permissibleNodes.Add(getSalesModuleNode());
+            //permissibleNodes.Add(getPurchaseModuleNode());
             permissibleNodes.Add(getAccountsModuleNode());
-            permissibleNodes.Add(getReportsModuleNode());
+            //permissibleNodes.Add(getReportsModuleNode());
 
             return permissibleNodes.ToArray();
         }

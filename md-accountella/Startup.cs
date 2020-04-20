@@ -3,9 +3,11 @@
 /// Description: Model represents single node of navigation menu
 /// URL: http://meghnathdas.github.io/
 /// </summary>
-namespace md_accountella
+namespace MD.Accountella.WebApp
 {
     using MD.Accountella.BL.Configuration;
+    using MD.Accountella.DL.Configuration;
+    using MD.Accountella.WebApp.Models;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.HttpsPolicy;
@@ -25,7 +27,9 @@ namespace md_accountella
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<AwsConfig>(Configuration.GetSection("AwsConfig"));
             services.AddBusinessServices();
+            services.AddDataAccessServices();
             services.AddControllersWithViews();
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
