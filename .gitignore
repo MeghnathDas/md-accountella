@@ -3,3 +3,15 @@
 ################################################################################
 
 /.vs/md-accountella
+/MD.Accountella.Core.Models/obj
+/MD.Accountella.Core.Models/bin
+/MD.Accountella.DataTransferObjects/obj
+/MD.Accountella.DataTransferObjects/bin
+/MD.Accountella.DomainObjects/obj
+/MD.Accountella.DomainObjects/bin
+/MD.Accountella.DL/obj
+/MD.Accountella.DL/bin
+/MD.Accountella.BL/obj
+/MD.Accountella.BL/bin
+/MD.Accountella.WebApp/obj
+/MD.Accountella.WebApp/bin

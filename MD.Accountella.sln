@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29503.13
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MD.Accountella.WebApp", "md-accountella\MD.Accountella.WebApp.csproj", "{077F58F6-9BD3-46E5-BF39-A702ABB80650}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MD.Accountella.WebApp", "MD.Accountella.WebApp\MD.Accountella.WebApp.csproj", "{077F58F6-9BD3-46E5-BF39-A702ABB80650}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MD.Accountella.DataTransferObjects", "MD.Accountella.DataTransferObjects\MD.Accountella.DataTransferObjects.csproj", "{F62D1E8F-572C-4955-8322-115B26FC3A77}"
 EndProject
