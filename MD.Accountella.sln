@@ -3,17 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29503.13
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MD.Accountella.WebApp", "md-accountella\MD.Accountella.WebApp.csproj", "{077F58F6-9BD3-46E5-BF39-A702ABB80650}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MD.Accountella.WebApp", "MD.Accountella.WebApp\MD.Accountella.WebApp.csproj", "{077F58F6-9BD3-46E5-BF39-A702ABB80650}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MD.Accountella.DataTransferObjects", "MD.Accountella.DataTransferObjects\MD.Accountella.DataTransferObjects.csproj", "{F62D1E8F-572C-4955-8322-115B26FC3A77}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MD.Accountella.DataTransferObjects", "MD.Accountella.DataTransferObjects\MD.Accountella.DataTransferObjects.csproj", "{F62D1E8F-572C-4955-8322-115B26FC3A77}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MD.Accountella.BL", "MD.Accountella.BL\MD.Accountella.BL.csproj", "{EAB6E478-1B50-4222-903D-D5E80AAEF694}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MD.Accountella.BL", "MD.Accountella.BL\MD.Accountella.BL.csproj", "{EAB6E478-1B50-4222-903D-D5E80AAEF694}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MD.Accountella.DL", "MD.Accountella.DL\MD.Accountella.DL.csproj", "{8DE500A4-C5E9-4CAF-A5EF-05A4280E6A9C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MD.Accountella.DL", "MD.Accountella.DL\MD.Accountella.DL.csproj", "{8DE500A4-C5E9-4CAF-A5EF-05A4280E6A9C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MD.Accountella.DomainObjects", "MD.Accountella.DomainObjects\MD.Accountella.DomainObjects.csproj", "{65797152-DDCA-4E5A-B22A-5525F2FE9694}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MD.Accountella.DomainObjects", "MD.Accountella.DomainObjects\MD.Accountella.DomainObjects.csproj", "{65797152-DDCA-4E5A-B22A-5525F2FE9694}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Models", "Models", "{90CCF2FD-73BE-44FE-9CBB-9EC6DAE68610}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MD.Accountella.Core.Models", "MD.Accountella.Core.Models\MD.Accountella.Core.Models.csproj", "{BB959B52-DBA0-44E7-BFD0-D81FCC70D6AE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,10 @@ Global
 		{65797152-DDCA-4E5A-B22A-5525F2FE9694}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{65797152-DDCA-4E5A-B22A-5525F2FE9694}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{65797152-DDCA-4E5A-B22A-5525F2FE9694}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB959B52-DBA0-44E7-BFD0-D81FCC70D6AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB959B52-DBA0-44E7-BFD0-D81FCC70D6AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB959B52-DBA0-44E7-BFD0-D81FCC70D6AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB959B52-DBA0-44E7-BFD0-D81FCC70D6AE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,6 +54,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{F62D1E8F-572C-4955-8322-115B26FC3A77} = {90CCF2FD-73BE-44FE-9CBB-9EC6DAE68610}
 		{65797152-DDCA-4E5A-B22A-5525F2FE9694} = {90CCF2FD-73BE-44FE-9CBB-9EC6DAE68610}
+		{BB959B52-DBA0-44E7-BFD0-D81FCC70D6AE} = {90CCF2FD-73BE-44FE-9CBB-9EC6DAE68610}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4C46403F-18F7-421F-8D45-107AC7D02296}

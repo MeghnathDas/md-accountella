@@ -6,8 +6,8 @@
 namespace MD.Accountella.WebApp
 {
     using MD.Accountella.BL.Configuration;
+    using MD.Accountella.Core.Models;
     using MD.Accountella.DL.Configuration;
-    using MD.Accountella.WebApp.Models;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.HttpsPolicy;
