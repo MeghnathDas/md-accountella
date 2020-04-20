@@ -3,7 +3,7 @@
 /// Description: Delivers navigation menu related services
 /// URL: http://meghnathdas.github.io/
 /// </summary>
-namespace md_accountella.Controllers
+namespace MD.Accountella.WebApp.Controllers
 {
     using System;
     using System.Collections.Generic;

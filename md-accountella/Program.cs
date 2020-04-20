@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace md_accountella
+namespace MD.Accountella.WebApp
 {
     public class Program
     {

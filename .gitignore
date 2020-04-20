@@ -5,3 +5,8 @@
 /.vs/md-accountella
 /MD.Accountella.DataTransferObjects/obj
 /MD.Accountella.BL/obj
+/MD.Accountella.DomainObjects/obj
+/MD.Accountella.DL/obj
+/MD.Accountella.DomainObjects/bin/Debug/netcoreapp3.0
+/MD.Accountella.DL/bin/Debug/netcoreapp3.0
+/MD.Accountella.BL/bin/Debug/netcoreapp3.0

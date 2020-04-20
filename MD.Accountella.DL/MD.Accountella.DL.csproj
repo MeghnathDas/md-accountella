@@ -5,12 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AWSSDK.DynamoDBv2" Version="3.3.105.28" />
+    <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.3.101" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MD.Accountella.DataTransferObjects\MD.Accountella.DataTransferObjects.csproj" />
-    <ProjectReference Include="..\MD.Accountella.DL\MD.Accountella.DL.csproj" />
     <ProjectReference Include="..\MD.Accountella.DomainObjects\MD.Accountella.DomainObjects.csproj" />
   </ItemGroup>
 
