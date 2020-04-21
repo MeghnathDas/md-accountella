@@ -5,11 +5,15 @@
 /// </summary>
 namespace MD.Accountella.DomainObjects
 {
+    using Amazon.DynamoDBv2.DataModel;
+
+    [DynamoDBTable(Helpers.Utils.tableNamePrefix + "AccountCategory")]
     public class AccountCategory
     {
-        public int Id { get; set; }
+        [DynamoDBHashKey]
+        public string Id { get; set; }
         public string Name { get; set; }
-        public int _parentId { get; set; }
-        public AccountCategory[] SubCategories { get; set; }
+        public string _parentId { get; set; }
+        public virtual AccountCategory[] SubCategories { get; set; }
     }
 }

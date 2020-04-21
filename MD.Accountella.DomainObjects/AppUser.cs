@@ -6,9 +6,13 @@
 namespace MD.Accountella.DomainObjects
 {
     using System;
+    using Amazon.DynamoDBv2.DataModel;
+
+    [DynamoDBTable(Helpers.Utils.tableNamePrefix + "AppUser")]
     public class AppUser
     {
-        public int Id { get; set; }
+        [DynamoDBHashKey]
+        public string Id { get; set; }
         public DateTimeOffset CreatedOn { get; set; }
         public DateTimeOffset LastModifiedOn { get; set; }
         public string UserName { get; set; }

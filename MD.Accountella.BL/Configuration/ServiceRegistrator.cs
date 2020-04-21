@@ -1,6 +1,6 @@
 ﻿/// <summary>
 /// Author: Meghnath Das
-/// Description: Navigation menu related business logics
+/// Description: Extension for DI Registration
 /// URL: http://meghnathdas.github.io/
 /// </summary>
 namespace MD.Accountella.BL.Configuration
@@ -11,6 +11,7 @@ namespace MD.Accountella.BL.Configuration
         public static IServiceCollection AddBusinessServices(this IServiceCollection services)
         {
             services.AddTransient<INavMenuService, NavMenuService>();
+            services.AddTransient<IAccounts, Accounts>();
 
             return services;
         }

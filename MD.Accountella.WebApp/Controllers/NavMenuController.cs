@@ -16,9 +16,11 @@ namespace MD.Accountella.WebApp.Controllers
     [Route("api/nav-nodes")]
     public class NavMenuController : Controller
     {
-        private INavMenuService _navMnuService;
-        public NavMenuController(INavMenuService navMnuService)
+        private readonly INavMenuService _navMnuService;
+        private readonly IAccounts _accounts;
+        public NavMenuController(INavMenuService navMnuService, IAccounts accounts)
         {
+            this._accounts = accounts;
             this._navMnuService = navMnuService;
         }
 
@@ -26,6 +28,7 @@ namespace MD.Accountella.WebApp.Controllers
         [HttpGet]
         public ICollection<NavNode> Get()
         {
+            _accounts.GetAccounts();
             return this._navMnuService.GetPermisibleNavNodes();
         }
     }
