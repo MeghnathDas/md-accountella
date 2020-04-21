@@ -8,19 +8,24 @@ namespace MD.Accountella.DL
     using System;
     using System.Collections.Generic;
     using System.Text;
+    using MD.Accountella.DL.Core;
     using MD.Accountella.DomainObjects;
 
     public class AccountManager : IAccountManager
     {
+        private readonly IDynamoDBStore _dbStore;
+        public AccountManager(IDynamoDBStore dynamoDBStore)
+        {
+            this._dbStore = dynamoDBStore;
+        }
         public Account AddAccount(Account accToAdd)
         {
-            throw new NotImplementedException();
-
+            return new Account();
         }
 
         public Account GetAccounts(string id)
         {
-            throw new NotImplementedException();
+            return new Account() { Id = id };
         }
 
         public bool RemoveAccount(string id)

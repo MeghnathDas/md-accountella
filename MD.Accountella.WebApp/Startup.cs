@@ -28,9 +28,10 @@ namespace MD.Accountella.WebApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<AwsConfig>(Configuration.GetSection("AwsConfig"));
-            services.AddBusinessServices();
             services.AddDataAccessServices();
+            services.AddBusinessServices();
             services.AddControllersWithViews();
+
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {

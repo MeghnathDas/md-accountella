@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MD.Accountella.DomainObject
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Models", "Models", "{90CCF2FD-73BE-44FE-9CBB-9EC6DAE68610}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MD.Accountella.Core.Models", "MD.Accountella.Core.Models\MD.Accountella.Core.Models.csproj", "{BB959B52-DBA0-44E7-BFD0-D81FCC70D6AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MD.Accountella.Core.Models", "MD.Accountella.Core.Models\MD.Accountella.Core.Models.csproj", "{BB959B52-DBA0-44E7-BFD0-D81FCC70D6AE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

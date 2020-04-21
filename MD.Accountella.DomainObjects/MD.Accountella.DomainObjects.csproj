@@ -4,4 +4,8 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AWSSDK.DynamoDBv2" Version="3.3.105.28" />
+  </ItemGroup>
+
 </Project>
