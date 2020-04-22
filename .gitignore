@@ -17,3 +17,5 @@
 /MD.Accountella.WebApp/bin
 /.vs/MD.Accountella
 /MD.Accountella.WebApp/appsettings.development.json
+/MD.Accountells.Core/obj
+/MD.Accountells.Core/bin

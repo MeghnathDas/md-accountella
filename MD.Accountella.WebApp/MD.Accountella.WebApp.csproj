@@ -16,6 +16,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.3.101" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.0.0" />
   </ItemGroup>
 
@@ -32,7 +33,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MD.Accountella.BL\MD.Accountella.BL.csproj" />
-    <ProjectReference Include="..\MD.Accountella.Core.Models\MD.Accountella.Core.Models.csproj" />
     <ProjectReference Include="..\MD.Accountella.DataTransferObjects\MD.Accountella.DataTransferObjects.csproj" />
     <ProjectReference Include="..\MD.Accountella.DL\MD.Accountella.DL.csproj" />
   </ItemGroup>
