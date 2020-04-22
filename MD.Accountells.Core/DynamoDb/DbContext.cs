@@ -3,85 +3,60 @@
 /// Description:
 /// URL: http://meghnathdas.github.io/
 /// </summary>
-namespace MD.Accountella.DL.Core
+namespace MD.Accountella.Core.DynamoDb
 {
-    using Amazon;
     using Amazon.DynamoDBv2;
     using Amazon.DynamoDBv2.DataModel;
-    using Amazon.DynamoDBv2.Model;
-    using MD.Accountella.Core.Models;
-    using MD.Accountella.DomainObjects.Helpers;
-    using Microsoft.Extensions.Options;
     using System;
     using System.Collections.Generic;
+    using Amazon.DynamoDBv2.Model;
     using System.Linq;
-    using System.Reflection;
     using System.Threading;
     using System.Threading.Tasks;
 
-    public class DynamoDBStore : IDynamoDBStore
+    public class DbContext : DynamoDBContext
     {
-        private readonly AwsConfig _awsConfig;
-        private readonly AmazonDynamoDBClient _client;
-        private readonly DynamoDBContext _dbContext;
-        private class TableInfo
+        private readonly IAmazonDynamoDB _client;
+        private ModelBuilder _modelBuilder;
+        public IAmazonDynamoDB Client => this._client;
+        public DbContext(IAmazonDynamoDB client) : base(client)
         {
-            public string tableName { get; set; }
-            public List<attrINfo> attributes { get; set; }
+            this._modelBuilder = new ModelBuilder();
+            this._client = client;
+        }
+        public bool EnsureCreated()
+        {
+            OnModelCreating(this._modelBuilder);
 
-            public class attrINfo
+            try
             {
-                public string name { get; set; }
-                public Type dataType { get; set; }
-                public bool isPrimary { get; set; }
+                checkAndCreate(this._modelBuilder.Tables).Wait();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+        protected virtual void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            if (modelBuilder.Tables == null || !modelBuilder.Tables.Any())
+            {
+                throw new Exception("At least one entity should be present to execute");
             }
         }
-        public AmazonDynamoDBClient Client => _client;
 
-        public DynamoDBContext DBContext => _dbContext;
-
-        public DynamoDBStore(IOptions<AwsConfig> configOp)
+        private async Task checkAndCreate(TableInfo[] tablesToCheck)
         {
-            _awsConfig = configOp.Value;
-
-            var region = RegionEndpoint.GetBySystemName(_awsConfig.Region);
-            //RegionEndpoint.APSouth1
-            //Creating DynamoDB client
-            _client = new AmazonDynamoDBClient(_awsConfig.AccessKeyID, _awsConfig.AccessKey, region);
-            _dbContext = new DynamoDBContext(_client);
-
-            this.Init().Wait();
-        }
-
-        private async Task Init()
-        {
-            TableInfo convertTableInfo(Type typ)
-            {
-                var tbl = new TableInfo();
-                tbl.tableName = typ.GetCustomAttribute<DynamoDBTableAttribute>().TableName;
-                tbl.attributes = typ.GetProperties().Select(tf =>
-                {
-                    var attr = new TableInfo.attrINfo
-                    {
-                        name = tf.Name,
-                        dataType = tf.GetType(),
-                        isPrimary = tf.GetCustomAttributes(typeof(DynamoDBHashKeyAttribute), true).Length > 0
-                    };
-                    return attr;
-                }).ToList();
-                return tbl;
-            }
-
             //Get all available tables in database
             var tableResponse = await _client.ListTablesAsync();
 
-            Utils.GetTableTypes()
-                .Select(tblTyp => convertTableInfo(tblTyp))
+                tablesToCheck
                 .Where(x => !tableResponse.TableNames.Contains(x.tableName))
                 .ToList()
                 .ForEach(tblSpec =>
                 {
-                    createTable(tblSpec);   
+                    createTable(tblSpec);
                 });
         }
         private async void createTable(TableInfo tblToCreate)
@@ -106,7 +81,7 @@ namespace MD.Accountella.DL.Core
                     },
                 AttributeDefinitions = new List<AttributeDefinition>
                     {
-                        new AttributeDefinition { 
+                        new AttributeDefinition {
                             AttributeName = pk.name,
                             AttributeType = pk.dataType == typeof(int) ? ScalarAttributeType.N : ScalarAttributeType.S
                         }
@@ -140,6 +115,6 @@ namespace MD.Accountella.DL.Core
                 System.Console.WriteLine("Unable to to create table: {0}", tblToCreate.tableName);
                 System.Console.BackgroundColor = originalColor;
             }
-        }
+        }        
     }
 }

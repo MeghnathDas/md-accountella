@@ -8,15 +8,14 @@ namespace MD.Accountella.DL
     using System;
     using System.Collections.Generic;
     using System.Text;
-    using MD.Accountella.DL.Core;
     using MD.Accountella.DomainObjects;
 
     public class AccountManager : IAccountManager
     {
-        private readonly IDynamoDBStore _dbStore;
-        public AccountManager(IDynamoDBStore dynamoDBStore)
+        private readonly AccountellaDbContext _dbContext;
+        public AccountManager(AccountellaDbContext dbContext)
         {
-            this._dbStore = dynamoDBStore;
+            this._dbContext = dbContext;
         }
         public Account AddAccount(Account accToAdd)
         {

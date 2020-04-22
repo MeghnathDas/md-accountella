@@ -1,22 +1,36 @@
 /// <summary>
 /// Author: Meghnath Das
-/// Description: Model represents single node of navigation menu
+/// Description:
 /// URL: http://meghnathdas.github.io/
 /// </summary>
 namespace MD.Accountella.WebApp
 {
+    using Amazon;
+    using Amazon.DynamoDBv2;
+    using Amazon.Extensions.NETCore.Setup;
     using MD.Accountella.BL.Configuration;
-    using MD.Accountella.Core.Models;
     using MD.Accountella.DL.Configuration;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.HttpsPolicy;
     using Microsoft.AspNetCore.SpaServices.AngularCli;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     public class Startup
     {
+        private class AwsConfig
+        {
+            public string Profile { get; set; }
+            public string AccessKey { get; set; }
+            public string SecretKey { get; set; }
+            public string Region { get; set; }
+            public AWSOptions GetAWSOptions() => new AWSOptions()
+            {
+                Profile = this.Profile,
+                Credentials = new Amazon.Runtime.BasicAWSCredentials(this.AccessKey, this.SecretKey),
+                Region = RegionEndpoint.GetBySystemName(this.Region)
+            };
+        }
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -27,10 +41,13 @@ namespace MD.Accountella.WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<AwsConfig>(Configuration.GetSection("AwsConfig"));
+            services.AddControllersWithViews();
+            services.AddDefaultAWSOptions(
+                Configuration.GetSection("AWS").Get<AwsConfig>().GetAWSOptions()
+                );
+            services.AddAWSService<IAmazonDynamoDB>();
             services.AddDataAccessServices();
             services.AddBusinessServices();
-            services.AddControllersWithViews();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

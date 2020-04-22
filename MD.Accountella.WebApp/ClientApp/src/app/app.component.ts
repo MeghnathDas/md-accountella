@@ -53,7 +53,6 @@ export class AppComponent implements OnInit, AfterViewChecked {
   }
 
   private onBlockerChage(data: KeyValue<boolean, string>) {
-    console.log(data);
     this.interactionBlocker = {
       visible: data.key,
       msg: data.value
