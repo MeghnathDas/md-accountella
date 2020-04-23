@@ -29,9 +29,9 @@ namespace MD.Accountella.Core.DynamoDb
             }).ToList();
             return tbl;
         }
-        
-        TableInfo[] IModelBuilder.Tables => this._lstTyps.Select(typ => convertTableInfo(typ)).ToArray();
 
+        TableInfo[] IModelBuilder.TableSpecs => this._lstTyps.Select(typ => convertTableInfo(typ)).ToArray();
+        
         public virtual void Entity<TEntity>() where TEntity : class
         {
             addEntityTyps(new Type[] { typeof(TEntity) });

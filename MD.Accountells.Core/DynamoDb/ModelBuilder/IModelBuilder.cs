@@ -8,6 +8,6 @@ namespace MD.Accountella.Core.DynamoDb
     public interface IModelBuilder
     {
         public void IncludeAllAvailableEntities();
-        internal TableInfo[] Tables { get; }
+        internal TableInfo[] TableSpecs { get; }
     }
 }

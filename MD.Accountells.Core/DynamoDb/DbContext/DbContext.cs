@@ -33,7 +33,7 @@ namespace MD.Accountella.Core.DynamoDb
 
             try
             {
-                checkAndCreate(this._modelBuilder.Tables).Wait();
+                checkAndCreate(this._modelBuilder.TableSpecs).Wait();
             }
             catch (Exception)
             {
