@@ -5,10 +5,10 @@
 /// </summary>
 namespace MD.Accountella.WebApp
 {
-    using Amazon;
     using Amazon.DynamoDBv2;
-    using Amazon.Extensions.NETCore.Setup;
     using MD.Accountella.BL.Configuration;
+    using MD.Accountella.Core.DynamoDb;
+    using MD.Accountella.Core.RestConcerns;
     using MD.Accountella.DL.Configuration;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -16,21 +16,10 @@ namespace MD.Accountella.WebApp
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using Microsoft.Extensions.Logging;
+
     public class Startup
     {
-        private class AwsConfig
-        {
-            public string Profile { get; set; }
-            public string AccessKey { get; set; }
-            public string SecretKey { get; set; }
-            public string Region { get; set; }
-            public AWSOptions GetAWSOptions() => new AWSOptions()
-            {
-                Profile = this.Profile,
-                Credentials = new Amazon.Runtime.BasicAWSCredentials(this.AccessKey, this.SecretKey),
-                Region = RegionEndpoint.GetBySystemName(this.Region)
-            };
-        }
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -42,8 +31,9 @@ namespace MD.Accountella.WebApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddScoped<LoggingActionFilter>();
             services.AddDefaultAWSOptions(
-                Configuration.GetSection("AWS").Get<AwsConfig>().GetAWSOptions()
+                Configuration.GetSection("AWS").Get<BasicAwsConfig>().GetAWSOptions()
                 );
             services.AddAWSService<IAmazonDynamoDB>();
             services.AddDataAccessServices();

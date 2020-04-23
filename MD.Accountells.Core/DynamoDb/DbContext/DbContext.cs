@@ -14,10 +14,13 @@ namespace MD.Accountella.Core.DynamoDb
     using System.Threading;
     using System.Threading.Tasks;
 
-    public class DbContext : DynamoDBContext
+    public class DbContext : DynamoDBContext, IDbContext
     {
         private readonly IAmazonDynamoDB _client;
-        private ModelBuilder _modelBuilder;
+        private IModelBuilder _modelBuilder;
+
+        public event EventHandler<DbContextActionMessage> OnMessaging;
+
         public IAmazonDynamoDB Client => this._client;
         public DbContext(IAmazonDynamoDB client) : base(client)
         {
@@ -38,7 +41,7 @@ namespace MD.Accountella.Core.DynamoDb
             }
             return true;
         }
-        protected virtual void OnModelCreating(ModelBuilder modelBuilder)
+        protected virtual void OnModelCreating(IModelBuilder modelBuilder)
         {
             if (modelBuilder.Tables == null || !modelBuilder.Tables.Any())
             {
@@ -51,13 +54,13 @@ namespace MD.Accountella.Core.DynamoDb
             //Get all available tables in database
             var tableResponse = await _client.ListTablesAsync();
 
-                tablesToCheck
-                .Where(x => !tableResponse.TableNames.Contains(x.tableName))
-                .ToList()
-                .ForEach(tblSpec =>
-                {
-                    createTable(tblSpec);
-                });
+            tablesToCheck
+            .Where(x => !tableResponse.TableNames.Contains(x.tableName))
+            .ToList()
+            .ForEach(tblSpec =>
+            {
+                createTable(tblSpec);
+            });
         }
         private async void createTable(TableInfo tblToCreate)
         {
@@ -97,24 +100,12 @@ namespace MD.Accountella.Core.DynamoDb
                 isTableAvailable = tableStatus.Table.TableStatus == "ACTIVE";
             }
 
-            if (isTableAvailable)
-            {
-                var originalColor = System.Console.ForegroundColor;
-                System.Console.ForegroundColor = System.ConsoleColor.Green;
-                System.Console.Write("info: ");
-                System.Console.ForegroundColor = originalColor;
-                System.Console.WriteLine("Created table: {0}", tblToCreate.tableName);
-                System.Console.ForegroundColor = originalColor;
-            }
-            else
-            {
-                var originalColor = System.Console.BackgroundColor;
-                System.Console.BackgroundColor = System.ConsoleColor.Red;
-                System.Console.Write("failed: ");
-                System.Console.ForegroundColor = originalColor;
-                System.Console.WriteLine("Unable to to create table: {0}", tblToCreate.tableName);
-                System.Console.BackgroundColor = originalColor;
-            }
-        }        
+            OnMessaging.Invoke(this,
+                new DbContextActionMessage(
+                    isTableAvailable ? $"Created table: {tblToCreate.tableName}"
+                        : $"Unable to to create table: {tblToCreate.tableName}",
+                    isTableAvailable ? DbContextActionMessageType.Info : DbContextActionMessageType.Error)
+                );
+        }
     }
 }
