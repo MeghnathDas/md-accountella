@@ -9,5 +9,7 @@ namespace MD.Accountella.Core.DynamoDb
     {
         public void IncludeAllAvailableEntities();
         internal TableInfo[] TableSpecs { get; }
+        public void Entity<TEntity>() where TEntity : class;
+
     }
 }

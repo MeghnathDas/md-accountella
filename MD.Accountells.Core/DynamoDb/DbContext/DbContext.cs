@@ -43,7 +43,7 @@ namespace MD.Accountella.Core.DynamoDb
         }
         protected virtual void OnModelCreating(IModelBuilder modelBuilder)
         {
-            if (modelBuilder.Tables == null || !modelBuilder.Tables.Any())
+            if (modelBuilder.TableSpecs == null || !modelBuilder.TableSpecs.Any())
             {
                 throw new Exception("At least one entity should be present to execute");
             }
