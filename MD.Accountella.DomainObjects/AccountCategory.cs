@@ -1,6 +1,6 @@
 ﻿/// <summary>
 /// Author: Meghnath Das
-/// Description: Model represents single node of navigation menu
+/// Description:
 /// URL: http://meghnathdas.github.io/
 /// </summary>
 namespace MD.Accountella.DomainObjects

@@ -1,6 +1,6 @@
 ﻿/// <summary>
 /// Author: Meghnath Das
-/// Description: Model represents Ledger
+/// Description: Model represents a Ledger entry
 /// URL: http://meghnathdas.github.io/
 /// </summary>
 namespace MD.Accountella.DomainObjects

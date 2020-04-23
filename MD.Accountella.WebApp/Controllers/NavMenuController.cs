@@ -12,13 +12,16 @@ namespace MD.Accountella.WebApp.Controllers
     using MD.Accountella.DataTransferObjects;
     using Microsoft.AspNetCore.Mvc;
     using MD.Accountella.BL;
+    using Microsoft.Extensions.Logging;
+    using MD.Accountella.Core.RestConcerns;
 
     [Route("api/nav-nodes")]
-    public class NavMenuController : Controller
+    public class NavMenuController: AccountellaControllerBase
     {
         private readonly INavMenuService _navMnuService;
         private readonly IAccounts _accounts;
-        public NavMenuController(INavMenuService navMnuService, IAccounts accounts)
+        public NavMenuController(ILogger<NavMenuController> logger,
+            INavMenuService navMnuService, IAccounts accounts)
         {
             this._accounts = accounts;
             this._navMnuService = navMnuService;
