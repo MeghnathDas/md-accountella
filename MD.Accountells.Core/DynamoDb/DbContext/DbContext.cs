@@ -17,23 +17,23 @@ namespace MD.Accountella.Core.DynamoDb
     public class DbContext : DynamoDBContext, IDbContext
     {
         private readonly IAmazonDynamoDB _client;
-        private IModelBuilder _modelBuilder;
+        private EntityBuilder _entityBuilder;
 
         public event EventHandler<DbContextActionMessage> OnMessaging;
 
         public IAmazonDynamoDB Client => this._client;
         public DbContext(IAmazonDynamoDB client) : base(client)
         {
-            this._modelBuilder = new ModelBuilder();
+            this._entityBuilder = new EntityBuilder();
             this._client = client;
         }
         public bool EnsureCreated()
         {
-            OnModelCreating(this._modelBuilder);
+            OnModelCreating(this._entityBuilder);
 
             try
             {
-                checkAndCreate(this._modelBuilder.TableSpecs).Wait();
+                checkAndCreate(this._entityBuilder.TableSpecs).Wait();
             }
             catch (Exception)
             {
@@ -41,9 +41,9 @@ namespace MD.Accountella.Core.DynamoDb
             }
             return true;
         }
-        protected virtual void OnModelCreating(IModelBuilder modelBuilder)
+        protected virtual void OnModelCreating(EntityBuilder entityBuilder)
         {
-            if (modelBuilder.TableSpecs == null || !modelBuilder.TableSpecs.Any())
+            if (entityBuilder.TableSpecs == null || !entityBuilder.TableSpecs.Any())
             {
                 throw new Exception("At least one entity should be present to execute");
             }

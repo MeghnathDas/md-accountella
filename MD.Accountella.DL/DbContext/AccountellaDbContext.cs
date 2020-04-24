@@ -44,9 +44,9 @@ namespace MD.Accountella.DL
                 throw new Exception("Databse table creation failed");
         }
 
-        protected override void OnModelCreating(IModelBuilder modelBuilder)
+        protected override void OnModelCreating(EntityBuilder entityBuilder)
         {
-            modelBuilder.IncludeAllAvailableEntities();
+            entityBuilder.IncludeAllAvailableEntities();
         }
     }
 }

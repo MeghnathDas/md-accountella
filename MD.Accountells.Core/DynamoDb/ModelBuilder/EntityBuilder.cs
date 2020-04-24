@@ -10,7 +10,7 @@ namespace MD.Accountella.Core.DynamoDb
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
-    public class ModelBuilder: IModelBuilder
+    public class EntityBuilder: IEntityBuilder
     {
         private List<Type> _lstTyps;
         private TableInfo convertTableInfo(Type typ)
@@ -30,7 +30,7 @@ namespace MD.Accountella.Core.DynamoDb
             return tbl;
         }
 
-        TableInfo[] IModelBuilder.TableSpecs => this._lstTyps.Select(typ => convertTableInfo(typ)).ToArray();
+        internal TableInfo[] TableSpecs => this._lstTyps.Select(typ => convertTableInfo(typ)).ToArray();
         
         public virtual void Entity<TEntity>() where TEntity : class
         {

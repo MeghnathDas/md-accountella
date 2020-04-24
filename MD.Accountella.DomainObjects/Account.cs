@@ -17,7 +17,7 @@ namespace MD.Accountella.DomainObjects
         public string Name { get; set; }
         public string Details { get; set; }
         public string _CategoryId { get; set; }
-        public virtual AccountCategory Category { get; set; }
+        public virtual EntityCategory Category { get; set; }
         public bool IsActive { get; set; }
         public bool IsReadOnly { get; set; }
     }
