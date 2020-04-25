@@ -12,12 +12,14 @@ namespace MD.Accountella.Core.DynamoDb
     using System.Reflection;
     public class EntityBuilder: IEntityBuilder
     {
-        private List<Type> _lstTyps;
-        private TableInfo convertTableInfo(Type typ)
+        private Dictionary<Type, List<IExecuter>> _dicTyps;
+        private TableInfo convertTableInfo(KeyValuePair<Type, List<IExecuter>> entTypeToConvert)
         {
             var tbl = new TableInfo();
-            tbl.tableName = typ.GetCustomAttribute<DynamoDBTableAttribute>().TableName;
-            tbl.attributes = typ.GetProperties().Select(tf =>
+            tbl.SeedDataProviders = entTypeToConvert.Value;
+            var tblAttr = entTypeToConvert.Key.GetCustomAttribute<DynamoDBTableAttribute>();
+            tbl.tableName = tblAttr != null ? tblAttr.TableName : entTypeToConvert.Key.Name;
+            tbl.attributes = entTypeToConvert.Key.GetProperties().Select(tf =>
             {
                 var attr = new TableInfo.attrINfo
                 {
@@ -30,25 +32,46 @@ namespace MD.Accountella.Core.DynamoDb
             return tbl;
         }
 
-        internal TableInfo[] TableSpecs => this._lstTyps.Select(typ => convertTableInfo(typ)).ToArray();
-        
+        internal EntityBuilder()
+        {
+            _dicTyps = new Dictionary<Type, List<IExecuter>>();
+            addEntityTyp(typeof(DbMigration));
+        }
+
+        internal TableInfo[] TableSpecs => this._dicTyps.Select(typ => convertTableInfo(typ)).ToArray();
+
         public virtual void Entity<TEntity>() where TEntity : class
         {
-            addEntityTyps(new Type[] { typeof(TEntity) });
+            Entity<TEntity>(null);
         }
+        public virtual void Entity<TEntity>(IEntitySeedDataProvider<TEntity> seedDataProvider) where TEntity : class
+        {
+            addEntityTyp(typeof(TEntity), seedDataProvider);
+        }
+        
         public void IncludeAllAvailableEntities()
         {
             var callerAsmTyps = getTableTyps(new Assembly[] { Assembly.GetCallingAssembly() });
             var callerRefAsmsTyps = getTableTyps(Assembly.GetCallingAssembly().GetReferencedAssemblies());
-            
-            addEntityTyps(callerAsmTyps);
-            addEntityTyps(callerRefAsmsTyps);
+
+            callerAsmTyps.ToList().ForEach(x => addEntityTyp(x));
+            callerRefAsmsTyps.ToList().ForEach(x => addEntityTyp(x));
         }
-        private void addEntityTyps(IEnumerable<Type> typsToAdd)
+        private void addEntityTyp(Type typToAdd, IExecuter seedDataProvider = null)
         {
-            if (_lstTyps == null)
-                _lstTyps = new List<Type>();
-            _lstTyps.AddRange(typsToAdd);
+            List<IExecuter> existEntTyp = null;
+            _dicTyps.TryGetValue(typToAdd, out existEntTyp);
+            if (existEntTyp != null)
+            {
+                if (seedDataProvider != null)
+                    existEntTyp.Add(seedDataProvider);
+            }
+            else
+            {
+                var sps = seedDataProvider == null ?
+                    new List<IExecuter>() : new List<IExecuter>() { seedDataProvider };
+                _dicTyps.Add(typToAdd, sps);
+            }
         }
         private IEnumerable<Type> getTableTyps(IEnumerable<AssemblyName> assemblyNames)
         {

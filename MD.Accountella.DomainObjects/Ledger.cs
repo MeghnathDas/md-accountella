@@ -13,7 +13,11 @@ namespace MD.Accountella.DomainObjects
     {
         [DynamoDBHashKey]
         public string Id { get; set; }
+
+        [DynamoDBProperty(typeof(DateTimeOffsetTypeConverter))]
         public DateTimeOffset CreatedOn { get; set; }
+
+        [DynamoDBProperty(typeof(DateTimeOffsetTypeConverter))]
         public DateTimeOffset LastModifiedOn { get; set; }
         public string _AccountId { get; set; }
         public string SourceCurrencyName { get; set; }

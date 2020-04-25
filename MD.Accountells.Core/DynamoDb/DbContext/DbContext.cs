@@ -14,12 +14,13 @@ namespace MD.Accountella.Core.DynamoDb
     using System.Threading;
     using System.Threading.Tasks;
 
-    public class DbContext : DynamoDBContext, IDbContext
+    public abstract class DbContext : DynamoDBContext, IDbContext
     {
         private readonly IAmazonDynamoDB _client;
         private EntityBuilder _entityBuilder;
 
         public event EventHandler<DbContextActionMessage> OnMessaging;
+        public abstract void OnModelCreating(EntityBuilder entityBuilder);
 
         public IAmazonDynamoDB Client => this._client;
         public DbContext(IAmazonDynamoDB client) : base(client)
@@ -30,6 +31,10 @@ namespace MD.Accountella.Core.DynamoDb
         public bool EnsureCreated()
         {
             OnModelCreating(this._entityBuilder);
+            if (_entityBuilder.TableSpecs == null || !_entityBuilder.TableSpecs.Any())
+            {
+                throw new Exception("At least one entity should be present to execute");
+            }
 
             try
             {
@@ -41,14 +46,6 @@ namespace MD.Accountella.Core.DynamoDb
             }
             return true;
         }
-        protected virtual void OnModelCreating(EntityBuilder entityBuilder)
-        {
-            if (entityBuilder.TableSpecs == null || !entityBuilder.TableSpecs.Any())
-            {
-                throw new Exception("At least one entity should be present to execute");
-            }
-        }
-
         private async Task checkAndCreate(TableInfo[] tablesToCheck)
         {
             //Get all available tables in database
@@ -106,6 +103,9 @@ namespace MD.Accountella.Core.DynamoDb
                         : $"Unable to to create table: {tblToCreate.tableName}",
                     isTableAvailable ? DbContextActionMessageType.Info : DbContextActionMessageType.Error)
                 );
+
+            if (isTableAvailable)
+                await Task.WhenAll(tblToCreate.SeedDataProviders.Select(sd => sd.Execute(this)));
         }
     }
 }

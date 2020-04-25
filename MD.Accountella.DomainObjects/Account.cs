@@ -7,13 +7,18 @@ namespace MD.Accountella.DomainObjects
 {
     using System;
     using Amazon.DynamoDBv2.DataModel;
+
     [DynamoDBTable(Helpers.Utils.tableNamePrefix + "Account")]
     public class Account
     {
         [DynamoDBHashKey]
         public string Id { get; set; }
-        public DateTimeOffset CreatedOn { get; set; }
-        public DateTimeOffset LastModifiedOn { get; set; }
+
+        [DynamoDBProperty(typeof(DateTimeOffsetTypeConverter))]
+        public DateTimeOffset? CreatedOn { get; set; }
+
+        [DynamoDBProperty(typeof(DateTimeOffsetTypeConverter))]
+        public DateTimeOffset? LastModifiedOn { get; set; }
         public string Name { get; set; }
         public string Details { get; set; }
         public string _CategoryId { get; set; }

@@ -12,7 +12,7 @@ namespace MD.Accountella.Core.DynamoDb
     {
         public string tableName { get; set; }
         public List<attrINfo> attributes { get; set; }
-
+        public IReadOnlyCollection<IExecuter> SeedDataProviders { get; set; }
         public class attrINfo
         {
             public string name { get; set; }
