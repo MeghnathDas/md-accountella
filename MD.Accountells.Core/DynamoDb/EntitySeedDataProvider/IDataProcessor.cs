@@ -6,9 +6,13 @@
 namespace MD.Accountella.Core.DynamoDb
 {
     using Amazon.DynamoDBv2.DataModel;
+    using Amazon.DynamoDBv2.Model;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
-    public interface IExecuter
+
+    public interface IDataProcessor
     {
-        public Task Execute(DynamoDBContext dbContext);
+        public BatchWrite GetBatchWrite(DynamoDBContext dbContext);
+
     }
 }

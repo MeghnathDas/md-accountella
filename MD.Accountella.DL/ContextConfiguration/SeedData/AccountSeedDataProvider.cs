@@ -12,7 +12,11 @@ namespace MD.Accountella.DL
     using System.Text;
     internal class AccountSeedDataProvider : EntitySeedDataProvider<Account>
     {
-        public override void SetData(List<Account> data)
+        public override void SetDataToDelete(List<Account> data)
+        {
+        }
+
+        public override void SetDataToCreateOrUpdate(List<Account> data)
         {
             data.AddRange(new Account[] {
                     new Account
@@ -22,7 +26,7 @@ namespace MD.Accountella.DL
                         CreatedOn = System.DateTimeOffset.Now,
                         Name = "Cash on hand",
                         IsActive = true,
-                        IsReadOnly = true                        
+                        IsReadOnly = true
                     },
                     new Account
                     {

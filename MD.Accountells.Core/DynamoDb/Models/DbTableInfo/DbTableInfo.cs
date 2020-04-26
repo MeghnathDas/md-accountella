@@ -7,10 +7,10 @@ namespace MD.Accountella.Core.DynamoDb
 {
     using System;
     using System.Collections.Generic;
-
-    public interface IEntitySeedDataProvider<TEntity> : IDataProcessor
+    using System.Text;
+    internal class DbTableInfo
     {
-        public void SetDataToDelete(List<TEntity> data);
-        public void SetDataToCreateOrUpdate(List<TEntity> data);
+        public string tableName { get; set; }
+        public ICollection<DbTableAttributeInfo> attributes { get; set; }
     }
 }

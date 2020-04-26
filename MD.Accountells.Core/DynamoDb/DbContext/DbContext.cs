@@ -13,11 +13,12 @@ namespace MD.Accountella.Core.DynamoDb
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
+    using Amazon.DynamoDBv2.DocumentModel;
 
     public abstract class DbContext : DynamoDBContext, IDbContext
     {
         private readonly IAmazonDynamoDB _client;
-        private EntityBuilder _entityBuilder;
+        private readonly EntityBuilder _entityBuilder;
 
         public event EventHandler<DbContextActionMessage> OnMessaging;
         public abstract void OnModelCreating(EntityBuilder entityBuilder);
@@ -38,7 +39,12 @@ namespace MD.Accountella.Core.DynamoDb
 
             try
             {
-                checkAndCreate(this._entityBuilder.TableSpecs).Wait();
+                checkAndCreate(_entityBuilder.TableSpecs).ContinueWith((t) =>
+                {
+                    if (t.IsCompleted)
+                        processSeedData(this._entityBuilder.TableSpecs.SelectMany(tbl => tbl.SeedDataProviders).ToArray());
+                });
+
             }
             catch (Exception)
             {
@@ -46,32 +52,35 @@ namespace MD.Accountella.Core.DynamoDb
             }
             return true;
         }
-        private async Task checkAndCreate(TableInfo[] tablesToCheck)
+        private Task checkAndCreate(DbTableWithSeedInfo[] tablesToCheck)
         {
-            //Get all available tables in database
-            var tableResponse = await _client.ListTablesAsync();
-
-            tablesToCheck
-            .Where(x => !tableResponse.TableNames.Contains(x.tableName))
-            .ToList()
-            .ForEach(tblSpec =>
+            return Task.Run(() =>
             {
-                createTable(tblSpec);
-            });
-        }
-        private async void createTable(TableInfo tblToCreate)
-        {
-            var pk = tblToCreate.attributes.Where(attr => attr.isPrimary).FirstOrDefault();
+                //Get all available tables in database
+                var tableResponse = _client.ListTablesAsync().Result;
 
-            await _client.CreateTableAsync(new CreateTableRequest
-            {
-                TableName = tblToCreate.tableName,
-                ProvisionedThroughput = new ProvisionedThroughput
+                tablesToCheck
+                .Where(x => !tableResponse.TableNames.Contains(x.tableName))
+                .ToList()
+                .ForEach(tblSpec =>
                 {
-                    ReadCapacityUnits = 4,
-                    WriteCapacityUnits = 2
-                },
-                KeySchema = new List<KeySchemaElement>
+                    createTable(tblSpec);
+                });
+            });
+
+            void createTable(DbTableWithSeedInfo tblToCreate)
+            {
+                var pk = tblToCreate.attributes.Where(attr => attr.isPrimary).FirstOrDefault();
+
+                _client.CreateTableAsync(new CreateTableRequest
+                {
+                    TableName = tblToCreate.tableName,
+                    ProvisionedThroughput = new ProvisionedThroughput
+                    {
+                        ReadCapacityUnits = 4,
+                        WriteCapacityUnits = 2
+                    },
+                    KeySchema = new List<KeySchemaElement>
                     {
                         new KeySchemaElement
                         {
@@ -79,33 +88,61 @@ namespace MD.Accountella.Core.DynamoDb
                             KeyType = KeyType.HASH,
                         }
                     },
-                AttributeDefinitions = new List<AttributeDefinition>
+                    AttributeDefinitions = new List<AttributeDefinition>
                     {
                         new AttributeDefinition {
                             AttributeName = pk.name,
                             AttributeType = pk.dataType == typeof(int) ? ScalarAttributeType.N : ScalarAttributeType.S
                         }
                     }
-            });
+                }).Wait();
 
-            bool isTableAvailable = false;
-            while (!isTableAvailable)
+                bool isTableAvailable = false;
+                while (!isTableAvailable)
+                {
+                    //"Waiting for table to be active...
+                    Thread.Sleep(5000);
+                    var tableStatus = _client.DescribeTableAsync(tblToCreate.tableName).Result;
+                    isTableAvailable = tableStatus.Table.TableStatus == "ACTIVE";
+                }
+
+                OnMessaging.Invoke(this,
+                    new DbContextActionMessage(
+                        isTableAvailable ? $"Created table: {tblToCreate.tableName}"
+                            : $"Unable to to create table: {tblToCreate.tableName}",
+                        isTableAvailable ? DbContextActionMessageType.Info : DbContextActionMessageType.Error)
+                    );
+            }
+        }
+
+        private void processSeedData(ICollection<IDataProcessor> seedDataProcessors)
+        {
+            OnMessaging.Invoke(this,
+                    new DbContextActionMessage("Processing seed data", DbContextActionMessageType.Info)
+                );
+
+            bool isSuccess = false;
+            string msg = string.Empty;
+            try
             {
-                //"Waiting for table to be active...
-                Thread.Sleep(5000);
-                var tableStatus = await _client.DescribeTableAsync(tblToCreate.tableName);
-                isTableAvailable = tableStatus.Table.TableStatus == "ACTIVE";
+                var allBatch = seedDataProcessors.Select(sp => sp.GetBatchWrite(this)).ToArray();
+                var superBatch = new MultiTableBatchWrite(allBatch);
+                superBatch.ExecuteAsync().Wait();
+                isSuccess = true;
+                msg = "Seed data processed sucessfully";
+            }
+            catch (Exception ex)
+            {
+                isSuccess = false;
+                msg = ex.Message;
             }
 
             OnMessaging.Invoke(this,
                 new DbContextActionMessage(
-                    isTableAvailable ? $"Created table: {tblToCreate.tableName}"
-                        : $"Unable to to create table: {tblToCreate.tableName}",
-                    isTableAvailable ? DbContextActionMessageType.Info : DbContextActionMessageType.Error)
+                    isSuccess ? msg
+                        : $"Seed data processing error: {msg}",
+                    isSuccess ? DbContextActionMessageType.Info : DbContextActionMessageType.Error)
                 );
-
-            if (isTableAvailable)
-                await Task.WhenAll(tblToCreate.SeedDataProviders.Select(sd => sd.Execute(this)));
         }
     }
 }

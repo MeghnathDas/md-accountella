@@ -18,8 +18,8 @@ namespace MD.Accountella.DL
         private static EntityCategory getRootAccountCategoryObject(string id, string name, string parentId = null) =>
             new EntityCategory
             {
-                Id = Utils.Helper.FormatSeedDataId(id),
-                Name = name + "_acc",
+                Id = Utils.Helper.FormatSeedDataId(id) + "_acc",
+                Name = name,
                 _parentId = parentId,
                 ForModule = ModuleCategory.Account,
                 IsReadOnly = true
@@ -41,8 +41,12 @@ namespace MD.Accountella.DL
             CreditCardCategory_SubLiability
         };
         #endregion
+        
+        public override void SetDataToDelete(List<EntityCategory> data)
+        {
+        }
 
-        public override void SetData(List<EntityCategory> data)
+        public override void SetDataToCreateOrUpdate(List<EntityCategory> data)
         {
             data.AddRange(GetAllAccountCategoryObjects());
         }

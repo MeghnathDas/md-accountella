@@ -12,33 +12,20 @@ namespace MD.Accountella.Core.DynamoDb
     using System.Reflection;
     public class EntityBuilder: IEntityBuilder
     {
-        private Dictionary<Type, List<IExecuter>> _dicTyps;
-        private TableInfo convertTableInfo(KeyValuePair<Type, List<IExecuter>> entTypeToConvert)
+        private Dictionary<Type, List<IDataProcessor>> _dicTyps;
+        private DbTableWithSeedInfo convertTableInfo(KeyValuePair<Type, List<IDataProcessor>> entTypeToConvert)
         {
-            var tbl = new TableInfo();
+            DbTableWithSeedInfo tbl = new DbTableWithSeedInfo(entTypeToConvert.Key.ToDbTableInfo());
             tbl.SeedDataProviders = entTypeToConvert.Value;
-            var tblAttr = entTypeToConvert.Key.GetCustomAttribute<DynamoDBTableAttribute>();
-            tbl.tableName = tblAttr != null ? tblAttr.TableName : entTypeToConvert.Key.Name;
-            tbl.attributes = entTypeToConvert.Key.GetProperties().Select(tf =>
-            {
-                var attr = new TableInfo.attrINfo
-                {
-                    name = tf.Name,
-                    dataType = tf.GetType(),
-                    isPrimary = tf.GetCustomAttributes(typeof(DynamoDBHashKeyAttribute), true).Length > 0
-                };
-                return attr;
-            }).ToList();
             return tbl;
         }
 
         internal EntityBuilder()
         {
-            _dicTyps = new Dictionary<Type, List<IExecuter>>();
-            addEntityTyp(typeof(DbMigration));
+            _dicTyps = new Dictionary<Type, List<IDataProcessor>>();
         }
 
-        internal TableInfo[] TableSpecs => this._dicTyps.Select(typ => convertTableInfo(typ)).ToArray();
+        internal DbTableWithSeedInfo[] TableSpecs => this._dicTyps.Select(typ => convertTableInfo(typ)).ToArray();
 
         public virtual void Entity<TEntity>() where TEntity : class
         {
@@ -57,9 +44,9 @@ namespace MD.Accountella.Core.DynamoDb
             callerAsmTyps.ToList().ForEach(x => addEntityTyp(x));
             callerRefAsmsTyps.ToList().ForEach(x => addEntityTyp(x));
         }
-        private void addEntityTyp(Type typToAdd, IExecuter seedDataProvider = null)
+        private void addEntityTyp(Type typToAdd, IDataProcessor seedDataProvider = null)
         {
-            List<IExecuter> existEntTyp = null;
+            List<IDataProcessor> existEntTyp = null;
             _dicTyps.TryGetValue(typToAdd, out existEntTyp);
             if (existEntTyp != null)
             {
@@ -69,7 +56,7 @@ namespace MD.Accountella.Core.DynamoDb
             else
             {
                 var sps = seedDataProvider == null ?
-                    new List<IExecuter>() : new List<IExecuter>() { seedDataProvider };
+                    new List<IDataProcessor>() : new List<IDataProcessor>() { seedDataProvider };
                 _dicTyps.Add(typToAdd, sps);
             }
         }
