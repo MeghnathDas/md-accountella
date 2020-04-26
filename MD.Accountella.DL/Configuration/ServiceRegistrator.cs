@@ -12,8 +12,8 @@ namespace MD.Accountella.DL.Configuration
         public static IServiceCollection AddDataAccessServices(this IServiceCollection services)
         {
             services.AddSingleton<AccountellaDbContext>();
-            services.AddTransient<IAccountManager, AccountManager>();
-            services.AddTransient<IAccountManager, AccountManager>();
+            services.AddTransient<IAccountsRepository, AccountsRepository>();
+            services.AddTransient<IAccountsRepository, AccountsRepository>();
 
             return services;
         }
