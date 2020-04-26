@@ -5,9 +5,10 @@
 /// </summary>
 namespace MD.Accountella.Core.DynamoDb
 {
-    public interface IModelBuilder
+    public interface IEntityBuilder
     {
         public void IncludeAllAvailableEntities();
-        internal TableInfo[] Tables { get; }
+        public void Entity<TEntity>() where TEntity : class;
+
     }
 }

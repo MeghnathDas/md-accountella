@@ -8,23 +8,36 @@ namespace MD.Accountella.DL
     using System;
     using System.Collections.Generic;
     using System.Text;
+    using System.Threading.Tasks;
+    using Amazon.DynamoDBv2.DataModel;
     using MD.Accountella.DomainObjects;
 
-    public class AccountManager : IAccountManager
+    public class AccountsRepository : IAccountsRepository
     {
         private readonly AccountellaDbContext _dbContext;
-        public AccountManager(AccountellaDbContext dbContext)
+        public AccountsRepository(AccountellaDbContext dbContext)
         {
             this._dbContext = dbContext;
         }
         public Account AddAccount(Account accToAdd)
         {
-            return new Account();
+            accToAdd.Id = Guid.NewGuid().ToString();
+            try
+            {
+                _dbContext.SaveAsync<Account>(accToAdd).Wait();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            return accToAdd;
         }
 
-        public Account GetAccounts(string id)
+        public Task<List<Account>> GetAccounts(string id)
         {
-            return new Account() { Id = id };
+            List<ScanCondition> conditions = new List<ScanCondition>();
+            // conditions.Add(new ScanCondition("IsDeleted", ScanOperator.Equal, 0));
+            return this._dbContext.ScanAsync<Account>(conditions).GetRemainingAsync();
         }
 
         public bool RemoveAccount(string id)
