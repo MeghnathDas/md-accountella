@@ -50,7 +50,7 @@ namespace MD.Accountella.WebApp.Controllers
 
         // DELETE: api/accounts/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void Delete(string id)
         {
             _accountService.RemoveAccount(id);
         }

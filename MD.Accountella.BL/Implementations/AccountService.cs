@@ -39,9 +39,9 @@ namespace MD.Accountella.BL
             throw new NotImplementedException();
         }
 
-        public bool RemoveAccount(int id)
+        public bool RemoveAccount(string id)
         {
-            throw new NotImplementedException();
+            return this._accountsRepo.RemoveAccount(id);
         }
     }
 }

@@ -14,11 +14,12 @@ namespace MD.Accountella.DL
     using System.Threading.Tasks;
     internal class EntityCategorySeedDataProvider : EntitySeedDataProvider<EntityCategory>
     {
+        private const string categoryIdPrefix = "catg_";
         #region "Accounts Releted Categories"
         private static EntityCategory getRootAccountCategoryObject(string id, string name, string parentId = null) =>
             new EntityCategory
             {
-                Id = Utils.Helper.FormatSeedDataId(id) + "_acc",
+                Id = $"{categoryIdPrefix}{Helper.DbUtility.FormatSeedDataId(id)}_acc",
                 Name = name,
                 _parentId = parentId,
                 ForModule = ModuleCategory.Account,

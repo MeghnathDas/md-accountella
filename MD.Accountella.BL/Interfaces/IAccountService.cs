@@ -14,6 +14,6 @@ namespace MD.Accountella.BL
         public IEnumerable<AccountDto> GetAccounts(string id);
         public AccountDto AddAccount(AccountDto accountToAdd);
         bool AlterAccount(int id, AccountDto value);
-        bool RemoveAccount(int id);
+        bool RemoveAccount(string id);
     }
 }

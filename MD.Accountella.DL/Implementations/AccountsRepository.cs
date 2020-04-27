@@ -10,7 +10,9 @@ namespace MD.Accountella.DL
     using System.Text;
     using System.Threading.Tasks;
     using Amazon.DynamoDBv2.DataModel;
+    using Amazon.DynamoDBv2.Model;
     using MD.Accountella.DomainObjects;
+    using MD.Accountella.DL.Helper;
 
     public class AccountsRepository : IAccountsRepository
     {
@@ -35,14 +37,27 @@ namespace MD.Accountella.DL
 
         public Task<List<Account>> GetAccounts(string id)
         {
+            //var obj = new Account();
+            //var tblNme = DbUtility.GetTableName<Account>();
+            //var tblNme2 = DbUtility.GetTableName(obj.GetType());
+            //var fieldNme = nameof(obj.Category);
             List<ScanCondition> conditions = new List<ScanCondition>();
-            // conditions.Add(new ScanCondition("IsDeleted", ScanOperator.Equal, 0));
+            //conditions.Add(new ScanCondition("IsDeleted", ScanOperator.Equal, 0));
             return this._dbContext.ScanAsync<Account>(conditions).GetRemainingAsync();
         }
 
         public bool RemoveAccount(string id)
         {
-            throw new NotImplementedException();
+            //_dbContext.Delete<Account>(acc => !acc.IsReadOnly && acc.Id == id);
+            //var request = new DeleteItemRequest
+            //{
+            //    TableName = tableName,
+            //    Key = new Dictionary<string, AttributeValue>()
+            //    { { "StudentId", new AttributeValue {S=studentId} } }
+            //};
+            //var res = this._dbContext.DeleteAsync<Account>(1);
+            ////var response = await this._dbContext.DeleteItemAsync(request);
+            return true;
         }
 
         public bool UpdateAccount(Account accToAdd)

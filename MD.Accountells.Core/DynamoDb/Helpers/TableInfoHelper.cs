@@ -3,7 +3,7 @@
 /// Description:
 /// URL: http://meghnathdas.github.io/
 /// </summary>
-namespace MD.Accountella.Core.DynamoDb
+namespace MD.Accountella.Core.DynamoDb.Helpers
 {
     using Amazon.DynamoDBv2.DataModel;
     using System;
@@ -11,7 +11,7 @@ namespace MD.Accountella.Core.DynamoDb
     using System.Linq;
     using System.Reflection;
     using System.Text;
-    internal static class Helper
+    internal static class TableInfoHelper
     {
         public static DbTableInfo ToDbTableInfo(this Type type)
         {
@@ -29,6 +29,12 @@ namespace MD.Accountella.Core.DynamoDb
                 return attr;
             }).ToList();
             return tbl;
+        }
+
+        public static string GetTableName(this Type type)
+        {
+            var tblAttr = type.GetCustomAttribute<DynamoDBTableAttribute>();
+            return tblAttr != null ? tblAttr.TableName : type.Name;
         }
     }
 }

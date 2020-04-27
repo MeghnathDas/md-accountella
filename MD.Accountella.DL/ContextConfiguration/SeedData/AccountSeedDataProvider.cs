@@ -21,7 +21,7 @@ namespace MD.Accountella.DL
             data.AddRange(new Account[] {
                     new Account
                     {
-                        Id = Utils.Helper.FormatSeedDataId("cash_on_hand"),
+                        Id = Helper.DbUtility.FormatSeedDataId("cash_on_hand"),
                         _CategoryId = EntityCategorySeedDataProvider.CashAndBankCategory_SubAsset.Id,
                         CreatedOn = System.DateTimeOffset.Now,
                         Name = "Cash on hand",
@@ -30,7 +30,7 @@ namespace MD.Accountella.DL
                     },
                     new Account
                     {
-                        Id = Utils.Helper.FormatSeedDataId("sales"),
+                        Id = Helper.DbUtility.FormatSeedDataId("sales"),
                         _CategoryId = EntityCategorySeedDataProvider.IncomeAccountCategory.Id,
                         CreatedOn = System.DateTimeOffset.Now,
                         Name = "Sales",
