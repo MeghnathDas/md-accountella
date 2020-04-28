@@ -12,7 +12,7 @@ namespace MD.Accountella.Core.DynamoDb
 
     public interface IDataProcessor
     {
-        public BatchWrite GetBatchWrite(DynamoDBContext dbContext);
+        BatchWrite GetBatchWrite(DynamoDBContext dbContext);
 
     }
 }

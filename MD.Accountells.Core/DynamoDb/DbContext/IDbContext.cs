@@ -10,8 +10,8 @@ namespace MD.Accountella.Core.DynamoDb
 
     public interface IDbContext
     {
-        public event EventHandler<DbContextActionMessage> OnMessaging;
-        public IAmazonDynamoDB Client { get; }
-        public bool EnsureCreated();
+        event EventHandler<DbContextActionMessage> OnMessaging;
+        IAmazonDynamoDB Client { get; }
+        bool EnsureCreated();
     }
 }

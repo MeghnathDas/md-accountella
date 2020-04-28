@@ -11,9 +11,9 @@ namespace MD.Accountella.BL
     using System.Text;
     public interface IAccountService
     {
-        public IEnumerable<AccountDto> GetAccounts(string id);
-        public AccountDto AddAccount(AccountDto accountToAdd);
-        bool AlterAccount(int id, AccountDto value);
-        bool RemoveAccount(string id);
+        IEnumerable<AccountDto> GetAccounts(string id);
+        AccountDto AddAccount(AccountDto accountToAdd);
+        void AlterAccount(string id, AccountDto accountToAlter);
+        void RemoveAccount(string id);
     }
 }

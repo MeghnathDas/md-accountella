@@ -1,21 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MD.Accountella.BL;
-using MD.Accountella.Core.RestConcerns;
-using MD.Accountella.DataTransferObjects;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-
+﻿/// <summary>
+/// Author: Meghnath Das
+/// Description:
+/// URL: http://meghnathdas.github.io/
+/// </summary>
 namespace MD.Accountella.WebApp.Controllers
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using MD.Accountella.BL;
+    using MD.Accountella.Core.RestConcerns;
+    using MD.Accountella.DataTransferObjects;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
+
     [Route("api/accounts")]
-    public class AccountManagerController: AccountellaControllerBase
+    public class AccountController: AccountellaControllerBase
     {
         IAccountService _accountService;
-        public AccountManagerController(ILogger<AccountManagerController> logger, IAccountService accountService)
+        public AccountController(ILogger<AccountController> logger, IAccountService accountService)
         {
             this._accountService = accountService;
         }
@@ -28,7 +32,7 @@ namespace MD.Accountella.WebApp.Controllers
         }
 
         // GET: api/accounts/5
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id}", Name = "GetAccount")]
         public AccountDto Get(string id)
         {
             return _accountService.GetAccounts(id).FirstOrDefault();
@@ -43,7 +47,7 @@ namespace MD.Accountella.WebApp.Controllers
 
         // PUT: api/accounts/5
         [HttpPut("{id}")]
-        public void Put(int id, AccountDto value)
+        public void Put(string id, AccountDto value)
         {
             _accountService.AlterAccount(id, value);
         }

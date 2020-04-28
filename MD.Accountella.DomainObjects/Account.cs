@@ -13,15 +13,13 @@ namespace MD.Accountella.DomainObjects
     {
         [DynamoDBHashKey]
         public string Id { get; set; }
-
-        [DynamoDBProperty(typeof(DateTimeOffsetTypeConverter))]
-        public DateTimeOffset? CreatedOn { get; set; }
-
-        [DynamoDBProperty(typeof(DateTimeOffsetTypeConverter))]
-        public DateTimeOffset? LastModifiedOn { get; set; }
+        public DateTime? CreatedOn { get; set; }
+        public DateTime? LastModifiedOn { get; set; }
         public string Name { get; set; }
         public string Details { get; set; }
         public string _CategoryId { get; set; }
+
+        [DynamoDBIgnore]
         public virtual EntityCategory Category { get; set; }
         public bool IsActive { get; set; }
         public bool IsReadOnly { get; set; }

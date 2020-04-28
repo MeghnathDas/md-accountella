@@ -7,8 +7,8 @@ namespace MD.Accountella.Core.DynamoDb
 {
     public interface IEntityBuilder
     {
-        public void IncludeAllAvailableEntities();
-        public void Entity<TEntity>() where TEntity : class;
+        void IncludeAllAvailableEntities();
+        void Entity<TEntity>() where TEntity : class;
 
     }
 }

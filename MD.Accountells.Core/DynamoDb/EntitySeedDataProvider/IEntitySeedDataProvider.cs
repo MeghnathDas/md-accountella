@@ -10,7 +10,7 @@ namespace MD.Accountella.Core.DynamoDb
 
     public interface IEntitySeedDataProvider<TEntity> : IDataProcessor
     {
-        public void SetDataToDelete(List<TEntity> data);
-        public void SetDataToCreateOrUpdate(List<TEntity> data);
+        void SetDataToDelete(List<TEntity> data);
+        void SetDataToCreateOrUpdate(List<TEntity> data);
     }
 }

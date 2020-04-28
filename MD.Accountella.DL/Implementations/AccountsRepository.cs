@@ -13,6 +13,10 @@ namespace MD.Accountella.DL
     using Amazon.DynamoDBv2.Model;
     using MD.Accountella.DomainObjects;
     using MD.Accountella.DL.Helper;
+    using Amazon.DynamoDBv2;
+    using Amazon.DynamoDBv2.DocumentModel;
+    using System.Linq;
+    using Amazon.Runtime;
 
     public class AccountsRepository : IAccountsRepository
     {
@@ -23,7 +27,32 @@ namespace MD.Accountella.DL
         }
         public Account AddAccount(Account accToAdd)
         {
+            if (string.IsNullOrWhiteSpace(accToAdd.Name))
+                throw new Exception("Account name must be provided");
+
+            var accountMatches = _dbContext
+                .ScanAsync<Account>(new ScanCondition[] {
+                    new ScanCondition(nameof(accToAdd.Name),
+                        ScanOperator.Equal,
+                        new object [] { accToAdd.Name }
+                    )
+                }).GetRemainingAsync().Result;
+            if (accountMatches.Any())
+                throw new Exception("Account name already exists");
+
+            if (string.IsNullOrWhiteSpace(accToAdd._CategoryId))
+                throw new Exception("Account category must be assigned");
+
+            EntityCategory catg = _dbContext.LoadAsync<EntityCategory>(accToAdd._CategoryId).Result;
+            if (catg == null)
+                throw new Exception("Invalid category assigned");
+
+
             accToAdd.Id = Guid.NewGuid().ToString();
+            accToAdd.CreatedOn = DateTime.Now;
+            accToAdd.IsActive = true;
+            accToAdd.IsReadOnly = false;
+
             try
             {
                 _dbContext.SaveAsync<Account>(accToAdd).Wait();
@@ -32,37 +61,49 @@ namespace MD.Accountella.DL
             {
                 return null;
             }
-            return accToAdd;
+            return _dbContext.LoadAsync<Account>(accToAdd.Id).Result;
         }
 
-        public Task<List<Account>> GetAccounts(string id)
+        public List<Account> GetAccounts(string id)
         {
-            //var obj = new Account();
-            //var tblNme = DbUtility.GetTableName<Account>();
-            //var tblNme2 = DbUtility.GetTableName(obj.GetType());
-            //var fieldNme = nameof(obj.Category);
             List<ScanCondition> conditions = new List<ScanCondition>();
-            //conditions.Add(new ScanCondition("IsDeleted", ScanOperator.Equal, 0));
-            return this._dbContext.ScanAsync<Account>(conditions).GetRemainingAsync();
+            if (!string.IsNullOrWhiteSpace(id))
+                conditions.Add(new ScanCondition(nameof(Account.Id), ScanOperator.Equal, id));
+            return _dbContext.ScanAsync<Account>(conditions).GetRemainingAsync().Result;
         }
 
-        public bool RemoveAccount(string id)
+        public void UpdateAccount(string id, Account accountToUpdate)
         {
-            //_dbContext.Delete<Account>(acc => !acc.IsReadOnly && acc.Id == id);
-            //var request = new DeleteItemRequest
-            //{
-            //    TableName = tableName,
-            //    Key = new Dictionary<string, AttributeValue>()
-            //    { { "StudentId", new AttributeValue {S=studentId} } }
-            //};
-            //var res = this._dbContext.DeleteAsync<Account>(1);
-            ////var response = await this._dbContext.DeleteItemAsync(request);
-            return true;
+            try
+            {
+                var accFound = GetAccounts(id);
+                if (!accFound.Any())
+                    throw new KeyNotFoundException("Item requested for update not found");
+
+                accountToUpdate.Id = id;
+                accountToUpdate.IsReadOnly = accFound.First().IsReadOnly;
+                accountToUpdate.LastModifiedOn = DateTime.Now;
+                _dbContext.SaveAsync<Account>(accountToUpdate);
+            }
+            catch (AmazonDynamoDBException aDbEx)
+            {
+                throw new Exception("Data Error: " + aDbEx.Message);
+            }
+            catch (AmazonServiceException e) { throw new Exception("DB Service Error: " + e.Message); }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
-        public bool UpdateAccount(Account accToAdd)
+        public void RemoveAccount(string id)
         {
-            throw new NotImplementedException();
+            Account accToDel = _dbContext.LoadAsync<Account>(id).Result;
+            if (accToDel == null)
+                throw new KeyNotFoundException("No item found");
+            if (accToDel.IsReadOnly)
+                throw new Exception("Requested item is read only, hence cannot be deleted");
+            this._dbContext.DeleteAsync<Account>(accToDel).Wait();
         }
     }
 }

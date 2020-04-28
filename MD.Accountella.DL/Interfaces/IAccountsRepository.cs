@@ -11,9 +11,9 @@ namespace MD.Accountella.DL
 
     public interface IAccountsRepository
     {
-        public Task<List<Account>> GetAccounts(string id);
-        public Account AddAccount(Account accToAdd);
-        public bool UpdateAccount(Account accToAdd);
-        public bool RemoveAccount(string id);
+        List<Account> GetAccounts(string id);
+        Account AddAccount(Account accToAdd);
+        void UpdateAccount(string id, Account accountToUpdate);
+        void RemoveAccount(string id);
     }
 }

@@ -6,6 +6,7 @@
 namespace MD.Accountella.Core.DynamoDb
 {
     using Amazon.DynamoDBv2.DataModel;
+    using MD.Accountella.Core.DynamoDb.Helpers;
     using System;
     using System.Collections.Generic;
     using System.Linq;

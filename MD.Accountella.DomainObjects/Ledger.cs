@@ -13,12 +13,10 @@ namespace MD.Accountella.DomainObjects
     {
         [DynamoDBHashKey]
         public string Id { get; set; }
-
-        [DynamoDBProperty(typeof(DateTimeOffsetTypeConverter))]
-        public DateTimeOffset CreatedOn { get; set; }
-
-        [DynamoDBProperty(typeof(DateTimeOffsetTypeConverter))]
-        public DateTimeOffset LastModifiedOn { get; set; }
+        public DateTime CreatedOn { get; set; }
+        public long CreatedOn_Timestamp { get; set; }
+        public DateTime LastModifiedOn { get; set; }
+        public long LastModifiedOn_TimeStamp { get; set; }
         public string _AccountId { get; set; }
         public string SourceCurrencyName { get; set; }
         public string SourceCurrencyRate { get; set; }
@@ -28,6 +26,8 @@ namespace MD.Accountella.DomainObjects
         public string _refId { get; set; }
         public string RefType { get; set; }
         public int _CreatedByUserId { get; set; }
-        public virtual AppUser CreatedByUser { get; set; }
+
+        [DynamoDBVersion]
+        public int? VersionNumber { get; set; }
     }
 }

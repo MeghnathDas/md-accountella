@@ -24,7 +24,7 @@ namespace MD.Accountella.BL
 
         public IEnumerable<AccountDto> GetAccounts(string id)
         {
-            var accounts = this._accountsRepo.GetAccounts(id).Result;
+            var accounts = this._accountsRepo.GetAccounts(id);
             return _mapper.Map<IEnumerable<AccountDto>>(accounts);
         }
         public AccountDto AddAccount(AccountDto accountToAdd)
@@ -34,14 +34,14 @@ namespace MD.Accountella.BL
                 );
         }
 
-        public bool AlterAccount(int id, AccountDto value)
+        public void AlterAccount(string id, AccountDto accountToAlter)
         {
-            throw new NotImplementedException();
+            this._accountsRepo.UpdateAccount(id, _mapper.Map<Account>(accountToAlter));
         }
 
-        public bool RemoveAccount(string id)
+        public void RemoveAccount(string id)
         {
-            return this._accountsRepo.RemoveAccount(id);
+            this._accountsRepo.RemoveAccount(id);
         }
     }
 }
