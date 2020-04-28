@@ -14,6 +14,9 @@ namespace MD.Accountella.DomainObjects
         public string Id { get; set; }
         public string Name { get; set; }
         public string _parentId { get; set; }
+        public int SequenceNo { get; set; }
+
+        [DynamoDBIgnore]
         public virtual EntityCategory[] SubCategories { get; set; }
 
         [DynamoDBProperty(typeof(EnumTypeConverter<ModuleCategory>))]

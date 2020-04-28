@@ -31,7 +31,7 @@ namespace MD.Accountella.DL
                     new Account
                     {
                         Id = Helper.DbUtility.FormatSeedDataId("sales"),
-                        _CategoryId = EntityCategorySeedDataProvider.IncomeAccountCategory.Id,
+                        _CategoryId = EntityCategorySeedDataProvider.IncomeAccountCategory_SubIncome.Id,
                         CreatedOn = DateTime.Now,
                         Name = "Sales",
                         IsActive = true,
