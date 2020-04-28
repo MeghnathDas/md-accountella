@@ -13,10 +13,10 @@ namespace MD.Accountella.DomainObjects
     {
         [DynamoDBHashKey]
         public string Id { get; set; }
+
+        [DynamoDBRangeKey]
         public DateTime CreatedOn { get; set; }
-        public long CreatedOn_Timestamp { get; set; }
         public DateTime LastModifiedOn { get; set; }
-        public long LastModifiedOn_TimeStamp { get; set; }
         public string _AccountId { get; set; }
         public string SourceCurrencyName { get; set; }
         public string SourceCurrencyRate { get; set; }

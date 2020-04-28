@@ -11,5 +11,6 @@ namespace MD.Accountella.Core.DynamoDb
         public string name { get; set; }
         public Type dataType { get; set; }
         public bool isPrimary { get; set; }
+        public bool isRange { get; set; }
     }
 }

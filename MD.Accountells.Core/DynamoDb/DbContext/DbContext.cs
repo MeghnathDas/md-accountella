@@ -70,7 +70,22 @@ namespace MD.Accountella.Core.DynamoDb
 
             void createTable(DbTableWithSeedInfo tblToCreate)
             {
-                var pk = tblToCreate.attributes.Where(attr => attr.isPrimary).FirstOrDefault();
+                var attrDefinations = new List<AttributeDefinition>();
+                var keySchema = new List<KeySchemaElement>();
+
+                foreach (var attr in tblToCreate.attributes.Where(x => x.isPrimary || x.isRange))
+                {
+                    keySchema.Add(new KeySchemaElement
+                    {
+                        AttributeName = attr.name,
+                        KeyType = attr.isPrimary ? KeyType.HASH : KeyType.RANGE
+                    });
+                    attrDefinations.Add(new AttributeDefinition
+                    {
+                        AttributeName = attr.name,
+                        AttributeType = attr.dataType == typeof(int) ? ScalarAttributeType.N : ScalarAttributeType.S
+                    });
+                }
 
                 _client.CreateTableAsync(new CreateTableRequest
                 {
@@ -80,21 +95,8 @@ namespace MD.Accountella.Core.DynamoDb
                         ReadCapacityUnits = 4,
                         WriteCapacityUnits = 2
                     },
-                    KeySchema = new List<KeySchemaElement>
-                    {
-                        new KeySchemaElement
-                        {
-                            AttributeName = pk.name,
-                            KeyType = KeyType.HASH,
-                        }
-                    },
-                    AttributeDefinitions = new List<AttributeDefinition>
-                    {
-                        new AttributeDefinition {
-                            AttributeName = pk.name,
-                            AttributeType = pk.dataType == typeof(int) ? ScalarAttributeType.N : ScalarAttributeType.S
-                        }
-                    }
+                    KeySchema = keySchema,
+                    AttributeDefinitions = attrDefinations
                 }).Wait();
 
                 bool isTableAvailable = false;

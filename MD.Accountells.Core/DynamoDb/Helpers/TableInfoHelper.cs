@@ -24,7 +24,8 @@ namespace MD.Accountella.Core.DynamoDb.Helpers
                 {
                     name = tf.Name,
                     dataType = tf.PropertyType,
-                    isPrimary = tf.GetCustomAttributes(typeof(DynamoDBHashKeyAttribute), true).Length > 0
+                    isPrimary = tf.GetCustomAttributes(typeof(DynamoDBHashKeyAttribute), true).Length > 0,
+                    isRange = tf.GetCustomAttributes(typeof(DynamoDBRangeKeyAttribute), true).Length > 0
                 };
                 return attr;
             }).ToList();

@@ -49,6 +49,7 @@ namespace MD.Accountella.DL
             entityBuilder.IncludeAllAvailableEntities();
             entityBuilder.Entity<EntityCategory>(new EntityCategorySeedDataProvider());
             entityBuilder.Entity<Account>(new AccountSeedDataProvider());
+            entityBuilder.Entity<CurrencyType>(new CurrencyTypeSeedDataProvider());            
         }
     }
 }
