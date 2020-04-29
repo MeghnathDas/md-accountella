@@ -1,6 +1,6 @@
 ﻿/// <summary>
 /// Author: Meghnath Das
-/// Description: Account Manager class, implementation of IAccountManager
+/// Description: Account repository, implementation of IAccountsRepository
 /// URL: http://meghnathdas.github.io/
 /// </summary>
 namespace MD.Accountella.DL
@@ -63,7 +63,6 @@ namespace MD.Accountella.DL
             }
             return _dbContext.LoadAsync<Account>(accToAdd.Id).Result;
         }
-
         public List<Account> GetAccounts(string id)
         {
             List<ScanCondition> conditions = new List<ScanCondition>();
@@ -71,7 +70,6 @@ namespace MD.Accountella.DL
                 conditions.Add(new ScanCondition(nameof(Account.Id), ScanOperator.Equal, id));
             return _dbContext.ScanAsync<Account>(conditions).GetRemainingAsync().Result;
         }
-
         public void UpdateAccount(string id, Account accountToUpdate)
         {
             try
@@ -82,8 +80,10 @@ namespace MD.Accountella.DL
 
                 accountToUpdate.Id = id;
                 accountToUpdate.IsReadOnly = accFound.First().IsReadOnly;
+                if (accFound.First().IsReadOnly)
+                    accountToUpdate._CategoryId = accFound.First()._CategoryId;
                 accountToUpdate.LastModifiedOn = DateTime.Now;
-                _dbContext.SaveAsync<Account>(accountToUpdate);
+                _dbContext.SaveAsync<Account>(accountToUpdate).Wait();
             }
             catch (AmazonDynamoDBException aDbEx)
             {
@@ -95,7 +95,6 @@ namespace MD.Accountella.DL
                 throw ex;
             }
         }
-
         public void RemoveAccount(string id)
         {
             Account accToDel = _dbContext.LoadAsync<Account>(id).Result;

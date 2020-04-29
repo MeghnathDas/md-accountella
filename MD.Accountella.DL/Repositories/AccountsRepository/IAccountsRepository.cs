@@ -1,6 +1,6 @@
 ﻿/// <summary>
 /// Author: Meghnath Das
-/// Description: Account Manager Interface
+/// Description: Account repository interface
 /// URL: http://meghnathdas.github.io/
 /// </summary>
 namespace MD.Accountella.DL

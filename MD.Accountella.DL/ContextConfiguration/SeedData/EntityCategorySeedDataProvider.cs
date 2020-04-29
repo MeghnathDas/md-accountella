@@ -23,7 +23,7 @@ namespace MD.Accountella.DL
                 Name = name,
                 SequenceNo = seqNo,
                 _parentId = parentId,
-                ForModule = ModuleCategory.Account,
+                ForModule = AppModules.Account,
                 IsReadOnly = true
             };
         public static EntityCategory IncomeAndRevenueAccountCategory => getRootAccountCategoryObject("income_root", "Income and Revenue", 1);

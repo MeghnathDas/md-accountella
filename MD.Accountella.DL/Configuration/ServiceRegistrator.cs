@@ -13,7 +13,7 @@ namespace MD.Accountella.DL.Configuration
         {
             services.AddSingleton<AccountellaDbContext>();
             services.AddTransient<IAccountsRepository, AccountsRepository>();
-            services.AddTransient<IAccountsRepository, AccountsRepository>();
+            services.AddTransient<IEntityCategoryRepository, EntityCategoryRepository>();
 
             return services;
         }

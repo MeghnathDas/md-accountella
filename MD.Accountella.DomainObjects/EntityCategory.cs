@@ -19,8 +19,8 @@ namespace MD.Accountella.DomainObjects
         [DynamoDBIgnore]
         public virtual EntityCategory[] SubCategories { get; set; }
 
-        [DynamoDBProperty(typeof(EnumTypeConverter<ModuleCategory>))]
-        public ModuleCategory ForModule { get; set; }
+        [DynamoDBProperty(typeof(EnumTypeConverter<AppModules>))]
+        public AppModules ForModule { get; set; }
         public bool IsReadOnly { get; set; }
     }
 }

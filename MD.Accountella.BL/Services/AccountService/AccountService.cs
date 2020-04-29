@@ -15,33 +15,33 @@ namespace MD.Accountella.BL
     public class AccountService : IAccountService
     {
         private readonly IMapper _mapper;
-        private readonly IAccountsRepository _accountsRepo;
-        public AccountService(IAccountsRepository accountManager, IMapper mapper)
+        private readonly IAccountsRepository _repository;
+        public AccountService(IAccountsRepository accountsRepository, IMapper mapper)
         {
             this._mapper = mapper;
-            this._accountsRepo = accountManager;
+            this._repository = accountsRepository;
         }
 
-        public IEnumerable<AccountDto> GetAccounts(string id)
+        public ICollection<AccountDto> GetAccounts(string id)
         {
-            var accounts = this._accountsRepo.GetAccounts(id);
-            return _mapper.Map<IEnumerable<AccountDto>>(accounts);
+            var accounts = this._repository.GetAccounts(id);
+            return _mapper.Map<ICollection<AccountDto>>(accounts);
         }
         public AccountDto AddAccount(AccountDto accountToAdd)
         {
             return _mapper.Map<AccountDto>(
-                    this._accountsRepo.AddAccount(_mapper.Map<Account>(accountToAdd))
+                    this._repository.AddAccount(_mapper.Map<Account>(accountToAdd))
                 );
         }
 
-        public void AlterAccount(string id, AccountDto accountToAlter)
+        public void UpdateAccount(string id, AccountDto accountToAlter)
         {
-            this._accountsRepo.UpdateAccount(id, _mapper.Map<Account>(accountToAlter));
+            this._repository.UpdateAccount(id, _mapper.Map<Account>(accountToAlter));
         }
 
         public void RemoveAccount(string id)
         {
-            this._accountsRepo.RemoveAccount(id);
+            this._repository.RemoveAccount(id);
         }
     }
 }

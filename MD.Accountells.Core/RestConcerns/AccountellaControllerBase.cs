@@ -14,5 +14,6 @@ namespace MD.Accountella.Core.RestConcerns
     [ApiController]
     public class AccountellaControllerBase : ControllerBase
     {
+        public const string RoutePrefix = "api/";
     }
 }

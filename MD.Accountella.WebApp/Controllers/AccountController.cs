@@ -15,18 +15,18 @@ namespace MD.Accountella.WebApp.Controllers
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
 
-    [Route("api/accounts")]
+    [Route(RoutePrefix + "accounts")]
     public class AccountController: AccountellaControllerBase
     {
         IAccountService _accountService;
-        public AccountController(ILogger<AccountController> logger, IAccountService accountService)
+        public AccountController(IAccountService accountService)
         {
             this._accountService = accountService;
         }
 
         // GET: api/accounts
         [HttpGet]
-        public IEnumerable<AccountDto> Get()
+        public ICollection<AccountDto> Get()
         {
             return _accountService.GetAccounts(null);
         }
@@ -49,7 +49,7 @@ namespace MD.Accountella.WebApp.Controllers
         [HttpPut("{id}")]
         public void Put(string id, AccountDto value)
         {
-            _accountService.AlterAccount(id, value);
+            _accountService.UpdateAccount(id, value);
         }
 
         // DELETE: api/accounts/5
