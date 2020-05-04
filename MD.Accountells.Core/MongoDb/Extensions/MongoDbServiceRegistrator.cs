@@ -17,7 +17,7 @@ namespace MD.Accountella.Core.MongoDb.Extensions.DependencyInjection
         {
             var mongoConfig = configuration.GetSection("MongoDbConfig").Get<MongoDbConfig>();
 
-            if (mongoConfig == null)
+            if (mongoConfig == null || string.IsNullOrWhiteSpace(mongoConfig.ConnectionString))
                 mongoConfig = new MongoDbConfig
                 {
                     ConnectionString = configuration.GetValue<string>("MONGO_CONNECTIONSTRING"),
