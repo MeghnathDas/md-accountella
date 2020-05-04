@@ -5,7 +5,7 @@
 /// </summary>
 namespace MD.Accountella.DL
 {
-    using MD.Accountella.Core.DynamoDb;
+    using MD.Accountella.Core.MongoDb;
     using MD.Accountella.DomainObjects;
     using System;
     using System.Collections.Generic;
@@ -21,18 +21,18 @@ namespace MD.Accountella.DL
             data.AddRange(new Account[] {
                     new Account
                     {
-                        Id = Helper.DbUtility.FormatSeedDataId("cash_on_hand"),
+                        Id = Guid.NewGuid().ToString(),
+                        SysId = Helper.DbUtility.FormatSeedDataId("cash_on_hand"),
                         _CategoryId = EntityCategorySeedDataProvider.CashAndBankCategory_SubAsset.Id,
-                        CreatedOn = DateTime.Now,
                         Name = "Cash on hand",
                         IsActive = true,
                         IsReadOnly = true
                     },
                     new Account
                     {
-                        Id = Helper.DbUtility.FormatSeedDataId("sales"),
+                        Id = Guid.NewGuid().ToString(),
+                        SysId = Helper.DbUtility.FormatSeedDataId("sales"),
                         _CategoryId = EntityCategorySeedDataProvider.IncomeAccountCategory_SubIncome.Id,
-                        CreatedOn = DateTime.Now,
                         Name = "Sales",
                         IsActive = true,
                         IsReadOnly = true

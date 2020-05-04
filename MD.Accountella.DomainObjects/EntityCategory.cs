@@ -5,22 +5,21 @@
 /// </summary>
 namespace MD.Accountella.DomainObjects
 {
-    using Amazon.DynamoDBv2.DataModel;
-
-    [DynamoDBTable(Helpers.Utils.tableNamePrefix + "EntityCategory")]
+    using MongoDB.Bson;
+    using MongoDB.Bson.Serialization.Attributes;
     public class EntityCategory
     {
-        [DynamoDBHashKey]
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
+        public string SysId { get; set; }
         public string Name { get; set; }
         public string _parentId { get; set; }
         public int SequenceNo { get; set; }
 
-        [DynamoDBIgnore]
+        [BsonIgnore]
         public virtual EntityCategory[] SubCategories { get; set; }
-
-        [DynamoDBProperty(typeof(EnumTypeConverter<AppModules>))]
-        public AppModules ForModule { get; set; }
+        public AppModuleEnum ForModule { get; set; }
         public bool IsReadOnly { get; set; }
     }
 }

@@ -5,14 +5,15 @@
 /// </summary>
 namespace MD.Accountella.DomainObjects
 {
-    using Amazon.DynamoDBv2.DataModel;
-
-    [DynamoDBTable(Helpers.Utils.tableNamePrefix + "CurrencyType")]
+    using MongoDB.Bson;
+    using MongoDB.Bson.Serialization.Attributes;
     public class CurrencyType
     {
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
+        public string SysId { get; set; }
 
-        [DynamoDBHashKey]
         public string Name { get; set; }
         public string SymbolName { get; set; }
         public double Rate { get; set; }

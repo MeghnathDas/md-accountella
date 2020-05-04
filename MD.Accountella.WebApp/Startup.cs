@@ -5,10 +5,9 @@
 /// </summary>
 namespace MD.Accountella.WebApp
 {
-    using Amazon.DynamoDBv2;
     using MD.Accountella.BL.Configuration;
-    using MD.Accountella.Core.DynamoDb;
     using MD.Accountella.Core.RestConcerns;
+    using MD.Accountella.DL;
     using MD.Accountella.DL.Configuration;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -32,11 +31,7 @@ namespace MD.Accountella.WebApp
         {
             services.AddControllersWithViews();
             services.AddScoped<LoggingActionFilter>();
-            services.AddDefaultAWSOptions(
-                Configuration.GetSection("AWS").Get<BasicAwsConfig>().GetAWSOptions()
-                );
-            services.AddAWSService<IAmazonDynamoDB>();
-            services.AddDataAccessServices();
+            services.AddDataAccessServices(Configuration);
             services.AddBusinessServices();
 
             // In production, the Angular files will be served from this directory
@@ -49,6 +44,8 @@ namespace MD.Accountella.WebApp
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            //app.ApplicationServices.GetService<AccountellaDbContext>().EnsureTablesCreatedWithSeedData();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

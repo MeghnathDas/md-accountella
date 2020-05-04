@@ -5,8 +5,9 @@
 /// </summary>
 namespace MD.Accountella.DL
 {
+    using System;
     using System.Collections.Generic;
-    using MD.Accountella.Core.DynamoDb;
+    using MD.Accountella.Core.MongoDb;
     using MD.Accountella.DomainObjects;
     internal class CurrencyTypeSeedDataProvider : EntitySeedDataProvider<CurrencyType>
     {
@@ -14,7 +15,8 @@ namespace MD.Accountella.DL
         {
             data.Add(new CurrencyType
             {
-                Id = "curr_inr_system",
+                Id = Guid.NewGuid().ToString(),
+                SysId = "curr_inr_system",
                 IsMain = true,
                 Name = "INR",
                 Symbol = "₹",

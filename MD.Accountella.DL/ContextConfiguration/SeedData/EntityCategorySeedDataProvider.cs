@@ -5,8 +5,7 @@
 /// </summary>
 namespace MD.Accountella.DL
 {
-    using Amazon.DynamoDBv2.DataModel;
-    using MD.Accountella.Core.DynamoDb;
+    using MD.Accountella.Core.MongoDb;
     using MD.Accountella.DomainObjects;
     using System;
     using System.Collections.Generic;
@@ -19,11 +18,12 @@ namespace MD.Accountella.DL
         private static EntityCategory getRootAccountCategoryObject(string id, string name, int seqNo, string parentId = null) =>
             new EntityCategory
             {
-                Id = $"{categoryIdPrefix}{Helper.DbUtility.FormatSeedDataId(id)}_acc",
+                Id = Guid.NewGuid().ToString(),
+                SysId = $"{categoryIdPrefix}{Helper.DbUtility.FormatSeedDataId(id)}_acc",
                 Name = name,
                 SequenceNo = seqNo,
                 _parentId = parentId,
-                ForModule = AppModules.Account,
+                ForModule = AppModuleEnum.Account,
                 IsReadOnly = true
             };
         public static EntityCategory IncomeAndRevenueAccountCategory => getRootAccountCategoryObject("income_root", "Income and Revenue", 1);
