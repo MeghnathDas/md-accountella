@@ -30,7 +30,6 @@
     "aspnet-prerendering": "^3.0.1",
     "bootstrap": "^4.4.1",
     "core-js": "^3.6.4",
-    "fibers": "^4.0.2",
     "html-webpack-plugin": "^4.2.0",
     "i": "^0.3.6",
     "jquery": "^3.4.1",
