@@ -14,7 +14,7 @@ A basic accounting application
 - Git Branching & Merging
 - Azure Pipeline
 
-Hosted URL -> [https://md-erp.azurewebsites.net/](https://md-erp.azurewebsites.net/)
+Hosted URL -> [https://md-accountella.herokuapp.com/](https://md-accountella.herokuapp.com/)
 
 # Editor
 
