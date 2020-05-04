@@ -5,15 +5,18 @@
 /// </summary>
 namespace MD.Accountella.DL.Configuration
 {
+    using MD.Accountella.Core.MongoDb.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
 
     public static class ServiceRegistrator
     {
-        public static IServiceCollection AddDataAccessServices(this IServiceCollection services)
+        public static IServiceCollection AddDataAccessServices(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddMongoDbConfigServices(configuration);
             services.AddSingleton<AccountellaDbContext>();
             services.AddTransient<IAccountsRepository, AccountsRepository>();
-            services.AddTransient<IAccountsRepository, AccountsRepository>();
+            services.AddTransient<IEntityCategoryRepository, EntityCategoryRepository>();
 
             return services;
         }

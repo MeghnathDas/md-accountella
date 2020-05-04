@@ -6,18 +6,14 @@
 namespace MD.Accountella.DomainObjects
 {
     using System;
-    using Amazon.DynamoDBv2.DataModel;
-
-    [DynamoDBTable(Helpers.Utils.tableNamePrefix + "Ledger")]
+    using MongoDB.Bson;
+    using MongoDB.Bson.Serialization.Attributes;
     public class Ledger
     {
-        [DynamoDBHashKey]
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
-
-        [DynamoDBProperty(typeof(DateTimeOffsetTypeConverter))]
         public DateTimeOffset CreatedOn { get; set; }
-
-        [DynamoDBProperty(typeof(DateTimeOffsetTypeConverter))]
         public DateTimeOffset LastModifiedOn { get; set; }
         public string _AccountId { get; set; }
         public string SourceCurrencyName { get; set; }
@@ -28,6 +24,6 @@ namespace MD.Accountella.DomainObjects
         public string _refId { get; set; }
         public string RefType { get; set; }
         public int _CreatedByUserId { get; set; }
-        public virtual AppUser CreatedByUser { get; set; }
+        public int? VersionNumber { get; set; }
     }
 }

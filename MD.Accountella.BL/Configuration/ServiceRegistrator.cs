@@ -14,6 +14,7 @@ namespace MD.Accountella.BL.Configuration
             services.AddAutoMapper(typeof(MappingConfig));
             services.AddTransient<INavMenuService, NavMenuService>();
             services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<IEntityCategoryService, EntityCategoryService>();
 
             return services;
         }

@@ -5,23 +5,21 @@
 /// </summary>
 namespace MD.Accountella.DomainObjects
 {
+    using MongoDB.Bson;
+    using MongoDB.Bson.Serialization.Attributes;
     using System;
-    using Amazon.DynamoDBv2.DataModel;
 
-    [DynamoDBTable(Helpers.Utils.tableNamePrefix + "Account")]
     public class Account
     {
-        [DynamoDBHashKey]
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
-
-        [DynamoDBProperty(typeof(DateTimeOffsetTypeConverter))]
-        public DateTimeOffset? CreatedOn { get; set; }
-
-        [DynamoDBProperty(typeof(DateTimeOffsetTypeConverter))]
-        public DateTimeOffset? LastModifiedOn { get; set; }
+        public string SysId { get; set; }
         public string Name { get; set; }
         public string Details { get; set; }
         public string _CategoryId { get; set; }
+
+        [BsonIgnore]
         public virtual EntityCategory Category { get; set; }
         public bool IsActive { get; set; }
         public bool IsReadOnly { get; set; }

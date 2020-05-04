@@ -8,9 +8,7 @@ namespace MD.Accountella.DL
     using System;
     using System.Linq;
     using System.Reflection;
-    using Amazon.DynamoDBv2;
-    using Amazon.DynamoDBv2.DataModel;
-    using MD.Accountella.Core.DynamoDb;
+    using MD.Accountella.Core.MongoDb;
     using MD.Accountella.DomainObjects;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
@@ -18,7 +16,7 @@ namespace MD.Accountella.DL
     public class AccountellaDbContext : DbContext
     {
         private readonly ILogger _logger;
-        public AccountellaDbContext(IAmazonDynamoDB client, ILogger<AccountellaDbContext> logger) : base(client)
+        public AccountellaDbContext(IMongoDbConfig mongoDbConfig, ILogger<AccountellaDbContext> logger) : base(mongoDbConfig)
         {
             _logger = logger;
 
@@ -39,16 +37,13 @@ namespace MD.Accountella.DL
             };
 
             OnMessaging += writeLog;
-
-            if (!this.EnsureCreated())
-                throw new Exception("Databse table creation failed");
         }
 
         public override void OnModelCreating(EntityBuilder entityBuilder)
         {
-            entityBuilder.IncludeAllAvailableEntities();
             entityBuilder.Entity<EntityCategory>(new EntityCategorySeedDataProvider());
             entityBuilder.Entity<Account>(new AccountSeedDataProvider());
+            entityBuilder.Entity<CurrencyType>(new CurrencyTypeSeedDataProvider());            
         }
     }
 }

@@ -15,7 +15,7 @@ namespace MD.Accountella.WebApp.Controllers
     using Microsoft.Extensions.Logging;
     using MD.Accountella.Core.RestConcerns;
 
-    [Route("api/nav-nodes")]
+    [Route(RoutePrefix + "nav-nodes")]
     public class NavMenuController: AccountellaControllerBase
     {
         private readonly INavMenuService _navMnuService;
