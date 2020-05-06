@@ -34,90 +34,23 @@ namespace MD.Accountella.Core.MongoDb
             {
                 throw new Exception("At least one entity should be present to execute");
             }
+
             processSeedData(this._entityBuilder.TableSpecs.SelectMany(tbl => tbl.SeedDataProviders).ToArray());
-        }
-        private Task checkAndCreate(DbTableWithSeedInfo[] tablesToCheck)
-        {
-            return Task.Run(() =>
-            {
-                ////Get all available tables in database
-                //var tableResponse = _db.ListCollectionNames().ToEnumerable();
-
-                //tablesToCheck
-                //.Where(x => !tableResponse.Contains(x.tableName))
-                //.ToList()
-                //.ForEach(tblSpec =>
-                //{
-                //    createTable(tblSpec);
-                //});
-            });
-
-            //void createTable(DbTableWithSeedInfo tblToCreate)
-            //{
-            //    var pk = tblToCreate.attributes.Where(attr => attr.isPrimary).FirstOrDefault();
-
-            //    _db.CreateCollection(tblToCreate.tableName, new CreateCollectionOptions
-            //    {
-                    
-            //    });
-
-            //    _db.CreateCollection(new CreateTableRequest
-            //    {
-            //        TableName = tblToCreate.tableName,
-            //        ProvisionedThroughput = new ProvisionedThroughput
-            //        {
-            //            ReadCapacityUnits = 4,
-            //            WriteCapacityUnits = 2
-            //        },
-            //        KeySchema = new List<KeySchemaElement>
-            //        {
-            //            new KeySchemaElement
-            //            {
-            //                AttributeName = pk.name,
-            //                KeyType = KeyType.HASH,
-            //            }
-            //        },
-            //        AttributeDefinitions = new List<AttributeDefinition>
-            //        {
-            //            new AttributeDefinition {
-            //                AttributeName = pk.name,
-            //                AttributeType = pk.dataType == typeof(int) ? ScalarAttributeType.N : ScalarAttributeType.S
-            //            }
-            //        }
-            //    }).Wait();
-
-            //    bool isTableAvailable = false;
-            //    while (!isTableAvailable)
-            //    {
-            //        //"Waiting for table to be active...
-            //        Thread.Sleep(5000);
-            //        var tableStatus = _db.DescribeTableAsync(tblToCreate.tableName).Result;
-            //        isTableAvailable = tableStatus.Table.TableStatus == "ACTIVE";
-            //    }
-
-            //    OnMessaging.Invoke(this,
-            //        new DbContextActionMessage(
-            //            isTableAvailable ? $"Created table: {tblToCreate.tableName}"
-            //                : $"Unable to to create table: {tblToCreate.tableName}",
-            //            isTableAvailable ? DbContextActionMessageType.Info : DbContextActionMessageType.Error)
-            //        );
-            //}
         }
         private void processSeedData(ICollection<IDataProcessor> seedDataProcessors)
         {
             OnMessaging.Invoke(this,
-                    new DbContextActionMessage("Processing seed data", DbContextActionMessageType.Info)
+                    new DbContextActionMessage("Working on seed data", DbContextActionMessageType.Info)
                 );
 
             bool isSuccess = false;
             string msg = string.Empty;
             try
             {
-                seedDataProcessors.ToList().ForEach(dp => dp.ExecuteAsync(DB).Wait());
-                //var allBatch = Task.WhenAll(
-                //    seedDataProcessors.Select(sp => sp.ExecuteAsync(DB))
-                //);
-                //allBatch.Wait();
+                var allBatch = Task.WhenAll(
+                    seedDataProcessors.Select(sp => sp.ExecuteAsync(DB))
+                );
+                allBatch.Wait();
 
                 isSuccess = true;
                 msg = "Seed data processed sucessfully";

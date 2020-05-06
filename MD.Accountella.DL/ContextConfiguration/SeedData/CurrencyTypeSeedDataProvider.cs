@@ -8,15 +8,15 @@ namespace MD.Accountella.DL
     using System;
     using System.Collections.Generic;
     using MD.Accountella.Core.MongoDb;
+    using MD.Accountella.DL.Helper;
     using MD.Accountella.DomainObjects;
     internal class CurrencyTypeSeedDataProvider : EntitySeedDataProvider<CurrencyType>
     {
-        public override void SetDataToCreateOrUpdate(List<CurrencyType> data)
+        public override void SetDataToCreate(List<CurrencyType> data)
         {
             data.Add(new CurrencyType
             {
-                Id = Guid.NewGuid().ToString(),
-                SysId = "curr_inr_system",
+                Id = "curr_inr_system",
                 IsMain = true,
                 Name = "INR",
                 Symbol = "₹",
@@ -24,10 +24,6 @@ namespace MD.Accountella.DL
                 Rate = 1,
                 IsReadOnly = true
             });
-        }
-
-        public override void SetDataToDelete(List<CurrencyType> data)
-        {
         }
     }
 }

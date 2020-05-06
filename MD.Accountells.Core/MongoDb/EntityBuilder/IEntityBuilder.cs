@@ -7,7 +7,7 @@ namespace MD.Accountella.Core.MongoDb
 {
     public interface IEntityBuilder
     {
-        public void Entity<TEntity>() where TEntity : class;
-
+        EntitySeedDataProvider<TEntity> UseSeedData<TEntity, TEntitySeedDataProvider>()
+            where TEntitySeedDataProvider : IEntitySeedDataProvider<TEntity>;
     }
 }

@@ -5,15 +5,15 @@
 /// </summary>
 namespace MD.Accountella.DomainObjects
 {
-    using MongoDB.Bson;
+    using MD.Accountella.Core.MongoDb;
     using MongoDB.Bson.Serialization.Attributes;
+    using MongoDB.Bson.Serialization.IdGenerators;
+    using System;
+
     public class CurrencyType
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
-        public string SysId { get; set; }
-
+        [BsonId(IdGenerator = typeof(CustomIdGeneratorWithGuidAndTableName<CurrencyType>))]
+        public string Id { get; set; }        
         public string Name { get; set; }
         public string SymbolName { get; set; }
         public double Rate { get; set; }

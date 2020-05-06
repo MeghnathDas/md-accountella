@@ -6,6 +6,7 @@
 namespace MD.Accountella.WebApp
 {
     using MD.Accountella.BL.Configuration;
+    using MD.Accountella.Core.MongoDb.Extensions.DependencyInjection;
     using MD.Accountella.Core.RestConcerns;
     using MD.Accountella.DL;
     using MD.Accountella.DL.Configuration;
@@ -31,7 +32,8 @@ namespace MD.Accountella.WebApp
         {
             services.AddControllersWithViews();
             services.AddScoped<LoggingActionFilter>();
-            services.AddDataAccessServices(Configuration);
+            services.AddMongoDbConfigServices(Configuration);
+            services.AddDataAccessServices();
             services.AddBusinessServices();
 
             // In production, the Angular files will be served from this directory
@@ -44,7 +46,7 @@ namespace MD.Accountella.WebApp
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            //app.ApplicationServices.GetService<AccountellaDbContext>().EnsureTablesCreatedWithSeedData();
+            app.ApplicationServices.GetService<AccountellaDbContext>().EnsureTablesCreatedWithSeedData();
 
             if (env.IsDevelopment())
             {

@@ -9,7 +9,7 @@ namespace MD.Accountella.DL.Helper
     {
         public static string FormatSeedDataId(string id)
         {
-            return $"{id}_system";
+            return $"{id}_sys";
         }
     }
 }

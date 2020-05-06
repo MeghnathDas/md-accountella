@@ -8,4 +8,8 @@
     <PackageReference Include="MongoDB.Bson" Version="2.10.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MD.Accountells.Core\MD.Accountella.Core.csproj" />
+  </ItemGroup>
+
 </Project>

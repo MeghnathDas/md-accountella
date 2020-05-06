@@ -12,6 +12,9 @@ namespace MD.Accountella.Core.MongoDb
     {
         public string ConnectionString { get; set; }
         public string DataBaseName { get; set; }
+
+        internal const string Environment_ConnectionStringKey = "MONGO_CONNECTIONSTRING";
+        internal const string Environment_DbNameKey = "MONGO_DBNAME";
     }
     public interface IMongoDbConfig
     {

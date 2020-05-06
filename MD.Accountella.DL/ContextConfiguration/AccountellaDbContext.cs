@@ -41,9 +41,9 @@ namespace MD.Accountella.DL
 
         public override void OnModelCreating(EntityBuilder entityBuilder)
         {
-            entityBuilder.Entity<EntityCategory>(new EntityCategorySeedDataProvider());
-            entityBuilder.Entity<Account>(new AccountSeedDataProvider());
-            entityBuilder.Entity<CurrencyType>(new CurrencyTypeSeedDataProvider());            
+            entityBuilder.UseSeedData<CurrencyType, CurrencyTypeSeedDataProvider>();
+            entityBuilder.UseSeedData<EntityCategory, EntityCategorySeedDataProvider>();
+            entityBuilder.UseSeedData<Account, AccountSeedDataProvider>();
         }
     }
 }

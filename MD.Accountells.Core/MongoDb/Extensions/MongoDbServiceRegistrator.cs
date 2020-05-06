@@ -15,13 +15,13 @@ namespace MD.Accountella.Core.MongoDb.Extensions.DependencyInjection
     {
         public static IServiceCollection AddMongoDbConfigServices(this IServiceCollection services, IConfiguration configuration)
         {
-            var mongoConfig = configuration.GetSection("MongoDbConfig").Get<MongoDbConfig>();
+            var mongoConfig = configuration.GetSection(nameof(MongoDbConfig)).Get<MongoDbConfig>();
 
             if (mongoConfig == null || string.IsNullOrWhiteSpace(mongoConfig.ConnectionString))
                 mongoConfig = new MongoDbConfig
                 {
-                    ConnectionString = configuration.GetValue<string>("MONGO_CONNECTIONSTRING"),
-                    DataBaseName = configuration.GetValue<string>("MONGO_DBNAME")
+                    ConnectionString = configuration.GetValue<string>(MongoDbConfig.Environment_ConnectionStringKey),
+                    DataBaseName = configuration.GetValue<string>(MongoDbConfig.Environment_DbNameKey)
                 };
 
             // Explicitly register the settings object

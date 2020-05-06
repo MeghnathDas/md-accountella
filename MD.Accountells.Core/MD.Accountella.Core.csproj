@@ -11,4 +11,8 @@
     <PackageReference Include="MongoDB.Driver" Version="2.10.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="MongoDb\Attributes\" />
+  </ItemGroup>
+
 </Project>
