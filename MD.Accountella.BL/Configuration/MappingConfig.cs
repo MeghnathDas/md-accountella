@@ -10,15 +10,17 @@ namespace MD.Accountella.BL.Configuration
     using MD.Accountella.DomainObjects;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Text;
     public sealed class MappingConfig : Profile
     {
         public MappingConfig()
         {
-            CreateMap<EntityCategory, EntityCategoryDto>().ReverseMap();
-            //CreateMap<EntityCategory, EntityCategoryDto>().AfterMap((src, dest) => { 
-            //    src.ForModule
-            //});
+            CreateMap<EntityCategory, EntityCategoryDto>().AfterMap((src, dest) =>
+            {
+                dest.SubCategories = dest.SubCategories.Any() ? dest.SubCategories : null;
+            });
+            CreateMap<EntityCategoryDto, EntityCategory>();
             CreateMap<Account, AccountDto>().ReverseMap();
         }
     }

@@ -15,12 +15,18 @@ namespace MD.Accountella.DomainObjects
     {
         [BsonId(IdGenerator = typeof(CustomIdGeneratorWithGuidAndTableName<Account>))]
         public string Id { get; set; }
+
+        [BsonRequired]
         public string Name { get; set; }
         public string Details { get; set; }
+
+        [BsonRequired]
         public string _CategoryId { get; set; }
 
         [BsonIgnore]
         public virtual EntityCategory Category { get; set; }
+
+        [BsonDefaultValue(true)]
         public bool IsActive { get; set; }
         public bool IsReadOnly { get; set; }
     }

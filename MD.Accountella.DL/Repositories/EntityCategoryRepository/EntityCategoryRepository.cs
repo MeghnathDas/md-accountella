@@ -6,6 +6,8 @@
 namespace MD.Accountella.DL
 {
     using MD.Accountella.DomainObjects;
+    using MongoDB.Driver;
+    using MongoDB.Driver.Linq;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -13,111 +15,91 @@ namespace MD.Accountella.DL
     internal class EntityCategoryRepository: IEntityCategoryRepository
     {
         private readonly AccountellaDbContext _dbContext;
+        private readonly IMongoCollection<EntityCategory> _catgColl;
         public EntityCategoryRepository(AccountellaDbContext dbContext)
         {
             this._dbContext = dbContext;
+            var vv = new MongoCollectionSettings();
+            this._catgColl 
+                = this._dbContext.DB.GetCollection<EntityCategory>(nameof(EntityCategory));
+        }
+        public List<EntityCategory> GetCategories(string id)
+        {
+            IMongoQueryable<EntityCategory> catgs = _catgColl.AsQueryable();
+            if (!string.IsNullOrWhiteSpace(id))
+                catgs = catgs.Where(catg => catg.Id.Equals(id));
+
+            return catgs.ToList();
         }
         public EntityCategory AddCategory(EntityCategory catgToAdd)
         {
             if (string.IsNullOrWhiteSpace(catgToAdd.Name))
                 throw new Exception("Category name must be provided");
+            var catgMatches = _catgColl.Find(catg =>
+                        catg.Name.Equals(catgToAdd.Name)
+                        && catg._parentId.Equals(catgToAdd._parentId)
+                    );
 
-            //var catgMatches = _dbContext
-            //    .QueryAsync<EntityCategory>("",
-            //        new DynamoDBOperationConfig
-            //        {
-            //            QueryFilter = new List<ScanCondition>
-            //            {
-            //                new ScanCondition(nameof(catgToAdd.Name),
-            //                    ScanOperator.Equal,
-            //                    new object [] { catgToAdd.Name }
-            //                ),
-            //                new ScanCondition(nameof(catgToAdd._parentId),
-            //                    ScanOperator.Equal,
-            //                    new object [] { catgToAdd._parentId }
-            //                )
-            //            },
-            //            ConditionalOperator = ConditionalOperatorValues.Or
-            //        }).GetRemainingAsync().Result;
-            //if (catgMatches.Any())
-            //    throw new Exception("Duplicate category is not allowed");
+            if (catgMatches.Any())
+                throw new Exception("Duplicate category is not allowed");
 
-            //if (string.IsNullOrWhiteSpace(catgToAdd._parentId) && catgToAdd.ForModule == AppModuleEnum.Account)
-            //    throw new Exception("Must belong to a parent category");
+            if (string.IsNullOrWhiteSpace(catgToAdd._parentId) && catgToAdd.ForModule == AppModuleEnum.Account)
+                throw new Exception("Must belong to a parent category");
 
-            //if (!string.IsNullOrWhiteSpace(catgToAdd._parentId))
-            //{
-            //    catgMatches = _dbContext
-            //        .QueryAsync<EntityCategory>(catgToAdd._parentId,
-            //            new DynamoDBOperationConfig
-            //            {
-            //                QueryFilter = new List<ScanCondition>
-            //                {
-            //                    new ScanCondition(
-            //                            nameof(catgToAdd.ForModule),
-            //                            ScanOperator.Equal,
-            //                            new object [] { catgToAdd.ForModule }
-            //                        )
-            //                }
-            //            }).GetRemainingAsync().Result;                
-            //    if (!catgMatches.Any())
-            //        throw new Exception("Invalid parent");
-            //}
+            if (!string.IsNullOrWhiteSpace(catgToAdd._parentId))
+                if (!_catgColl.AsQueryable().Where(catg => catg.Id.Equals(catgToAdd._parentId)).Any())
+                    throw new Exception("Invalid parent");
 
+            catgToAdd.IsReadOnly = false;
 
-            //catgToAdd.Id = Guid.NewGuid().ToString();
-            //catgToAdd.IsReadOnly = false;
-
-            //try
-            //{
-            //    _dbContext.SaveAsync<EntityCategory>(catgToAdd).Wait();
-            //}
-            //catch (Exception)
-            //{
-            //    return null;
-            //}
-            //return _dbContext.LoadAsync<EntityCategory>(catgToAdd.Id).Result;
-            return new EntityCategory();
-        }
-        public List<EntityCategory> GetCategories(string id)
-        {
-            //List<ScanCondition> conditions = new List<ScanCondition>();
-            //if (!string.IsNullOrWhiteSpace(id))
-            //    conditions.Add(new ScanCondition(nameof(EntityCategory.Id), ScanOperator.Equal, id));
-            //return _dbContext.ScanAsync<EntityCategory>(conditions).GetRemainingAsync().Result;
-            return new List<EntityCategory> { { new EntityCategory() } };
+            try
+            {
+                _catgColl.InsertOne(catgToAdd);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            return catgToAdd;
         }
         public void UpdateCategory(string id, EntityCategory catgToUpdate)
         {
-            //try
-            //{
-            //    var catgFound = GetCategories(id);
-            //    if (!catgFound.Any())
-            //        throw new KeyNotFoundException("Category requested for update not found");
+            try
+            {
+                var catgFound = GetCategories(id);
 
-            //    catgToUpdate.Id = id;
-            //    catgToUpdate.IsReadOnly = catgFound.First().IsReadOnly;
-            //    catgToUpdate._parentId = catgFound.First()._parentId;
-            //    _dbContext.SaveAsync<EntityCategory>(catgToUpdate);
-            //}
-            //catch (AmazonDynamoDBException aDbEx)
-            //{
-            //    throw new Exception("Data Error: " + aDbEx.Message);
-            //}
-            //catch (AmazonServiceException e) { throw new Exception("DB Service Error: " + e.Message); }
-            //catch (Exception ex)
-            //{
-            //    throw ex;
-            //}
+                if (!catgFound.Any())
+                    throw new KeyNotFoundException("Item requested for update not found");
+                if (catgFound.First().IsReadOnly)
+                    throw new InvalidOperationException("Unable to delete/remove readonly item");
+
+                catgToUpdate.Id = id;
+                catgToUpdate.IsReadOnly = catgFound.First().IsReadOnly;
+                catgToUpdate._parentId = catgFound.First()._parentId;
+                var result = _catgColl.ReplaceOne<EntityCategory>(catg => catg.Id.Equals(catgToUpdate.Id) && catg.IsReadOnly == false, catgToUpdate);
+
+                if (!result.IsModifiedCountAvailable)
+                    throw new SystemException("Unable to modify");                
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         public void RemoveCategory(string id)
         {
-            //EntityCategory catgToDel = _dbContext.LoadAsync<EntityCategory>(id).Result;
-            //if (catgToDel == null)
-            //    throw new KeyNotFoundException("No category found with the provided key");
-            //if (catgToDel.IsReadOnly)
-            //    throw new Exception("Requested item is read only, hence cannot be deleted");
-            //this._dbContext.DeleteAsync<EntityCategory>(catgToDel).Wait();
+            var catgFound = GetCategories(id);
+
+            if (!catgFound.Any())
+                throw new KeyNotFoundException("Category requested for delete not found");
+
+            var result = _catgColl.DeleteOne<EntityCategory>(catg => catg.Id.Equals(id) && catg.IsReadOnly == false);
+
+            if (!result.IsAcknowledged)
+                throw new KeyNotFoundException("No matching category found with the provided key");
+
+            if (!(result.DeletedCount > 0))
+                throw new Exception("Unknown Error: Category not deleted");
         }
     }
 }
