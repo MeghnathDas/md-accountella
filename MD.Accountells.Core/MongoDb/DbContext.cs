@@ -34,6 +34,7 @@ namespace MD.Accountella.Core.MongoDb
             {
                 throw new Exception("At least one entity should be present to execute");
             }
+
             processSeedData(this._entityBuilder.TableSpecs.SelectMany(tbl => tbl.SeedDataProviders).ToArray());
         }
         private Task checkAndCreate(DbTableWithSeedInfo[] tablesToCheck)
@@ -113,11 +114,10 @@ namespace MD.Accountella.Core.MongoDb
             string msg = string.Empty;
             try
             {
-                seedDataProcessors.ToList().ForEach(dp => dp.ExecuteAsync(DB).Wait());
-                //var allBatch = Task.WhenAll(
-                //    seedDataProcessors.Select(sp => sp.ExecuteAsync(DB))
-                //);
-                //allBatch.Wait();
+                var allBatch = Task.WhenAll(
+                    seedDataProcessors.Select(sp => sp.ExecuteAsync(DB))
+                );
+                allBatch.Wait();
 
                 isSuccess = true;
                 msg = "Seed data processed sucessfully";

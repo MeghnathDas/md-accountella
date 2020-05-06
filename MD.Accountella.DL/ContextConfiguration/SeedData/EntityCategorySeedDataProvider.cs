@@ -6,9 +6,11 @@
 namespace MD.Accountella.DL
 {
     using MD.Accountella.Core.MongoDb;
+    using MD.Accountella.DL.Helper;
     using MD.Accountella.DomainObjects;
     using System;
     using System.Collections.Generic;
+    using System.Linq.Expressions;
     using System.Text;
     using System.Threading.Tasks;
     internal class EntityCategorySeedDataProvider : EntitySeedDataProvider<EntityCategory>
@@ -18,8 +20,7 @@ namespace MD.Accountella.DL
         private static EntityCategory getRootAccountCategoryObject(string id, string name, int seqNo, string parentId = null) =>
             new EntityCategory
             {
-                Id = Guid.NewGuid().ToString(),
-                SysId = $"{categoryIdPrefix}{Helper.DbUtility.FormatSeedDataId(id)}_acc",
+                Id = $"{categoryIdPrefix}{Helper.DbUtility.FormatSeedDataId(id)}_acc",
                 Name = name,
                 SequenceNo = seqNo,
                 _parentId = parentId,
@@ -53,12 +54,8 @@ namespace MD.Accountella.DL
             EquityAccountCategory
         };
         #endregion
-        
-        public override void SetDataToDelete(List<EntityCategory> data)
-        {
-        }
 
-        public override void SetDataToCreateOrUpdate(List<EntityCategory> data)
+        public override void SetDataToCreate(List<EntityCategory> data)
         {
             data.AddRange(GetAllAccountCategoryObjects());
         }

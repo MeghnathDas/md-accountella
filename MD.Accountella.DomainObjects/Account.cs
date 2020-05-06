@@ -5,16 +5,16 @@
 /// </summary>
 namespace MD.Accountella.DomainObjects
 {
+    using MD.Accountella.Core.MongoDb.Extensions;
     using MongoDB.Bson;
     using MongoDB.Bson.Serialization.Attributes;
+    using MongoDB.Bson.Serialization.IdGenerators;
     using System;
 
     public class Account
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
+        [BsonId(IdGenerator = typeof(CustomIdGeneratorWithGuidAndTableName<Account>))]
         public string Id { get; set; }
-        public string SysId { get; set; }
         public string Name { get; set; }
         public string Details { get; set; }
         public string _CategoryId { get; set; }
