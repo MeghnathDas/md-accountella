@@ -16,6 +16,7 @@ namespace MD.Accountella.DomainObjects
         [BsonId(IdGenerator = typeof(CustomIdGeneratorWithGuidAndTableName<EntityCategory>))]
         public string Id { get; set; }
 
+        [BsonRequired]
         public string Name { get; set; }
         public string _parentId { get; set; }
         public int SequenceNo { get; set; }

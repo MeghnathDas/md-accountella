@@ -13,10 +13,14 @@ namespace MD.Accountella.DomainObjects
     public class CurrencyType
     {
         [BsonId(IdGenerator = typeof(CustomIdGeneratorWithGuidAndTableName<CurrencyType>))]
-        public string Id { get; set; }        
+        public string Id { get; set; }
+
+        [BsonRequired]
         public string Name { get; set; }
         public string SymbolName { get; set; }
         public double Rate { get; set; }
+
+        [BsonDefaultValue(false)]
         public bool IsMain { get; set; }
         public string Symbol { get; set; }
         public bool IsReadOnly { get; set; }
