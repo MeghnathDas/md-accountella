@@ -26,13 +26,12 @@ namespace MD.Accountella.Core.MongoDb
 
         internal DbTableWithSeedInfo[] TableSpecs => this._dicTyps.Select(typ => convertTableInfo(typ)).ToArray();
 
-        public virtual void Entity<TEntity>() where TEntity : class
+        public EntitySeedDataProvider<TEntity> UseSeedData<TEntity, TEntitySeedDataProvider>()
+            where TEntitySeedDataProvider : IEntitySeedDataProvider<TEntity>
         {
-            Entity<TEntity>(null);
-        }
-        public virtual void Entity<TEntity>(IEntitySeedDataProvider<TEntity> seedDataProvider) where TEntity : class
-        {
-            addEntityTyp(typeof(TEntity), seedDataProvider);
+            var sdp = Activator.CreateInstance(typeof(TEntitySeedDataProvider)) as EntitySeedDataProvider<TEntity>;
+            addEntityTyp(typeof(TEntity), sdp);
+            return sdp;
         }
         private void addEntityTyp(Type typToAdd, IDataProcessor seedDataProvider = null)
         {

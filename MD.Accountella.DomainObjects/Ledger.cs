@@ -6,7 +6,7 @@
 namespace MD.Accountella.DomainObjects
 {
     using System;
-    using MD.Accountella.Core.MongoDb.Extensions;
+    using MD.Accountella.Core.MongoDb;
     using MongoDB.Bson;
     using MongoDB.Bson.Serialization.Attributes;
     using MongoDB.Bson.Serialization.IdGenerators;

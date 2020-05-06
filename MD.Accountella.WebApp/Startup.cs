@@ -6,6 +6,7 @@
 namespace MD.Accountella.WebApp
 {
     using MD.Accountella.BL.Configuration;
+    using MD.Accountella.Core.MongoDb.Extensions.DependencyInjection;
     using MD.Accountella.Core.RestConcerns;
     using MD.Accountella.DL;
     using MD.Accountella.DL.Configuration;
@@ -31,7 +32,8 @@ namespace MD.Accountella.WebApp
         {
             services.AddControllersWithViews();
             services.AddScoped<LoggingActionFilter>();
-            services.AddDataAccessServices(Configuration);
+            services.AddMongoDbConfigServices(Configuration);
+            services.AddDataAccessServices();
             services.AddBusinessServices();
 
             // In production, the Angular files will be served from this directory

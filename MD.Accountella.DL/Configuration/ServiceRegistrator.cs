@@ -11,9 +11,8 @@ namespace MD.Accountella.DL.Configuration
 
     public static class ServiceRegistrator
     {
-        public static IServiceCollection AddDataAccessServices(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddDataAccessServices(this IServiceCollection services)
         {
-            services.AddMongoDbConfigServices(configuration);
             services.AddSingleton<AccountellaDbContext>();
             services.AddTransient<IAccountsRepository, AccountsRepository>();
             services.AddTransient<IEntityCategoryRepository, EntityCategoryRepository>();
