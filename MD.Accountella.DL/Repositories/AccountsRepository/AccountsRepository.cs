@@ -12,93 +12,114 @@ namespace MD.Accountella.DL
     using MD.Accountella.DomainObjects;
     using MD.Accountella.DL.Helper;
     using System.Linq;
+    using MongoDB.Driver;
+    using MongoDB.Driver.Linq;
 
     public class AccountsRepository : IAccountsRepository
     {
-        private readonly AccountellaDbContext _dbContext;
-        public AccountsRepository(AccountellaDbContext dbContext)
+        private readonly IMongoCollection<Account> _accColl;
+        private readonly IEntityCategoryRepository _categoryRepo;
+        public AccountsRepository(AccountellaDbContext dbContext, IEntityCategoryRepository categoryRepo)
         {
-            this._dbContext = dbContext;
-        }
-        public Account AddAccount(Account accToAdd)
-        {
-            //if (string.IsNullOrWhiteSpace(accToAdd.Name))
-            //    throw new Exception("Account name must be provided");
-
-            //var accountMatches = _dbContext
-            //    .ScanAsync<Account>(new ScanCondition[] {
-            //        new ScanCondition(nameof(accToAdd.Name),
-            //            ScanOperator.Equal,
-            //            new object [] { accToAdd.Name }
-            //        )
-            //    }).GetRemainingAsync().Result;
-            //if (accountMatches.Any())
-            //    throw new Exception("Account name already exists");
-
-            //if (string.IsNullOrWhiteSpace(accToAdd._CategoryId))
-            //    throw new Exception("Account category must be assigned");
-
-            //EntityCategory catg = _dbContext.LoadAsync<EntityCategory>(accToAdd._CategoryId).Result;
-            //if (catg == null)
-            //    throw new Exception("Invalid category assigned");
-
-
-            //accToAdd.Id = Guid.NewGuid().ToString();
-            //accToAdd.CreatedOn = DateTime.Now;
-            //accToAdd.IsActive = true;
-            //accToAdd.IsReadOnly = false;
-
-            //try
-            //{
-            //    _dbContext.SaveAsync<Account>(accToAdd).Wait();
-            //}
-            //catch (Exception)
-            //{
-            //    return null;
-            //}
-            //return _dbContext.LoadAsync<Account>(accToAdd.Id).Result;
-            return new Account();
+            this._categoryRepo = categoryRepo;
+            this._accColl
+                = dbContext.Db.GetCollection<Account>(nameof(Account));
         }
         public List<Account> GetAccounts(string id)
         {
-            //List<ScanCondition> conditions = new List<ScanCondition>();
-            //if (!string.IsNullOrWhiteSpace(id))
-            //    conditions.Add(new ScanCondition(nameof(Account.Id), ScanOperator.Equal, id));
-            //return _dbContext.ScanAsync<Account>(conditions).GetRemainingAsync().Result;
-            return new List<Account> { { new Account() } };
+            IMongoQueryable<Account> accs = _accColl.AsQueryable();
+            if (!string.IsNullOrWhiteSpace(id))
+                accs = accs.Where(acc => acc.Id.Equals(id));
+
+            return accs.ToList();
+        }
+        public Account AddAccount(Account accToAdd)
+        {
+            if (string.IsNullOrWhiteSpace(accToAdd.Name))
+                throw new Exception("Name must be provided");
+            var catgMatches = _accColl.Find(catg =>
+                        catg.Name.Equals(accToAdd.Name)
+                    );
+            if (catgMatches.Any())
+                throw new Exception("Name must be unique");
+
+            if (string.IsNullOrWhiteSpace(accToAdd._CategoryId))
+                throw new Exception("Must belong to a category");
+
+            if (!_categoryRepo.GetCategories(accToAdd._CategoryId).Any())
+                throw new Exception("Invalid parent category defined");
+
+            accToAdd.IsActive = true;
+            accToAdd.IsReadOnly = false;
+
+            try
+            {
+                _accColl.InsertOne(accToAdd);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            return accToAdd;
         }
         public void UpdateAccount(string id, Account accountToUpdate)
         {
-            //try
-            //{
-            //    var accFound = GetAccounts(id);
-            //    if (!accFound.Any())
-            //        throw new KeyNotFoundException("Item requested for update not found");
+            try
+            {
+                var accFound = GetAccounts(id);
 
-            //    accountToUpdate.Id = id;
-            //    accountToUpdate.IsReadOnly = accFound.First().IsReadOnly;
-            //    if (accFound.First().IsReadOnly)
-            //        accountToUpdate._CategoryId = accFound.First()._CategoryId;
-            //    _dbContext.SaveAsync<Account>(accountToUpdate).Wait();
-            //}
-            //catch (AmazonDynamoDBException aDbEx)
-            //{
-            //    throw new Exception("Data Error: " + aDbEx.Message);
-            //}
-            //catch (AmazonServiceException e) { throw new Exception("DB Service Error: " + e.Message); }
-            //catch (Exception ex)
-            //{
-            //    throw ex;
-            //}
+                if (!accFound.Any())
+                    throw new KeyNotFoundException("Item requested for update not found");
+                if (accFound.First().IsReadOnly)
+                    throw new InvalidOperationException("Unable to delete/remove readonly item");
+
+                //Checkig wheather same name is already exists with other or not
+                var accMatches = _accColl.Find(acc =>
+                            acc.Name.Equals(accountToUpdate.Name)
+                            && acc.Id != id
+                        );
+                if (accMatches.Any())
+                    throw new Exception("Requested account name already exists");
+
+                accountToUpdate.Id = id;
+                accountToUpdate.IsReadOnly = accFound.First().IsReadOnly;
+                if (accFound.First().IsReadOnly)
+                    accountToUpdate._CategoryId = accFound.First()._CategoryId;
+                var result = _accColl.ReplaceOne<Account>(acc => acc.Id.Equals(accountToUpdate.Id) && acc.IsReadOnly == false, accountToUpdate);
+
+                if (!result.IsModifiedCountAvailable)
+                    throw new SystemException("Unable to modify");
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         public void RemoveAccount(string id)
         {
-            //Account accToDel = _dbContext.LoadAsync<Account>(id).Result;
-            //if (accToDel == null)
-            //    throw new KeyNotFoundException("No item found");
-            //if (accToDel.IsReadOnly)
-            //    throw new Exception("Requested item is read only, hence cannot be deleted");
-            //this._dbContext.DeleteAsync<Account>(accToDel).Wait();
+            try
+            {
+                var accFound = GetAccounts(id);
+
+                if (!accFound.Any())
+                    throw new KeyNotFoundException("Account requested for delete not found");
+
+                if (accFound.First().IsReadOnly)
+                    throw new Exception("Requested item is read only, hence cannot be deleted");
+
+                var result = _accColl.DeleteOne<Account>(acc => acc.Id.Equals(id) && acc.IsReadOnly == false);
+
+                if (!result.IsAcknowledged)
+                    throw new KeyNotFoundException("No matching account found with the provided key");
+
+                if (!(result.DeletedCount > 0))
+                    throw new Exception("Unknown Error: Category not deleted");
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
         }
     }
 }
