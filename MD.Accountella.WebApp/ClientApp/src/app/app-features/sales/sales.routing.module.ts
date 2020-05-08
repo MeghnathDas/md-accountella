@@ -10,7 +10,6 @@ import { ItemManagerComponent } from './item-manager/item-manager.component';
 
 const salesRoutes: Routes = [
     { path: '', redirectTo: 'invoices', pathMatch: 'full' },
-
     {
         path: 'invoices', component: CommonMasterComponent, data: [{
             entity: <MasterEntityInfoModel>{

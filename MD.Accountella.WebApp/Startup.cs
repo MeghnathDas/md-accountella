@@ -17,6 +17,7 @@ namespace MD.Accountella.WebApp
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
+    using System;
 
     public class Startup
     {
@@ -70,6 +71,13 @@ namespace MD.Accountella.WebApp
 
             app.UseEndpoints(endpoints =>
             {
+                //endpoints.MapGet("/api", async context =>
+                //{
+                //    await context.Response.BodyWriter.WriteAsync("Welcome to Accountella Data Api!");
+                //});
+                // Configure the Health Check endpoint and require an authorized user.
+                //endpoints.MapHealthChecks("/healthz").RequireAuthorization();
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
@@ -85,6 +93,7 @@ namespace MD.Accountella.WebApp
                 if (env.IsDevelopment())
                 {
                     spa.UseAngularCliServer(npmScript: "start");
+                    spa.Options.StartupTimeout = TimeSpan.FromSeconds(60);
                 }
             });
         }

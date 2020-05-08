@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
     declarations: [BaseLandingComponent, BaseCollectionComponent],
     imports: [CommonModule, FormsModule, ClarityModule],
     providers: [],
-    exports: [BaseLandingComponent, BaseCollectionComponent]
+    exports: [ClarityModule, BaseLandingComponent, BaseCollectionComponent]
 })
 export class SharedModule {
 

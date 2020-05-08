@@ -32,6 +32,10 @@ import { NavMenuService } from './services';
       {
         path: 'sales',
         loadChildren: () => import('./app-features').then(m => m.SalesModule)
+      },
+      {
+        path: 'accounts',
+        loadChildren: () => import('./app-features').then(m => m.AccountsModule)
       }
     ]),
     BrowserAnimationsModule,

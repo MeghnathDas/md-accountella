@@ -40,7 +40,7 @@ namespace MD.Accountella.DL
             if (catgMatches.Any())
                 throw new Exception("Duplicate category is not allowed");
 
-            if (string.IsNullOrWhiteSpace(catgToAdd._parentId) && catgToAdd.ForModule == AppModuleEnum.Account)
+            if (string.IsNullOrWhiteSpace(catgToAdd._parentId) && catgToAdd.ForEntity == AppEntityEnum.Account)
                 throw new Exception("Must belong to a parent category");
 
             if (!string.IsNullOrWhiteSpace(catgToAdd._parentId))
@@ -116,6 +116,22 @@ namespace MD.Accountella.DL
             {
                 throw ex;
             }
+        }
+
+        public ICollection<EntityCategory> GetCategoriesByEntity(AppEntityEnum enitity)
+        {
+            var catgs = _catgColl.AsQueryable().Where(catg => catg.ForEntity == enitity).ToList();
+            return catgs.Where(catg => string.IsNullOrWhiteSpace(catg._parentId))
+                        .OrderBy(x => x.SequenceNo)
+                        .Select(catg =>
+                        {
+                            catg.SubCategories
+                            = catgs.Where(x => x._parentId != null && x._parentId.Equals(catg.Id))
+                                    .OrderBy(x => x.SequenceNo)
+                                    .ToArray();
+                            return catg;
+                        })
+                        .ToArray();
         }
     }
 }

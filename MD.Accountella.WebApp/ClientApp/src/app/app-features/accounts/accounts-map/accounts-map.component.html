@@ -1,0 +1,14 @@
+<div class="tab-container">
+    <clr-tabs>
+        <clr-tab *ngFor="let aHead of accountHeads">
+            <button clrTabLink>{{aHead.name}}</button>
+            <!-- <ng-template [(clrIfActive)]="dashboardActive"> -->
+                <clr-tab-content>
+                    <ul class="account-groups">
+                        <li *ngFor="let agroup of aHead.subCategories">{{agroup.name}}</li>
+                    </ul>
+                </clr-tab-content>
+            <!-- </ng-template> -->
+        </clr-tab>
+    </clr-tabs>
+</div>

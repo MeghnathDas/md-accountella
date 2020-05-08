@@ -121,5 +121,10 @@ namespace MD.Accountella.DL
             }
 
         }
+
+        public ICollection<EntityCategory> GetCategories()
+        {
+            return _categoryRepo.GetCategoriesByEntity(AppEntityEnum.Account);
+        }
     }
 }

@@ -20,7 +20,7 @@ namespace MD.Accountella.DomainObjects
         public string Name { get; set; }
         public string _parentId { get; set; }
         public int SequenceNo { get; set; }
-        public AppModuleEnum ForModule { get; set; }
+        public AppEntityEnum ForEntity { get; set; }
         public bool IsReadOnly { get; set; }
 
         [BsonIgnore]
