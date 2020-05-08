@@ -102,36 +102,36 @@ namespace MD.Accountella.BL
                 label = "Accounts",
                 icon = "calculator",
                 route = "accounts",
-                nodes = new NavNode[] {
+                nodes = new NavNode[] {                    
                     new NavNode
                     {
                         id = 41,
-                        label = "Ledgers",
-                        route = "accounts/ledgers"
+                        label = "Transactions",
+                        route = "accounts/transactions"
                     },
                     new NavNode
                     {
                         id = 42,
-                        label = "Categories",
-                        route = "accounts/categories"
+                        label = "Ledger",
+                        route = "accounts/ledger"
                     },
                     new NavNode
                     {
                         id = 43,
-                        label = "Cash Book",
-                        route = "accounts/cash-book"
-                    },
-                    new NavNode
-                    {
-                        id = 44,
                         label = "Day Book",
                         route = "accounts/day-book"
                     },
                     new NavNode
                     {
+                        id = 44,
+                        label = "Cash Book",
+                        route = "accounts/cash-book"
+                    },
+                    new NavNode
+                    {
                         id = 45,
-                        label = "Account Manager",
-                        route = "accounts/manager"
+                        label = "Accounts Map",
+                        route = "accounts/map"
                     }
                 }
             };

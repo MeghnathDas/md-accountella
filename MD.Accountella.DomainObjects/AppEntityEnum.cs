@@ -5,5 +5,5 @@
 /// </summary>
 namespace MD.Accountella.DomainObjects
 {
-    public enum AppModuleEnum { Account, SaleItem, PurchaseItem, Vendor, Customer, Purchase, Invoice }
+    public enum AppEntityEnum { Account, SaleItem, PurchaseItem, Vendor, Customer, Purchase, Invoice }
 }

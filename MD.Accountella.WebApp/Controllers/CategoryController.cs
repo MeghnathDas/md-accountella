@@ -39,6 +39,13 @@ namespace MD.Accountella.WebApp.Controllers
             return _categoryService.GetCategories(id).FirstOrDefault();
         }
 
+        //// GET: api/categories?entity=
+        //[HttpGet("{id}", Name = "GetCategoryByFeature")]
+        //public EntityCategoryDto Get(string id)
+        //{
+        //    return _categoryService.GetCategories(id).FirstOrDefault();
+        //}
+
         // POST: api/categories
         [HttpPost]
         public EntityCategoryDto Post(EntityCategoryDto entityCategoryToAdd)

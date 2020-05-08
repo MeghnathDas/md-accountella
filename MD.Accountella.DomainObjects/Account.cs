@@ -26,7 +26,6 @@ namespace MD.Accountella.DomainObjects
         [BsonIgnore]
         public virtual EntityCategory Category { get; set; }
 
-        [BsonDefaultValue(true)]
         public bool IsActive { get; set; }
         public bool IsReadOnly { get; set; }
     }

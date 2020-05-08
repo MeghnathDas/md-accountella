@@ -43,5 +43,9 @@ namespace MD.Accountella.BL
         {
             this._repository.RemoveAccount(id);
         }
+        public ICollection<EntityCategoryDto> GetCategories()
+        {
+            return _mapper.Map< ICollection<EntityCategoryDto>>(this._repository.GetCategories());
+        }
     }
 }

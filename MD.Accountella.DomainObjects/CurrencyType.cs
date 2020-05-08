@@ -19,8 +19,6 @@ namespace MD.Accountella.DomainObjects
         public string Name { get; set; }
         public string SymbolName { get; set; }
         public double Rate { get; set; }
-
-        [BsonDefaultValue(false)]
         public bool IsMain { get; set; }
         public string Symbol { get; set; }
         public bool IsReadOnly { get; set; }

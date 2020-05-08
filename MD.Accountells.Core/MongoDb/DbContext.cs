@@ -20,14 +20,14 @@ namespace MD.Accountella.Core.MongoDb
         public event EventHandler<DbContextActionMessage> OnMessaging;
         public abstract void OnModelCreating(EntityBuilder entityBuilder);
 
-        public IMongoDatabase DB => this._db;
+        public IMongoDatabase Db => this._db;
         public DbContext(IMongoDbConfig config)
         {
             this._client = new MongoClient(config.ConnectionString);
             this._db = this._client.GetDatabase(config.DataBaseName);
             this._entityBuilder = new EntityBuilder();
         }
-        public void EnsureTablesCreatedWithSeedData()
+        public void ProcessSeedData()
         {
             OnModelCreating(this._entityBuilder);
             if (_entityBuilder.TableSpecs == null || !_entityBuilder.TableSpecs.Any())
@@ -48,7 +48,7 @@ namespace MD.Accountella.Core.MongoDb
             try
             {
                 var allBatch = Task.WhenAll(
-                    seedDataProcessors.Select(sp => sp.ExecuteAsync(DB))
+                    seedDataProcessors.Select(sp => sp.ExecuteAsync(Db))
                 );
                 allBatch.Wait();
 
@@ -76,7 +76,7 @@ namespace MD.Accountella.Core.MongoDb
     public interface IDbContext
     {
         event EventHandler<DbContextActionMessage> OnMessaging;
-        IMongoDatabase DB { get; }
-        void EnsureTablesCreatedWithSeedData();
+        IMongoDatabase Db { get; }
+        void ProcessSeedData();
     }
 }

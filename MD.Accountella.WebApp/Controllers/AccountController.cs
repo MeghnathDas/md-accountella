@@ -38,12 +38,28 @@ namespace MD.Accountella.WebApp.Controllers
             return _accountService.GetAccounts(id).FirstOrDefault();
         }
 
+        // GET: api/accounts/5
+        [HttpGet("[action]", Name = "GetAccountCategories")]
+        public ICollection<EntityCategoryDto> Categories()
+        {
+            return _accountService.GetCategories();
+        }
+
         // POST: api/accounts
         [HttpPost]
         public AccountDto Post(AccountDto value)
         {
             return _accountService.AddAccount(value);
         }
+        //[HttpPost]
+        //public async Task<ActionResult<TodoItem>> PostTodoItem(TodoItem todoItem)
+        //{
+        //    _context.TodoItems.Add(todoItem);
+        //    await _context.SaveChangesAsync();
+
+        //    //return CreatedAtAction("GetTodoItem", new { id = todoItem.Id }, todoItem);
+        //    return CreatedAtAction(nameof(GetTodoItem), new { id = todoItem.Id }, todoItem);
+        //}
 
         // PUT: api/accounts/5
         [HttpPut("{id}")]

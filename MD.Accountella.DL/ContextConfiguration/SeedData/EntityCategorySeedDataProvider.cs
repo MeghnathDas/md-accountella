@@ -24,16 +24,16 @@ namespace MD.Accountella.DL
                 Name = name,
                 SequenceNo = seqNo,
                 _parentId = parentId,
-                ForModule = AppModuleEnum.Account,
+                ForEntity = AppEntityEnum.Account,
                 IsReadOnly = true
             };
-        public static EntityCategory IncomeAndRevenueAccountCategory => getRootAccountCategoryObject("income_root", "Income and Revenue", 1);
+        public static EntityCategory IncomeAndRevenueAccountCategory => getRootAccountCategoryObject("income_root", "Income and Revenue", 3);
         public static EntityCategory IncomeAccountCategory_SubIncome => getRootAccountCategoryObject("income_income", "Income", 11, IncomeAndRevenueAccountCategory.Id);
         public static EntityCategory ExpectedCustomerPaymentCategory_SubLiability => getRootAccountCategoryObject("expected_customer_payment_income", "Expected Customer Payment", 12, LiabilityAccountCategory.Id);
-        public static EntityCategory ExpenceAccountCategory => getRootAccountCategoryObject("expence_root", "Expence", 2);
-        public static EntityCategory AssetAccountCategory => getRootAccountCategoryObject("asset_root", "Asset", 3);
+        public static EntityCategory ExpenceAccountCategory => getRootAccountCategoryObject("expence_root", "Expence", 4);
+        public static EntityCategory AssetAccountCategory => getRootAccountCategoryObject("asset_root", "Asset", 1);
         public static EntityCategory CashAndBankCategory_SubAsset => getRootAccountCategoryObject("cash_and_bank_asset", "Cash and Bank", 31, AssetAccountCategory.Id);
-        public static EntityCategory LiabilityAccountCategory => getRootAccountCategoryObject("liability_root", "Liability", 4);
+        public static EntityCategory LiabilityAccountCategory => getRootAccountCategoryObject("liability_root", "Liability", 2);
         public static EntityCategory CreditCardCategory_SubLiability => getRootAccountCategoryObject("credit_card_liability", "Credit Card", 41, LiabilityAccountCategory.Id);
         public static EntityCategory ExpectedVendorPaymentCategory_SubLiability => getRootAccountCategoryObject("expected_vendor_payment_liability", "Expected Vendor Payment", 42, LiabilityAccountCategory.Id);
         public static EntityCategory SalesTaxCategory_SubLiability => getRootAccountCategoryObject("sales_tax_liability", "Sales Tax", 43, LiabilityAccountCategory.Id);
