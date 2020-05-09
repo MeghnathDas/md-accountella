@@ -4,7 +4,9 @@
 .account-groups {
     padding: .6rem .2rem;
     display: flex;
-    flex-direction: column;
+    flex-direction: column;    
+    max-height: 55vh;
+    overflow-y: auto;
 }
 ::ng-deep .nav {    
     flex-wrap: wrap;
