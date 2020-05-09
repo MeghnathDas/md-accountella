@@ -13,8 +13,6 @@ header {
     padding: .2rem .5rem;
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
-    max-height: 45vh;
 }
 .detail-area .item-spec:not(:first-child) {
     padding-top: .5rem;
