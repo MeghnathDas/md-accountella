@@ -16,5 +16,6 @@ namespace MD.Accountella.DL
         void UpdateAccount(string id, Account accountToUpdate);
         void RemoveAccount(string id);
         ICollection<EntityCategory> GetCategories();
+        ICollection<Account> GetAccountsByCategory(string categoryId);
     }
 }

@@ -11,10 +11,11 @@ namespace MD.Accountella.BL
     using System.Text;
     public interface IAccountService
     {
-        ICollection<AccountDto> GetAccounts(string id);
+        IEnumerable<AccountDto> GetAccounts(string id);
+        IEnumerable<AccountDto> GetAccountsByCategory(string categoryId);
         AccountDto AddAccount(AccountDto accountToAdd);
         void UpdateAccount(string id, AccountDto accountToAlter);
         void RemoveAccount(string id);
-        ICollection<EntityCategoryDto> GetCategories();
+        IEnumerable<EntityCategoryDto> GetCategories();
     }
 }

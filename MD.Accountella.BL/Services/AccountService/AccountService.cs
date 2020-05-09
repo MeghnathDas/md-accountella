@@ -22,9 +22,14 @@ namespace MD.Accountella.BL
             this._repository = accountsRepository;
         }
 
-        public ICollection<AccountDto> GetAccounts(string id)
+        public IEnumerable<AccountDto> GetAccounts(string id)
         {
             var accounts = this._repository.GetAccounts(id);
+            return _mapper.Map<ICollection<AccountDto>>(accounts);
+        }
+        public IEnumerable<AccountDto> GetAccountsByCategory(string categoryId)
+        {
+            var accounts = this._repository.GetAccountsByCategory(categoryId);
             return _mapper.Map<ICollection<AccountDto>>(accounts);
         }
         public AccountDto AddAccount(AccountDto accountToAdd)
@@ -43,7 +48,7 @@ namespace MD.Accountella.BL
         {
             this._repository.RemoveAccount(id);
         }
-        public ICollection<EntityCategoryDto> GetCategories()
+        public IEnumerable<EntityCategoryDto> GetCategories()
         {
             return _mapper.Map< ICollection<EntityCategoryDto>>(this._repository.GetCategories());
         }

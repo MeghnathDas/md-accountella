@@ -29,7 +29,7 @@ namespace MD.Accountella.WebApp.Controllers
         [HttpGet]
         public ICollection<EntityCategoryDto> Get()
         {
-            return _categoryService.GetCategories(null);
+            return _categoryService.GetCategories(null).ToList();
         }
 
         // GET: api/categories/5

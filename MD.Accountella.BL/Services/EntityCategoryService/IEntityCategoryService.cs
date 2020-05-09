@@ -11,7 +11,7 @@ namespace MD.Accountella.BL
     using System.Text;
     public interface IEntityCategoryService
     {
-        ICollection<EntityCategoryDto> GetCategories(string id);
+        IEnumerable<EntityCategoryDto> GetCategories(string id);
         EntityCategoryDto AddCategories(EntityCategoryDto catgToAdd);
         void UpdateCategory(string id, EntityCategoryDto catgToUpdate);
         void RemoveCategory(string id);

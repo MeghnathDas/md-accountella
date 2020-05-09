@@ -6,12 +6,16 @@ import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class AccountMapService {
-  accountEndpoint = 'accounts';
+  accountEndpoint = `${environment.apiHost}/account-map`;
 
   constructor(private httpc: HttpClient) { }
 
-  getCategories(): Observable<Category[]> {
-    const url = `${environment.apiHost}/${this.accountEndpoint}/categories`;
+  getCategoryMap(): Observable<Category[]> {
+    const url = `${this.accountEndpoint}/categories`;
     return this.httpc.get<Category[]>(url);
+  }
+  getAccountsBySubCategory(categoryId: string): Observable<Account[]> {
+    const url = `${this.accountEndpoint}/accounts-by-category/${categoryId}`;
+    return this.httpc.get<Account[]>(url);
   }
 }

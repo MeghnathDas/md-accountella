@@ -33,6 +33,10 @@ namespace MD.Accountella.DL
 
             return accs.ToList();
         }
+        public ICollection<Account> GetAccountsByCategory(string categoryId)
+        {
+            return _accColl.AsQueryable().Where(acc => acc._CategoryId.Equals(categoryId)).ToList();
+        }
         public Account AddAccount(Account accToAdd)
         {
             if (string.IsNullOrWhiteSpace(accToAdd.Name))

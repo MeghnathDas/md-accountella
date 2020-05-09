@@ -1,0 +1,17 @@
+:host {
+    margin-bottom: .5rem;
+}
+header {
+    padding: .4rem .6rem;
+    background-color: #adadad;
+    height: auto;
+    font-weight: 500;
+    font-size: small;
+    border-radius: 2px;
+}
+.detail-area {
+    padding: .2rem .5rem;
+}
+.detail-area .item .caption {
+    padding: .2rem;
+}

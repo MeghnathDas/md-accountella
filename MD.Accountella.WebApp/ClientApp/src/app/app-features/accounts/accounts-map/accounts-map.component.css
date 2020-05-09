@@ -3,14 +3,6 @@
 }
 .account-groups {
     padding: .6rem .2rem;
-    list-style: none;
-}
-.account-groups li {
-    padding: .4rem .6rem;
-    background-color: #e4e4e4;
-    font-weight: bold;
-    border-radius: 2px;
-}
-.account-groups li:not(:last-child) {
-    margin-bottom: .5rem;
+    display: flex;
+    flex-direction: column;
 }
