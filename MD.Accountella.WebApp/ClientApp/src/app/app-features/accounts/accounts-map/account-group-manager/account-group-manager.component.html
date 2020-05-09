@@ -2,7 +2,14 @@
     {{group.name}}
 </header>
 <div class="detail-area">
-    <div class="item" *ngFor="let acc of accounts">
-        <div class="caption">{{acc.name}}</div>        
+    <div class="item-spec" *ngFor="let acc of accounts">
+        <div class="intro">
+            <div class="caption p2">{{acc.name}}</div>
+            <div class="sub-caption p7">Demo Intro - Elaborated</div>
+        </div>
+        <div class="desc p3">{{acc.description}}</div>
+    </div>
+    <div class="item-action">
+        <a>Add new account</a>
     </div>
 </div>

@@ -11,7 +11,35 @@ header {
 }
 .detail-area {
     padding: .2rem .5rem;
+    display: flex;
+    flex-direction: column;
 }
-.detail-area .item .caption {
-    padding: .2rem;
+.item-spec {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: stretch;
+    box-shadow: 0 -0.05rem 0 #ccc inset;
+    padding: 0 .5rem .5rem .5rem;
+    min-height: 3rem;
+}
+.item-spec .intro {
+    display: flex;
+    flex-direction: column;
+}
+.item-spec .intro .caption {
+    margin-top: 0;
+}
+.item-spec .intro .sub-caption {
+    margin-top: -2px;
+}
+.item-spec .desc {
+    margin-top: 0;
+    margin-left: 1rem;
+    max-width: 20rem;
+}
+.item-spec .action {
+    display: flex;
+    flex-direction: column;
 }

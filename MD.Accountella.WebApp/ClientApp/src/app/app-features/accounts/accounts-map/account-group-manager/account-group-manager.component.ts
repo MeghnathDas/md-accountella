@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Category } from 'src/app/app-features/models';
+import { Category, Account } from '../../../models';
 import { AccountMapService } from '../../services/account-map/account-map.service';
 
 @Component({
