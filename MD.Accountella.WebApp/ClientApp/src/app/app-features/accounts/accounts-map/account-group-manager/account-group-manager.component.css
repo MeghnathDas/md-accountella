@@ -13,16 +13,19 @@ header {
     padding: .2rem .5rem;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
+    max-height: 45vh;
+}
+.detail-area .item-spec:not(:first-child) {
+    padding-top: .5rem;
 }
 .item-spec {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     align-items: flex-start;
-    justify-content: stretch;
     box-shadow: 0 -0.05rem 0 #ccc inset;
     padding: 0 .5rem .5rem .5rem;
-    min-height: 3rem;
 }
 .item-spec .intro {
     display: flex;
@@ -36,8 +39,16 @@ header {
 }
 .item-spec .desc {
     margin-top: 0;
-    margin-left: 1rem;
-    max-width: 20rem;
+    max-width: 36vw;
+}
+@media screen and (min-width: 420px) {
+    .item-spec :first-child {
+        max-width: 10rem;
+    }
+    .item-spec > :not(:first-child) {
+        margin-left: 1rem;
+        min-height: 3rem;
+    }
 }
 .item-spec .action {
     display: flex;
