@@ -14,8 +14,8 @@ A basic accounting application
 - Git Branching & Merging
 - Azure Pipeline
 
-Hosted URL -> [https://md-accountella.herokuapp.com/](https://md-accountella.herokuapp.com/)
-
+Hosted URL -> [https://md-poc-accountella.azurewebsites.net/](https://md-poc-accountella.azurewebsites.net/)
+Azure DevOps URL -> [https://dev.azure.com/MD-POC/Accountella](https://dev.azure.com/MD-POC/Accountella)
 # Editor
 
 ![](https://meghnathdas.github.io/public/images/MD_Logo_138X138.png)
