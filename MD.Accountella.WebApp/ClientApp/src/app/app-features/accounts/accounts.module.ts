@@ -10,6 +10,7 @@ import { TransactionsComponent } from './transactions/transactions.component';
 import { AccountMapService } from './services/account-map/account-map.service';
 import { AccountBooksService as AccountBookService } from './services/account-book/account-book.service';
 import { AccountTransactionService } from './services/account-transaction/account-transaction.service';
+import { AccountGroupManagerComponent } from './accounts-map/account-group-manager/account-group-manager.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { AccountTransactionService } from './services/account-transaction/accoun
     LedgerComponent,
     DayBookComponent,
     CashBookComponent,
-    AccountsMapComponent
+    AccountsMapComponent,
+    AccountGroupManagerComponent
   ],
   imports: [
     CommonModule,

@@ -22,6 +22,8 @@ namespace MD.Accountella.DL
                         Id = Helper.DbUtility.FormatSeedDataId("cash_on_hand"),
                         _CategoryId = EntityCategorySeedDataProvider.CashAndBankCategory_SubAsset.Id,
                         Name = "Cash on hand",
+                        Description = "Cash you haven’t deposited in the bank. " +
+                        "Add your bank and credit card accounts to accurately categorize transactions that aren't cash.",
                         IsActive = true,
                         IsReadOnly = true
                     },
@@ -30,6 +32,7 @@ namespace MD.Accountella.DL
                         Id = Helper.DbUtility.FormatSeedDataId("sales"),
                         _CategoryId = EntityCategorySeedDataProvider.IncomeAccountCategory_SubIncome.Id,
                         Name = "Sales",
+                        Description = "Payments from your customers for products and services that your business sold.",
                         IsActive = true,
                         IsReadOnly = true
                     }

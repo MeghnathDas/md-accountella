@@ -28,7 +28,7 @@ namespace MD.Accountella.BL
             return _mapper.Map<EntityCategoryDto>(addedCatg);
         }
 
-        public ICollection<EntityCategoryDto> GetCategories(string id)
+        public IEnumerable<EntityCategoryDto> GetCategories(string id)
         {
             var catgs = _repository.GetCategories(id);
             return _mapper.Map<ICollection<EntityCategoryDto>>(catgs);

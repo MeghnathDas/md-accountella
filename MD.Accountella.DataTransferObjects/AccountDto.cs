@@ -10,7 +10,7 @@ namespace MD.Accountella.DataTransferObjects
     {
         public string Id { get; set; }
         public string Name { get; set; }
-        public string Details { get; set; }
+        public string Description { get; set; }
         public string _CategoryId { get; set; }
         public bool IsActive { get; set; }
         public bool IsReadOnly { get; set; }

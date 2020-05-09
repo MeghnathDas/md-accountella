@@ -18,7 +18,7 @@ namespace MD.Accountella.DomainObjects
 
         [BsonRequired]
         public string Name { get; set; }
-        public string Details { get; set; }
+        public string Description { get; set; }
 
         [BsonRequired]
         public string _CategoryId { get; set; }
