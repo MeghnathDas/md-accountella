@@ -8,14 +8,14 @@
                     <ng-container *ngFor="let agroup of aHead.subCategories">
                         <app-account-group-manager [group]="agroup"></app-account-group-manager>
                         <a class="action-link-button l-mar1" (click)="showAddNew(aHead, agroup)">Add new account</a>
-                        <button type="button" (click)="showAddNew(aHead, agroup)" class="btn btn-icon btn-primary btn-lg float"
-                            aria-label="add" title="Add Account">
-                            <clr-icon shape="plus"></clr-icon>
-                        </button>
                     </ng-container>
                 </div>
             </clr-tab-content>
             <!-- </ng-template> -->
         </clr-tab>
     </clr-tabs>
+    <button type="button" (click)="showAddNew()" class="btn btn-icon btn-primary btn-lg float"
+        aria-label="add" title="Add Account">
+        <clr-icon shape="plus"></clr-icon>
+    </button>
 </div>

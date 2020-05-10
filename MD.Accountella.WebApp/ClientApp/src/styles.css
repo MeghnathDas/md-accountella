@@ -19,13 +19,34 @@ body {
   height: 100vh;
 }
 
-body, body p {
+body,
+body p {
   color: #666;
-  color: var(--clr-p1-color,#666);
+  color: var(--clr-p1-color, #666);
   font-weight: 400;
-  font-weight: var(--clr-p1-font-weight,400);
-  font-size: .7rem;
+  font-weight: var(--clr-p1-font-weight, 400);
+  font-size: 0.7rem;
   letter-spacing: normal;
   line-height: 1.2rem;
   margin-bottom: 0;
+}
+
+.action-link-button {
+  cursor: pointer;
+}
+.l-mar1 {
+  margin-left: 1rem;
+}
+.float {
+  position: fixed;
+  bottom: 2rem;
+  right: 1.8rem;
+  box-shadow: 0px 17px 10px -10px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  transition: all ease-in-out 300ms;
+  text-decoration: none;
+}
+.float:hover {
+  box-shadow: 0px 37px 20px -15px rgba(0, 0, 0, 0.2);
+  transform: translate(0px, -10px);
 }

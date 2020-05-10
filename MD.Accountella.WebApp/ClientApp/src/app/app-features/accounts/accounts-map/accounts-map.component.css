@@ -13,22 +13,3 @@
     flex-wrap: wrap;
     height: auto;
 } */
-.action-link-button {
-    cursor: pointer;
-}
-.l-mar1 {
-    margin-left: 1rem;
-}
-.float {
-    position: fixed;
-    bottom: 4rem;
-    right: 3rem;
-    box-shadow: 0px 17px 10px -10px rgba(0, 0, 0, 0.4);
-    cursor: pointer;
-    transition: all ease-in-out 300ms;
-    text-decoration: none;
-}
-.float:hover {
-    box-shadow: 0px 37px 20px -15px rgba(0, 0, 0, 0.2);
-    transform: translate(0px, -10px);
-}
