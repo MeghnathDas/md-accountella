@@ -1,5 +1,5 @@
 <header>
-    {{group.name}}
+    {{accGroup.name}}
 </header>
 <div class="detail-area" *ngIf="accounts && accounts.length > 0">
     <div class="item-spec" *ngFor="let acc of accounts">
@@ -9,7 +9,7 @@
         </div>
         <div class="desc p3">{{acc.description}}</div>
         <div class="action">
-            <button class="btn btn-icon btn-sm" aria-label="edit" title="Edit">
+            <button (click)="editRequest.emit(acc)" class="btn btn-icon btn-sm" aria-label="edit" title="Edit">
                 <clr-icon shape="pencil"></clr-icon>
             </button>
         </div>

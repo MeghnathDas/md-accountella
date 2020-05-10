@@ -5,9 +5,10 @@ import { Title } from '@angular/platform-browser';
 import { BlockInteractionService } from './block-interaction/block-interaction.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpInterceptorService } from './http-interceptor/http-intercept.service';
+import { AutofocusDirective } from './directives/autofocus/autofocus.directive';
 
 @NgModule({
-    declarations: [],
+    declarations: [AutofocusDirective],
     imports: [],
     providers: [
         Title,

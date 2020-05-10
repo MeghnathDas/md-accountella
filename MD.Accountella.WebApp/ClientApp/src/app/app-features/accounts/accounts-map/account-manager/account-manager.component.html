@@ -1,0 +1,26 @@
+<form novalidate (ngSubmit)="onSubmit();">
+    <clr-modal [(clrModalOpen)]="show">
+        <div class="modal-title">Edit Account</div>
+
+        <div class="modal-body">
+            <section class="form-block">
+                <div class="form-group ">
+                    <label>Name</label>
+                    <input type="text" name="firstName" autofocus [(ngModel)]="acc.name" placeholder="first name"
+                        (keypress)="onKeyPress($event)" required>
+                </div>
+                <div class="form-group ">
+                    <label>Description</label>
+                    <textarea type="text" name="lastName" rows="2" cols="4" [(ngModel)]="acc.description" placeholder="last name"
+                        (keypress)="onKeyPress($event)">
+                    </textarea>
+                </div>
+            </section>
+        </div>
+
+        <div class="modal-footer">
+            <button (click)="close()" class="btn btn-default">Cancel</button>
+            <button type="submit" class="btn btn-primary">OK</button>
+        </div>
+    </clr-modal>
+</form>

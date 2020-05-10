@@ -1,4 +1,4 @@
-export interface Account {
+export interface Acount {
     name: string;
     description: string;
     _categoryId: string;
