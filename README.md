@@ -15,6 +15,7 @@ A basic accounting application
 - Azure Pipeline
 
 Hosted URL -> [https://md-poc-accountella.azurewebsites.net/](https://md-poc-accountella.azurewebsites.net/)
+
 Azure DevOps URL -> [https://dev.azure.com/MD-POC/Accountella](https://dev.azure.com/MD-POC/Accountella)
 # Editor
 
