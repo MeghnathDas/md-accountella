@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Category } from 'src/app/app-features/models';
 import { environment } from 'src/environments/environment';
-import { Account } from '../../../models/account.model';
+import { Acount } from '../../../models/account.model';
 
 @Injectable()
 export class AccountMapService {
@@ -15,8 +15,8 @@ export class AccountMapService {
     const url = `${this.accountEndpoint}/categories`;
     return this.httpc.get<Category[]>(url);
   }
-  getAccountsBySubCategory(categoryId: string): Observable<Account[]> {
+  getAccountsBySubCategory(categoryId: string): Observable<Acount[]> {
     const url = `${this.accountEndpoint}/accounts-by-category/${categoryId}`;
-    return this.httpc.get<Account[]>(url);
+    return this.httpc.get<Acount[]>(url);
   }
 }

@@ -1,0 +1,37 @@
+/* :host {
+    margin-bottom: .5rem;
+} */
+header {
+    padding: 0.4rem 0.6rem;
+    background-color: #adadad;
+    height: auto;
+    font-weight: 500;
+    font-size: small;
+    border-radius: 2px;
+}
+.detail-area {
+    padding: 0.2rem 0.5rem;
+    display: flex;
+    flex-direction: column;
+}
+.detail-area .item-spec:not(:first-child) {
+    padding-top: 0.5rem;
+}
+.item-spec {
+    box-shadow: 0 -0.05rem 0 #ccc inset;
+    padding: 0 0.5rem 0.5rem 0.5rem;
+    display: grid;
+    grid-template-columns: 30% 50% 8%;
+    grid-column-gap: 6px;
+    grid-row-gap: 6px;
+}
+.item-spec .intro {
+    display: flex;
+    flex-direction: column;
+}
+.item-spec .intro .caption, .item-spec .desc {
+    margin-top: 0;
+}
+.item-spec .intro .sub-caption {
+    margin-top: -2px;
+}
