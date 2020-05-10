@@ -12,6 +12,13 @@ code {
   border-color: #1861ac;
 }
 
+body {
+  /* display: flex; */
+  /* flex-direction: column; */
+  margin: 0;
+  height: 100vh;
+}
+
 body, body p {
   color: #666;
   color: var(--clr-p1-color,#666);

@@ -1,4 +1,4 @@
-<div class="tab-container">
+<div class="tab-container" #accTabContainer (window:resize)="onResize($event)">
     <clr-tabs>
         <clr-tab *ngFor="let aHead of accountHeads">
             <button clrTabLink>{{aHead.name}}</button>
