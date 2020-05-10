@@ -62,4 +62,10 @@ export class AccountsMapComponent implements OnInit, AfterViewChecked {
       this.autoTabSelectionRequired = autoTabSelection;
     });
   }
+  showAddNew(aHead, agroup) {
+    // console.log('Account head');
+    // console.log(aHead);
+    // console.log('Account group');
+    // console.log(agroup);
+  }
 }
