@@ -1,14 +1,15 @@
 .tab-container {
     padding: 1rem;
+    height: 100%;
 }
 .account-groups {
     padding: .6rem .2rem;
     display: flex;
     flex-direction: column;    
-    max-height: 55vh;
+    max-height: 100%;
     overflow-y: auto;
 }
-::ng-deep .nav {    
+/* ::ng-deep .nav {    
     flex-wrap: wrap;
     height: auto;
-}
+} */
