@@ -7,14 +7,14 @@
                 <div class="account-groups">
                     <ng-container *ngFor="let agroup of aHead.subCategories">
                         <app-account-group-viewer [accGroup]="agroup"></app-account-group-viewer>
-                        <a class="action-link-button l-mar1" (click)="accManager.open(undefined, agroup, undefined)">Add new account</a>
+                        <a class="action-link-button l-mar1" (click)="accManager.open(aHead, agroup, undefined)">Add new account</a>
                     </ng-container>
                 </div>
             </clr-tab-content>
             <!-- </ng-template> -->
         </clr-tab>
     </clr-tabs>
-    <button type="button" (click)="accManager.open(aHead, undefined, undefined)" class="btn btn-icon btn-primary btn-lg float"
+    <button type="button" (click)="accManager.open(undefined, undefined, undefined)" class="btn btn-icon btn-primary btn-lg float"
         aria-label="add" title="Add Account">
         <clr-icon shape="plus"></clr-icon>
     </button>
