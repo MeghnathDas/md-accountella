@@ -56,16 +56,14 @@ export class AccountsMapComponent implements OnInit, AfterViewChecked {
     this.loadAccountHeads(true);
   }
   loadAccountHeads(autoTabSelection: boolean = false, tabIndexToSelect = 0) {
+    this.tabIndexToSelect = tabIndexToSelect;
     this.accMapServ.getCategoryMap().subscribe(catgs => {
       this.accountHeads = catgs;
-      this.tabIndexToSelect = tabIndexToSelect;
       this.autoTabSelectionRequired = autoTabSelection;
     });
   }
   showAddNew(aHead, agroup) {
-    // console.log('Account head');
-    // console.log(aHead);
-    // console.log('Account group');
-    // console.log(agroup);
+    const actTabIndex = !aHead ? 0 : this.accountHeads.findIndex(x => x.id === aHead.id);
+    this.loadAccountHeads(true, actTabIndex);
   }
 }
