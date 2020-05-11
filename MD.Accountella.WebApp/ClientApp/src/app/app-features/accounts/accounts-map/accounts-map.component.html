@@ -1,7 +1,7 @@
 <div class="tab-container" #accTabContainer (window:resize)="onResize($event)">
     <clr-tabs>
         <clr-tab *ngFor="let aHead of accountHeads">
-            <button clrTabLink>{{aHead.name}}</button>
+            <button clrTabLink [id]="aHead.id">{{aHead.name}}</button>
             <!-- <ng-template [(clrIfActive)]="dashboardActive"> -->
             <clr-tab-content *clrIfActive="true">
                 <div class="account-groups">
@@ -14,7 +14,7 @@
             <!-- </ng-template> -->
         </clr-tab>
     </clr-tabs>
-    <button type="button" (click)="accManager.open()" class="btn btn-icon btn-primary btn-lg float"
+    <button type="button" (click)="accManager.open(getSelectedHead(), null)" class="btn btn-icon btn-primary btn-lg float"
         aria-label="add" title="Add Account">
         <clr-icon shape="plus"></clr-icon>
     </button>

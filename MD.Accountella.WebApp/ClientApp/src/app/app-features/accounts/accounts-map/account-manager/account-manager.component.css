@@ -1,7 +1,8 @@
 .inp-custom {
     min-width: 15rem;
 }
-.ng-dropdown-panel, .ng-select-bottom {
+.ng-dropdown-panel,
+.ng-select-bottom {
     position: absolute !important;
 }
 .modal-body {
@@ -9,12 +10,33 @@
 }
 ::ng-deep .ng-dropdown-panel {
     background-color: white;
-    padding: 0 .5rem;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 0 0.5rem;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 }
 ::ng-deep .ng-option {
     box-shadow: 0 -0.05rem 0 #ccc inset;
 }
 .padl-6 {
-    padding: 0 .6rem;
+    padding: 0 0.6rem;
+}
+.custom-wrapper {
+    display: flex;
+}
+::ng-deep .ng-dropdown-header {
+    padding: 0.3rem;
+    align-content: flex-start;
+    justify-content: space-between;
+}
+::ng-deep .ng-dropdown-header button {
+    height: 1.5rem !important;
+    min-width: auto;
+    font-size: x-small;
+    margin-top: 0.2rem;
+    border-radius: 0;
+}
+::ng-deep .ng-dropdown-header input {
+    padding-left: 0.5rem;
+}
+.sp-icon {
+    margin-left: -1.2rem;
 }

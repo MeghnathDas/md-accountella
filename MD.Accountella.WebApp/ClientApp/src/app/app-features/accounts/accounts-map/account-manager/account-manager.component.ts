@@ -11,7 +11,8 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
 })
 export class AccountManagerComponent implements OnInit {
   accForm = new FormGroup({
-    category: new FormControl(undefined, Validators.required),
+    head: new FormControl(''),
+    group: new FormControl(undefined, Validators.required),
     name: new FormControl('', Validators.required),
     desc: new FormControl('')
   });
@@ -47,17 +48,27 @@ export class AccountManagerComponent implements OnInit {
     this.show = true;
 
     if (accParam) {
+      const currGrp = this.accGroups.filter(ag => ag.id === accParam._CategoryId)[0];
       this.accForm.patchValue({
         name: accParam.name,
         desc: accParam.description,
-        category: this.accGroups.filter(ag => ag.id === accParam._CategoryId)[0]
+        group: currGrp,
+        head: currGrp.parent
       });
       this.isAlter = true;
     } else {
       if (accGroup) {
-        this.accForm.patchValue({
-          category: this.accGroups.filter(ag => ag.id === accGroup.id)[0]
-        });
+        if (accGroup._ParentId) {
+          const currGrp = this.accGroups.filter(ag => ag.id === accGroup.id)[0];
+          this.accForm.patchValue({
+            group: currGrp,
+            head: currGrp.parent
+          });
+        } else {
+          this.accForm.patchValue({
+            head: (Object.assign({}, accGroup) as Category)
+          });
+        }
       }
       this.isAlter = false;
     }
@@ -83,7 +94,7 @@ export class AccountManagerComponent implements OnInit {
       const acc = <Acount>{
         name: this.accForm.value.name,
         description: this.accForm.value.desc,
-        _CategoryId: this.accForm.value.category.id
+        _CategoryId: this.accForm.value.group.id
       };
       this.submitAction.emit(acc);
     }

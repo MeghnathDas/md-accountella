@@ -94,4 +94,12 @@ export class AccountsMapComponent implements OnInit, AfterViewChecked, AfterView
       this.autoTabSelectionRequired = autoTabSelection;
     });
   }
+  getSelectedHead(): Category {
+    try {
+      const headId = this.headTabs.filter(tb => tb.active === true)[0].tabLinkId;
+      return this.accountHeads.filter(ah => ah.id === headId)[0];
+    } catch (err) {
+      return null;
+    }
+  }
 }
