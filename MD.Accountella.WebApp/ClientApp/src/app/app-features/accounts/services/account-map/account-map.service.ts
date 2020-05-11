@@ -15,6 +15,10 @@ export class AccountMapService {
     const url = `${this.accountEndpoint}/categories`;
     return this.httpc.get<Category[]>(url);
   }
+  getAccountGroups(): Observable<Category[]> {
+    const url = `${this.accountEndpoint}/groups`;
+    return this.httpc.get<Category[]>(url);
+  }
   getAccountsBySubCategory(categoryId: string): Observable<Acount[]> {
     const url = `${this.accountEndpoint}/accounts-by-category/${categoryId}`;
     return this.httpc.get<Acount[]>(url);

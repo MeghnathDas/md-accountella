@@ -67,6 +67,16 @@ namespace MD.Accountella.WebApp.Controllers
             return _accountService.GetCategories().ToList();
         }
 
+        // GET: api/account-map/groups
+        [HttpGet("[action]", Name = "GetAccountGroups")]
+        public ICollection<EntityCategoryDto> Groups()
+        {
+            var subCatgs = _accountService.GetCategories()
+                .Where(x => x.SubCategories != null && x.SubCategories.Any())
+                .SelectMany(catg => catg.SubCategories);
+            return subCatgs.ToList();
+        }
+
         // GET: api/account-map/accounts-by-category/2
         [HttpGet("accounts-by-category/{subCategoryId}", Name = "GetAccountsByCategory")]
         public ICollection<AccountDto> GetAccountsByCategory(string subCategoryId)

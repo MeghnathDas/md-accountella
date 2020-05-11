@@ -50,7 +50,7 @@ namespace MD.Accountella.BL
         }
         public IEnumerable<EntityCategoryDto> GetCategories()
         {
-            return _mapper.Map< ICollection<EntityCategoryDto>>(this._repository.GetCategories());
+            return _mapper.Map<IEnumerable<EntityCategoryDto>>(this._repository.GetCategories());
         }
     }
 }

@@ -1,37 +1,38 @@
 <clr-modal [(clrModalOpen)]="show">
     <h3 class="modal-title">{{isAlter ? 'Update' : 'Add'}}&nbsp;Account</h3>
-    <div class="modal-body">
-        <form clrForm [formGroup]="accForm" (ngSubmit)="onSubmit()">
-            <clr-input-container>
-                <label for="name">Name</label>
-                <input clrInput type="text" formControlName="name" (keypress)="onKeyPress($event)" required />
-                <clr-control-helper>Name helper text that shows while it is pristine and valid</clr-control-helper>
-                <clr-control-error>Error message that appears after focus is lost and control is invalid
-                </clr-control-error>
-            </clr-input-container>
-            <clr-textarea-container>
-                <label>Description</label>
-                <textarea clrTextarea formControlName="desc" (keypress)="onKeyPress($event)">
+    <form class="modal-body" clrForm [formGroup]="accForm" (ngSubmit)="onSubmit()">
+        <clr-input-container>
+            <label for="name">Name</label>
+            <input class="inp-custom" clrInput type="text" formControlName="name" (keypress)="onKeyPress($event)" required />
+            <clr-control-helper>Name helper text that shows while it is pristine and valid</clr-control-helper>
+            <clr-control-error>Error message that appears after focus is lost and control is invalid
+            </clr-control-error>
+        </clr-input-container>
+        <clr-textarea-container>
+            <label>Description</label>
+            <textarea class="inp-custom" clrTextarea formControlName="desc" (keypress)="onKeyPress($event)">
                 </textarea>
-                <clr-control-helper>Description helper text that shows while it is pristine and valid
-                </clr-control-helper>
-                <clr-control-error>Error message that appears after focus is lost and control is invalid
-                </clr-control-error>
-            </clr-textarea-container>
-            <clr-datalist-container>
-                <label>Group</label>
-                <input clrDatalistInput formControlName="category" />
-                <datalist id="clr-accgrp-datalistid-1">
-                    <option *ngFor="let grp of accGroups" [value]="grp + ' dl 1'"></option>
-                </datalist>
-                <clr-control-helper>Account group helper text</clr-control-helper>
-                <clr-control-error>There was an error</clr-control-error>
-            </clr-datalist-container>
-            <div class="modal-footer">
-                <button (click)="close()" class="btn btn-default">Cancel</button>
-                <button type="submit" class="btn btn-primary">Save</button>
+            <clr-control-helper>Description helper text that shows while it is pristine and valid
+            </clr-control-helper>
+            <clr-control-error>Error message that appears after focus is lost and control is invalid
+            </clr-control-error>
+        </clr-textarea-container>
+        <div class="clr-form-control clr-row padl-6">
+            <label for="select-catg" class="clr-control-label">Group</label>
+            <div class="clr-control-container">
+                <ng-select class="clr-input inp-custom" formControlName="category" [items]="accGroups" bindLabel="name" [loading]="catgsLoading"
+                    [searchFn]="catgSearchFn">
+                    <ng-template ng-option-tmp let-item="item">
+                        {{item.name}} <br />
+                        <small>{{item.parent.name}}</small>
+                    </ng-template>
+                </ng-select>
+                <!-- <span class="clr-subtext">Error message</span> -->
             </div>
-        </form>
+        </div>
+    </form>
+    <div class="modal-footer">
+        <button (click)="close()" class="btn btn-default">Cancel</button>
+        <button type="submit" (click)="onSubmit()" [disabled]="accForm.invalid" class="btn btn-primary">Save</button>
     </div>
-
 </clr-modal>

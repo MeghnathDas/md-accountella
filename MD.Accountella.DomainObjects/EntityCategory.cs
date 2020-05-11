@@ -19,6 +19,9 @@ namespace MD.Accountella.DomainObjects
         [BsonRequired]
         public string Name { get; set; }
         public string _parentId { get; set; }
+
+        [BsonIgnore]
+        public virtual EntityCategory Parent { get; set; }
         public int SequenceNo { get; set; }
         public AppEntityEnum ForEntity { get; set; }
         public bool IsReadOnly { get; set; }

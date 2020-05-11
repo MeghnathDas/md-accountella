@@ -1,0 +1,20 @@
+.inp-custom {
+    min-width: 15rem;
+}
+.ng-dropdown-panel, .ng-select-bottom {
+    position: absolute !important;
+}
+.modal-body {
+    overflow: visible;
+}
+::ng-deep .ng-dropdown-panel {
+    background-color: white;
+    padding: 0 .5rem;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+::ng-deep .ng-option {
+    box-shadow: 0 -0.05rem 0 #ccc inset;
+}
+.padl-6 {
+    padding: 0 .6rem;
+}

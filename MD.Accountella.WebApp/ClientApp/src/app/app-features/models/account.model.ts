@@ -1,7 +1,7 @@
 export interface Acount {
     name: string;
     description: string;
-    _categoryId: string;
+    _CategoryId: string;
     isActive: boolean;
     isReadOnly: boolean;
 }

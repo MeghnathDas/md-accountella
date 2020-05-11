@@ -1,6 +1,6 @@
 import {
   Component, OnInit, ViewChildren, QueryList, AfterViewChecked,
-  ViewChild, ElementRef, HostListener, AfterViewInit
+  ViewChild, ElementRef, HostListener, AfterViewInit, OnDestroy
 } from '@angular/core';
 import { TitleService } from 'src/app/core';
 import { AccountMapService } from '../services/account-map/account-map.service';
@@ -8,7 +8,7 @@ import { Category, Acount } from '../../models';
 import { ClrTabLink } from '@clr/angular';
 import { AccountManagerComponent } from './account-manager/account-manager.component';
 import { AccountGroupViewerComponent } from './account-group-viewer/account-group-viewer.component';
-import { AccountManagerResponse } from './account-manager/account-manager-response.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-accounts-map',
@@ -16,6 +16,7 @@ import { AccountManagerResponse } from './account-manager/account-manager-respon
   styleUrls: ['./accounts-map.component.css']
 })
 export class AccountsMapComponent implements OnInit, AfterViewChecked, AfterViewInit {
+  private accGroupSubscriptions: Subscription[];
   caption = 'Account Mappings';
   accountHeads: Category[];
 
@@ -34,13 +35,14 @@ export class AccountsMapComponent implements OnInit, AfterViewChecked, AfterView
 
   constructor(private titleServ: TitleService, private accMapServ: AccountMapService) { }
   ngAfterViewInit(): void {
-      this.accManager.submitAction.subscribe((resp: AccountManagerResponse) => {
-          if (resp.isSuccess) {
-            this.accManager.close();
-            const actTabIndex = !resp.accountHead ? 0 : this.accountHeads.findIndex(x => x.id === resp.accountHead.id);
-            this.loadAccountHeads(true, actTabIndex);
-          }
-      });
+    this.accManager.submitAction.subscribe((resp: Acount) => {
+      if (resp) {
+        this.accManager.close();
+        const actTabIndex = this.accountHeads.findIndex(x =>
+          x.subCategories.filter(xs => xs.id === resp._CategoryId).length > 0);
+        this.loadAccountHeads(true, actTabIndex);
+      }
+    });
   }
   ngAfterViewChecked(): void {
     if (this.headTabs.first && this.autoTabSelectionRequired) {
@@ -48,10 +50,17 @@ export class AccountsMapComponent implements OnInit, AfterViewChecked, AfterView
       this.headTabs.toArray()[this.tabIndexToSelect].activate();
       this.setTabLinks();
     }
+    this.setupAccGroupViewerSubscription();
+  }
+  private setupAccGroupViewerSubscription() {
+    this.accGroupSubscriptions?.forEach(sb =>
+      sb.unsubscribe()
+    );
+    this.accGroupSubscriptions = [];
     this.accGroupViewers.forEach(gv => {
-      gv.editRequest.subscribe((req: Acount) => {
-        this.accManager.open(null, null, req);
-      });
+      this.accGroupSubscriptions.push(gv.editRequest.subscribe((req: Acount) => {
+        this.accManager.open(null, req);
+      }));
     });
   }
   private setTabLinks() {

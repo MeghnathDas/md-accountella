@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter, ElementRef, HostListener } from '@angular/core';
 import { AutofocusDirective } from '../../../../core';
 import { Acount, Category } from '../../../models';
-import { AccountManagerResponse } from './account-manager-response.model';
 import { AccountMapService } from '../../services/account-map/account-map.service';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 
@@ -11,33 +10,57 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
   styleUrls: ['./account-manager.component.css']
 })
 export class AccountManagerComponent implements OnInit {
-  accForm: FormGroup;
+  accForm = new FormGroup({
+    category: new FormControl(undefined, Validators.required),
+    name: new FormControl('', Validators.required),
+    desc: new FormControl('')
+  });
   @ViewChild(AutofocusDirective) autofocus: AutofocusDirective;
-  @Output() submitAction: EventEmitter<AccountManagerResponse> = new EventEmitter<AccountManagerResponse>();
+  @Output() submitAction: EventEmitter<Acount> = new EventEmitter<Acount>();
   show = false;
   isAlter = false;
 
-  accGroups: string[] = ['Item1', 'Item2', 'Item3'];
-  accHead: Category;
+  accGroups: Category[];
+  catgsLoading = false;
 
   constructor(private el: ElementRef,
     private accountServ: AccountMapService) {
-      this.accForm = new FormGroup({
-        category: new FormControl(undefined, Validators.required),
-        name: new FormControl('', Validators.required),
-        desc: new FormControl('')
-      });
   }
   ngOnInit(): void {
+    this.loadCategories();
+  }
+  private loadCategories() {
+    this.catgsLoading = true;
+    this.accountServ.getAccountGroups().subscribe(grps => {
+      this.accGroups = grps;
+      this.catgsLoading = false;
+    });
   }
 
-  open(accHead: Category, accGroup: Category, accParam: Acount) {
-    this.accForm.markAsPristine();
-    this.show = true;
-    this.accHead = accHead;
-    const acc: Acount = accParam ? Object.create(accParam) : undefined;
+  catgSearchFn(strSearch: string, item: Category) {
+    strSearch = strSearch.toLowerCase();
+    return item.name.toLowerCase().indexOf(strSearch) > -1;
+  }
 
-    this.isAlter = acc !== undefined;
+  open(accGroup: Category = null, accParam: Acount = null) {
+    this.accForm.reset();
+    this.show = true;
+
+    if (accParam) {
+      this.accForm.patchValue({
+        name: accParam.name,
+        desc: accParam.description,
+        category: this.accGroups.filter(ag => ag.id === accParam._CategoryId)[0]
+      });
+      this.isAlter = true;
+    } else {
+      if (accGroup) {
+        this.accForm.patchValue({
+          category: this.accGroups.filter(ag => ag.id === accGroup.id)[0]
+        });
+      }
+      this.isAlter = false;
+    }
 
     setTimeout(() => {
       if (this.autofocus) {
@@ -52,19 +75,20 @@ export class AccountManagerComponent implements OnInit {
 
   onKeyPress(event) {
     if (event.keyCode === 13) {
-      this.submitAction.emit(<AccountManagerResponse>{
-        accountHead: this.accHead,
-        isSuccess: true
-      });
+      this.onSubmit();
+    }
+  }
+  onSubmit() {
+    if (this.accForm.valid) {
+      const acc = <Acount>{
+        name: this.accForm.value.name,
+        description: this.accForm.value.desc,
+        _CategoryId: this.accForm.value.category.id
+      };
+      this.submitAction.emit(acc);
     }
   }
 
-  onSubmit() {
-    this.submitAction.emit(<AccountManagerResponse>{
-      accountHead: this.accHead,
-      isSuccess: true
-    });
-  }
   @HostListener('submit')
   onFormSubmit() {
     const invalidControl = this.el.nativeElement.querySelector('.ng-invalid');
@@ -73,5 +97,4 @@ export class AccountManagerComponent implements OnInit {
       invalidControl.focus();
     }
   }
-
 }
