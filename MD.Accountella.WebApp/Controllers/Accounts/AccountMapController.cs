@@ -25,6 +25,7 @@ namespace MD.Accountella.WebApp.Controllers
             this._accountService = accountService;
         }
 
+        #region "Account Management"
         // GET: api/account-map/accounts
         [HttpGet("accounts", Name = "GetAllAccounts")]
         public ICollection<AccountDto> GetAllAccounts()
@@ -37,6 +38,13 @@ namespace MD.Accountella.WebApp.Controllers
         public AccountDto GetAccountById(string id)
         {
             return _accountService.GetAccounts(id).FirstOrDefault();
+        }
+
+        // GET: api/account-map/accounts-by-type/2
+        [HttpGet("accounts-by-type/{accTypeId}")]
+        public ICollection<AccountDto> GetAccountsByType(string accTypeId)
+        {
+            return _accountService.GetAccountsByCategory(accTypeId).ToList();
         }
 
         // POST: api/account-map/accounts
@@ -53,25 +61,45 @@ namespace MD.Accountella.WebApp.Controllers
             _accountService.UpdateAccount(id, value);
         }
 
-        // DELETE: api/account-map/accounts/5
-        [HttpDelete("accounts/{id}")]
-        public void Delete(string id)
+        //// DELETE: api/account-map/accounts/5
+        //[HttpDelete("accounts/{id}")]
+        //public void Delete(string id)
+        //{
+        //    _accountService.RemoveAccount(id);
+        //}
+        #endregion
+
+        #region "Account Groups and Types"
+        // GET: api/account-map/account-groups
+        [HttpGet("account-groups")]
+        public ICollection<EntityCategoryDto> GetAccountGroups()
         {
-            _accountService.RemoveAccount(id);
+            return _accountService.GetGroups().ToList();
         }
 
-        // GET: api/account-map/categories
-        [HttpGet("[action]", Name = "GetAccountCategories")]
-        public ICollection<EntityCategoryDto> Categories()
+        // GET: api/account-map/account-types
+        [HttpGet("account-types")]
+        public ICollection<EntityCategoryDto> GetAccountTypes()
         {
-            return _accountService.GetCategories().ToList();
+            var subCatgs = _accountService.GetGroups()
+                .Where(x => x.SubCategories != null && x.SubCategories.Any())
+                .SelectMany(catg => catg.SubCategories);
+            return subCatgs.ToList();
         }
 
-        // GET: api/account-map/accounts-by-category/2
-        [HttpGet("accounts-by-category/{subCategoryId}", Name = "GetAccountsByCategory")]
-        public ICollection<AccountDto> GetAccountsByCategory(string subCategoryId)
+        // POST: api/account-map/account-types
+        [HttpPost("account-types")]
+        public EntityCategoryDto AddAccountType(EntityCategoryDto typeToAdd)
         {
-            return _accountService.GetAccountsByCategory(subCategoryId).ToList();
+            return _accountService.AddSubCategory(typeToAdd);
         }
+
+        // DELETE: api/account-map/account-types/3
+        [HttpDelete("account-types/{accTypeId}")]
+        public void RemoveAccountType(string accTypeId)
+        {
+            _accountService.RemoveSubCategory(accTypeId);
+        }
+        #endregion
     }
 }

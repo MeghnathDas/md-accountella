@@ -14,6 +14,7 @@ namespace MD.Accountella.DL
     using System.Linq;
     using MongoDB.Driver;
     using MongoDB.Driver.Linq;
+    using System.Data;
 
     public class AccountsRepository : IAccountsRepository
     {
@@ -117,7 +118,7 @@ namespace MD.Accountella.DL
                     throw new KeyNotFoundException("No matching account found with the provided key");
 
                 if (!(result.DeletedCount > 0))
-                    throw new Exception("Unknown Error: Category not deleted");
+                    throw new Exception("Unknown Error: Account not deleted");
             }
             catch (Exception ex)
             {
@@ -126,9 +127,22 @@ namespace MD.Accountella.DL
 
         }
 
-        public ICollection<EntityCategory> GetCategories()
+        public IEnumerable<EntityCategory> GetCategories()
         {
             return _categoryRepo.GetCategoriesByEntity(AppEntityEnum.Account);
+        }
+
+        public EntityCategory AddSubCategory(EntityCategory subCategoryToAdd)
+        {
+            subCategoryToAdd.ForEntity = AppEntityEnum.Account;
+            return _categoryRepo.AddCategory(subCategoryToAdd);
+        }
+
+        public void RemoveSubCategory(string subCategoryId)
+        {
+            if (GetAccountsByCategory(subCategoryId).Any())
+                throw new ConstraintException("One or more accounts belongs to the requested type, hence cannot be removed");
+            _categoryRepo.RemoveCategory(subCategoryId);
         }
     }
 }

@@ -1,0 +1,21 @@
+.modal-dialog {
+    width: auto;
+}
+.modal-body {
+    overflow: visible;
+}
+.inp-custom {
+    min-width: 15rem;
+}
+.padl-6 {
+    padding: 0 0.6rem;
+}
+.custom-wrapper {
+    display: flex;
+}
+.sp-icon {
+    margin-left: -1.2rem;
+}
+::ng-deep .ng-option:not(:last-of-type) {
+    box-shadow: 0 -0.05rem 0 #ccc inset;
+}

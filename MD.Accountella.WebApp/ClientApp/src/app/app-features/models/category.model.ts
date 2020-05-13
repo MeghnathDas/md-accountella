@@ -5,4 +5,5 @@ export interface Category {
     sequenceNo: number;
     subCategories: Category[];
     _parentId: string;
+    parent: Category;
 }

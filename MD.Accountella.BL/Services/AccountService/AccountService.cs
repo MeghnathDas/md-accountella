@@ -48,9 +48,21 @@ namespace MD.Accountella.BL
         {
             this._repository.RemoveAccount(id);
         }
-        public IEnumerable<EntityCategoryDto> GetCategories()
+        public IEnumerable<EntityCategoryDto> GetGroups()
         {
-            return _mapper.Map< ICollection<EntityCategoryDto>>(this._repository.GetCategories());
+            return _mapper.Map<IEnumerable<EntityCategoryDto>>(this._repository.GetCategories());
+        }
+
+        public EntityCategoryDto AddSubCategory(EntityCategoryDto subCategoryToAdd)
+        {
+            return _mapper.Map<EntityCategoryDto>(
+                this._repository.AddSubCategory(_mapper.Map<EntityCategory>(subCategoryToAdd))
+                );
+        }
+
+        public void RemoveSubCategory(string subCategoryId)
+        {
+            this._repository.RemoveSubCategory(subCategoryId);
         }
     }
 }

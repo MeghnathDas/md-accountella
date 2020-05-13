@@ -8,6 +8,11 @@ header {
     font-weight: 500;
     font-size: small;
     border-radius: 2px;
+    justify-content: space-between;
+    align-items: center;
+}
+header > clr-icon {
+    cursor: pointer;
 }
 .detail-area {
     padding: 0.2rem 0.5rem;

@@ -14,6 +14,6 @@ namespace MD.Accountella.DL
         EntityCategory AddCategory(EntityCategory accToAdd);
         void UpdateCategory(string id, EntityCategory accountToUpdate);
         void RemoveCategory(string id);
-        ICollection<EntityCategory> GetCategoriesByEntity(AppEntityEnum enitity);
+        IEnumerable<EntityCategory> GetCategoriesByEntity(AppEntityEnum enitity);
     }
 }

@@ -1,43 +1,65 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter, ElementRef, HostListener } from '@angular/core';
+import { Component, ViewChild, Output, EventEmitter, ElementRef } from '@angular/core';
 import { AutofocusDirective } from '../../../../core';
 import { Acount, Category } from '../../../models';
-import { AccountManagerResponse } from './account-manager-response.model';
-import { AccountMapService } from '../../services/account-map/account-map.service';
-import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-account-manager',
   templateUrl: './account-manager.component.html',
   styleUrls: ['./account-manager.component.css']
 })
-export class AccountManagerComponent implements OnInit {
+export class AccountManagerComponent {
   accForm: FormGroup;
   @ViewChild(AutofocusDirective) autofocus: AutofocusDirective;
-  @Output() submitAction: EventEmitter<AccountManagerResponse> = new EventEmitter<AccountManagerResponse>();
+  @Output() addRequest: EventEmitter<Acount> = new EventEmitter<Acount>();
+  @Output() updateRequest: EventEmitter<Acount> = new EventEmitter<Acount>();
   show = false;
   isAlter = false;
 
-  accGroups: string[] = ['Item1', 'Item2', 'Item3'];
-  accHead: Category;
+  currentGroup: Category;
+  catgsLoading = false;
 
-  constructor(private el: ElementRef,
-    private accountServ: AccountMapService) {
-      this.accForm = new FormGroup({
-        category: new FormControl(undefined, Validators.required),
-        name: new FormControl('', Validators.required),
-        desc: new FormControl('')
+  constructor(private el: ElementRef, private fb: FormBuilder) {
+    this.accForm = this.fb.group({
+      id: [null],
+      name: ['', Validators.required],
+      desc: [''],
+      type: [undefined, Validators.required]
+    });
+  }
+
+  catgSearchFn(strSearch: string, item: Category) {
+    strSearch = strSearch.toLowerCase();
+    return item.name.toLowerCase().indexOf(strSearch) > -1;
+  }
+
+  open(accGroup: Category, accParam: Acount = null, currTypeId: string = null) {
+    this.accForm.reset();
+    this.currentGroup = accGroup;
+    let currAccTyp: Category;
+    if (accParam || currTypeId) {
+      currAccTyp = (
+        Object.assign({},
+          this.currentGroup.subCategories.filter(x =>
+            x.id === currTypeId || x.id === accParam?._CategoryId)[0]) as Category);
+    }
+
+    if (accParam) {
+      this.accForm.patchValue({
+        id: accParam.id,
+        name: accParam.name,
+        desc: accParam.description,
+        type: currAccTyp
       });
-  }
-  ngOnInit(): void {
-  }
+      this.isAlter = true;
+    } else {
+      this.accForm.patchValue({
+        type: currAccTyp
+      });
+      this.isAlter = false;
+    }
 
-  open(accHead: Category, accGroup: Category, accParam: Acount) {
-    this.accForm.markAsPristine();
     this.show = true;
-    this.accHead = accHead;
-    const acc: Acount = accParam ? Object.create(accParam) : undefined;
-
-    this.isAlter = acc !== undefined;
 
     setTimeout(() => {
       if (this.autofocus) {
@@ -52,26 +74,22 @@ export class AccountManagerComponent implements OnInit {
 
   onKeyPress(event) {
     if (event.keyCode === 13) {
-      this.submitAction.emit(<AccountManagerResponse>{
-        accountHead: this.accHead,
-        isSuccess: true
-      });
+      this.onSubmit();
     }
   }
-
   onSubmit() {
-    this.submitAction.emit(<AccountManagerResponse>{
-      accountHead: this.accHead,
-      isSuccess: true
-    });
-  }
-  @HostListener('submit')
-  onFormSubmit() {
-    const invalidControl = this.el.nativeElement.querySelector('.ng-invalid');
-
-    if (invalidControl) {
-      invalidControl.focus();
+    if (this.accForm.dirty && this.accForm.valid) {
+      const acc = <Acount>{
+        id: this.accForm.value.id,
+        name: this.accForm.value.name,
+        description: this.accForm.value.desc,
+        _CategoryId: this.accForm.value.type.id
+      };
+      if (acc.id && acc.id?.trim().length > 0) {
+        this.updateRequest.emit(acc);
+      } else {
+        this.addRequest.emit(acc);
+      }
     }
   }
-
 }

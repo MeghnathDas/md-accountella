@@ -8,6 +8,7 @@ namespace MD.Accountella.DL
     using MD.Accountella.DomainObjects;
     using MongoDB.Driver;
     using MongoDB.Driver.Linq;
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -118,7 +119,7 @@ namespace MD.Accountella.DL
             }
         }
 
-        public ICollection<EntityCategory> GetCategoriesByEntity(AppEntityEnum enitity)
+        public IEnumerable<EntityCategory> GetCategoriesByEntity(AppEntityEnum enitity)
         {
             var catgs = _catgColl.AsQueryable().Where(catg => catg.ForEntity == enitity).ToList();
             return catgs.Where(catg => string.IsNullOrWhiteSpace(catg._parentId))
@@ -128,10 +129,13 @@ namespace MD.Accountella.DL
                             catg.SubCategories
                             = catgs.Where(x => x._parentId != null && x._parentId.Equals(catg.Id))
                                     .OrderBy(x => x.SequenceNo)
+                                    .Select(sCat => {
+                                        sCat.Parent = JsonConvert.DeserializeObject<EntityCategory>(JsonConvert.SerializeObject(catg));
+                                        return sCat;
+                                    })
                                     .ToArray();
                             return catg;
-                        })
-                        .ToArray();
+                        });
         }
     }
 }

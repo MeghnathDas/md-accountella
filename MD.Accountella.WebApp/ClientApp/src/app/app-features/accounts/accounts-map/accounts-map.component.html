@@ -1,22 +1,29 @@
 <div class="tab-container" #accTabContainer (window:resize)="onResize($event)">
     <clr-tabs>
-        <clr-tab *ngFor="let aHead of accountHeads">
-            <button clrTabLink>{{aHead.name}}</button>
+        <clr-tab *ngFor="let accGroup of accountGroups">
+            <button clrTabLink [id]="accGroup.id">{{accGroup.name}}</button>
             <!-- <ng-template [(clrIfActive)]="dashboardActive"> -->
             <clr-tab-content *clrIfActive="true">
                 <div class="account-groups">
-                    <ng-container *ngFor="let agroup of aHead.subCategories">
-                        <app-account-group-viewer [accGroup]="agroup"></app-account-group-viewer>
-                        <a class="action-link-button l-mar1" (click)="accManager.open(aHead, agroup, undefined)">Add new account</a>
+                    <ng-container *ngFor="let accTyp of accGroup.subCategories">
+                        <app-account-type-viewer [accGroup]="accTyp"></app-account-type-viewer>
+                        <a class="action-link-button l-mar1" (click)="accManager.open(accGroup, null, accTyp.id)">Add new
+                            account</a>
                     </ng-container>
                 </div>
             </clr-tab-content>
             <!-- </ng-template> -->
         </clr-tab>
     </clr-tabs>
-    <button type="button" (click)="accManager.open(undefined, undefined, undefined)" class="btn btn-icon btn-primary btn-lg float"
-        aria-label="add" title="Add Account">
-        <clr-icon shape="plus"></clr-icon>
-    </button>
+
+    <form [formGroup]="accTypeForm" clrForm class="add-type-area float" (ngSubmit)="addAccType()"
+        [ngClass]="{'clr-error': accTypeForm.dirty && accTypeForm.invalid}">
+        <input class="clr-input" [placeholder]="'Enter new type name for ' + selectedAccGroup?.name"
+        formControlName="name" name="accTypInput" />
+        <button type="submit"
+            class="btn btn-icon btn-primary btn-sm" aria-label="add type" title="Add Account Type">
+            <clr-icon shape="plus"></clr-icon>Add Type
+        </button>
+    </form>
 </div>
 <app-account-manager></app-account-manager>

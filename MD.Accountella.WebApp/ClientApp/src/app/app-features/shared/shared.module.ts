@@ -4,17 +4,24 @@ import { BaseCollectionComponent } from './base-collection/base-collection.compo
 import { ClarityModule } from '@clr/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
     declarations: [BaseLandingComponent, BaseCollectionComponent],
-    imports: [CommonModule, FormsModule, ClarityModule],
+    imports: [CommonModule,
+        FormsModule,
+        ClarityModule,
+        ReactiveFormsModule,
+        NgSelectModule
+    ],
     providers: [],
     exports: [
         ClarityModule,
         FormsModule,
         ReactiveFormsModule,
         BaseLandingComponent,
-        BaseCollectionComponent
+        BaseCollectionComponent,
+        NgSelectModule
     ]
 })
 export class SharedModule {
