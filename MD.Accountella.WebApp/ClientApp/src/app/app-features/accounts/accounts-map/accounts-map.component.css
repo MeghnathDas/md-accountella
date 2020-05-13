@@ -13,3 +13,25 @@
     flex-wrap: wrap;
     height: auto;
 } */
+.action-link-button {
+    width: fit-content;
+}
+.add-type-area {
+    display: grid;
+    grid-template-columns: 75% 20%;
+    grid-column-gap: .5rem;
+    background-color: lightgray;
+    padding: .4rem;
+    align-items: baseline;
+    justify-content: end;
+    min-width: 42%;
+}
+.add-type-area input {
+    margin-right: .2rem;
+    font-size: smaller;
+}
+.add-type-area button {
+    font-size: xx-small;
+    max-width: 102px;
+    margin-right: 0;
+}

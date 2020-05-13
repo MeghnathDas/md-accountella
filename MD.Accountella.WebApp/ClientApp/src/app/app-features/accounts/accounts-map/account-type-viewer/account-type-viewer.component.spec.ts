@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AccountGroupViewerComponent } from './account-group-viewer.component';
+import { AccountTypeViewerComponent } from './account-type-viewer.component';
 
-describe('AccountGroupViewerComponent', () => {
-  let component: AccountGroupViewerComponent;
-  let fixture: ComponentFixture<AccountGroupViewerComponent>;
+describe('AccountTypeViewerComponent', () => {
+  let component: AccountTypeViewerComponent;
+  let fixture: ComponentFixture<AccountTypeViewerComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AccountGroupViewerComponent ]
+      declarations: [ AccountTypeViewerComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AccountGroupViewerComponent);
+    fixture = TestBed.createComponent(AccountTypeViewerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

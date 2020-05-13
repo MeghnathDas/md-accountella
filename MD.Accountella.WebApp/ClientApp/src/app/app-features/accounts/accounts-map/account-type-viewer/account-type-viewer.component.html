@@ -1,15 +1,20 @@
 <header>
     {{accGroup.name}}
+
+    <clr-icon shape="trash" aria-label="delete account type" title="Remove"
+        *ngIf="accounts?.length === 0 && accGroup.isReadOnly === false"
+        (click)="accountTypeDeleteRequest.emit(accGroup)"></clr-icon>
 </header>
 <div class="detail-area" *ngIf="accounts && accounts.length > 0">
     <div class="item-spec" *ngFor="let acc of accounts">
         <div class="intro">
             <div class="caption p2">{{acc.name}}</div>
-            <div class="sub-caption p7">Demo Intro - Elaborated</div>
+            <div class="sub-caption p7">No transactions done yet</div>
         </div>
         <div class="desc p3">{{acc.description}}</div>
         <div class="action">
-            <button (click)="editRequest.emit(acc)" class="btn btn-icon btn-sm" aria-label="edit" title="Edit">
+            <button (click)="accountMangerOpenRequest.emit(acc)" class="btn btn-icon btn-sm" aria-label="edit"
+                title="Edit">
                 <clr-icon shape="pencil"></clr-icon>
             </button>
         </div>

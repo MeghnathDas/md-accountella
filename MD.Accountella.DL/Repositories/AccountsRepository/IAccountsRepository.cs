@@ -17,5 +17,7 @@ namespace MD.Accountella.DL
         void RemoveAccount(string id);
         IEnumerable<EntityCategory> GetCategories();
         ICollection<Account> GetAccountsByCategory(string categoryId);
+        EntityCategory AddSubCategory(EntityCategory subCategoryToAdd);
+        void RemoveSubCategory(string subCategoryId);
     }
 }

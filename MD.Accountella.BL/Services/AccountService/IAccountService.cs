@@ -16,6 +16,8 @@ namespace MD.Accountella.BL
         AccountDto AddAccount(AccountDto accountToAdd);
         void UpdateAccount(string id, AccountDto accountToAlter);
         void RemoveAccount(string id);
-        IEnumerable<EntityCategoryDto> GetCategories();
+        IEnumerable<EntityCategoryDto> GetGroups();
+        EntityCategoryDto AddSubCategory(EntityCategoryDto subCategoryToAdd);
+        void RemoveSubCategory(string subCategoryId);
     }
 }

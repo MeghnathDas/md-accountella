@@ -7,8 +7,10 @@ import { AccountMapService } from '../services/account-map/account-map.service';
 import { Category, Acount } from '../../models';
 import { ClrTabLink } from '@clr/angular';
 import { AccountManagerComponent } from './account-manager/account-manager.component';
-import { AccountGroupViewerComponent } from './account-group-viewer/account-group-viewer.component';
 import { Subscription } from 'rxjs';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { AccountTypeViewerComponent } from './account-type-viewer/account-type-viewer.component';
+import { map, mergeMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-accounts-map',
@@ -16,12 +18,16 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./accounts-map.component.css']
 })
 export class AccountsMapComponent implements OnInit, AfterViewChecked, AfterViewInit {
-  private accGroupSubscriptions: Subscription[];
+  accTypeForm = new FormGroup({
+    name: new FormControl('', Validators.required)
+  });
+  private accTypeViewerSubscriptions: Subscription[];
   caption = 'Account Mappings';
-  accountHeads: Category[];
+  accountGroups: Category[];
+  selectedAccGroup: Category;
 
   @ViewChild(AccountManagerComponent) accManager: AccountManagerComponent;
-  @ViewChildren(AccountGroupViewerComponent) accGroupViewers: QueryList<AccountGroupViewerComponent>;
+  @ViewChildren(AccountTypeViewerComponent) accGroupViewers: QueryList<AccountTypeViewerComponent>;
 
   @ViewChildren(ClrTabLink) headTabs: QueryList<ClrTabLink>;
   @ViewChild('accTabContainer', { static: true }) accTabContainer: ElementRef;
@@ -35,13 +41,17 @@ export class AccountsMapComponent implements OnInit, AfterViewChecked, AfterView
 
   constructor(private titleServ: TitleService, private accMapServ: AccountMapService) { }
   ngAfterViewInit(): void {
-    this.accManager.submitAction.subscribe((resp: Acount) => {
-      if (resp) {
-        this.accManager.close();
-        const actTabIndex = this.accountHeads.findIndex(x =>
-          x.subCategories.filter(xs => xs.id === resp._CategoryId).length > 0);
-        this.loadAccountHeads(true, actTabIndex);
-      }
+    this.accManager.addRequest.pipe(
+      mergeMap(acc => this.accMapServ.addAccount(acc))
+    ).subscribe(resp => {
+      this.accManager.close();
+      this.loadAccountHeads();
+    });
+    this.accManager.updateRequest.pipe(
+      mergeMap(acc => this.accMapServ.updateAccount(acc))
+    ).subscribe(resp => {
+      this.accManager.close();
+      this.loadAccountHeads();
     });
   }
   ngAfterViewChecked(): void {
@@ -50,18 +60,34 @@ export class AccountsMapComponent implements OnInit, AfterViewChecked, AfterView
       this.headTabs.toArray()[this.tabIndexToSelect].activate();
       this.setTabLinks();
     }
-    this.setupAccGroupViewerSubscription();
+    this.setupAccTypeViewerSubscriptions();
+    this.setSelectedHead();
   }
-  private setupAccGroupViewerSubscription() {
-    this.accGroupSubscriptions?.forEach(sb =>
+  private setupAccTypeViewerSubscriptions() {
+    this.accTypeViewerSubscriptions?.forEach(sb =>
       sb.unsubscribe()
     );
-    this.accGroupSubscriptions = [];
+    this.accTypeViewerSubscriptions = [];
     this.accGroupViewers.forEach(gv => {
-      this.accGroupSubscriptions.push(gv.editRequest.subscribe((req: Acount) => {
-        this.accManager.open(null, req);
+      this.accTypeViewerSubscriptions.push(gv.accountMangerOpenRequest.subscribe((req: Acount) => {
+        this.accManager.open(this.selectedAccGroup, req);
+      }));
+      this.accTypeViewerSubscriptions.push(gv.accountTypeDeleteRequest.subscribe((accTyp: Category) => {
+        this.accMapServ.removeAccountType(accTyp.id).subscribe(resp =>
+          this.loadAccountHeads()
+        );
       }));
     });
+  }
+  private setSelectedHead() {
+    try {
+      const headId = this.headTabs.filter(tb => tb.active === true)[0].tabLinkId;
+      const hd = this.accountGroups.filter(ah => ah.id === headId)[0];
+      if (!this.selectedAccGroup || (this.selectedAccGroup.id !== hd.id)) {
+        this.selectedAccGroup = hd;
+        this.accTypeForm.reset();
+      }
+    } catch (err) { }
   }
   private setTabLinks() {
     try {
@@ -85,21 +111,31 @@ export class AccountsMapComponent implements OnInit, AfterViewChecked, AfterView
   }
   ngOnInit(): void {
     this.titleServ.updateTitleWithSuffix(this.caption);
-    this.loadAccountHeads(true);
+    this.loadAccountHeads();
   }
-  loadAccountHeads(autoTabSelection: boolean = false, tabIndexToSelect = 0) {
-    this.tabIndexToSelect = tabIndexToSelect;
-    this.accMapServ.getCategoryMap().subscribe(catgs => {
-      this.accountHeads = catgs;
-      this.autoTabSelectionRequired = autoTabSelection;
+  loadAccountHeads() {
+    this.tabIndexToSelect = this.accountGroups?.length > 0 && this.selectedAccGroup ?
+      this.accountGroups.findIndex(ah => ah.id === this.selectedAccGroup.id) : 0;
+    this.accMapServ.getAccountGroups().subscribe(catgs => {
+      this.accountGroups = catgs;
+      this.autoTabSelectionRequired = true;
     });
   }
-  getSelectedHead(): Category {
-    try {
-      const headId = this.headTabs.filter(tb => tb.active === true)[0].tabLinkId;
-      return this.accountHeads.filter(ah => ah.id === headId)[0];
-    } catch (err) {
-      return null;
+  addAccType() {
+    if (this.accTypeForm.dirty && this.accTypeForm.valid) {
+      const catgToAdd = <Category>{
+        _parentId: this.selectedAccGroup.id,
+        name: this.accTypeForm.value.name,
+        sequenceNo: this.selectedAccGroup.subCategories ?
+          this.selectedAccGroup.subCategories.length + 1 : 1
+      };
+      this.accMapServ.addAccountType(catgToAdd).subscribe((resp: Category) => {
+        this.loadAccountHeads();
+        this.accTypeForm.reset();
+      });
+    } else {
+      this.accTypeForm.controls.name.markAsDirty();
+      this.accTypeForm.controls.name.setErrors({ 'incorrect': true });
     }
   }
 }

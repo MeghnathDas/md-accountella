@@ -10,8 +10,8 @@ import { TransactionsComponent } from './transactions/transactions.component';
 import { AccountMapService } from './services/account-map/account-map.service';
 import { AccountBooksService as AccountBookService } from './services/account-book/account-book.service';
 import { AccountTransactionService } from './services/account-transaction/account-transaction.service';
-import { AccountGroupViewerComponent } from './accounts-map/account-group-viewer/account-group-viewer.component';
 import { AccountManagerComponent } from './accounts-map/account-manager/account-manager.component';
+import { AccountTypeViewerComponent } from './accounts-map/account-type-viewer/account-type-viewer.component';
 
 
 @NgModule({
@@ -21,7 +21,7 @@ import { AccountManagerComponent } from './accounts-map/account-manager/account-
     DayBookComponent,
     CashBookComponent,
     AccountsMapComponent,
-    AccountGroupViewerComponent,
+    AccountTypeViewerComponent,
     AccountManagerComponent
   ],
   imports: [

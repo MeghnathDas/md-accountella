@@ -1,40 +1,30 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter, ElementRef, HostListener } from '@angular/core';
+import { Component, ViewChild, Output, EventEmitter, ElementRef } from '@angular/core';
 import { AutofocusDirective } from '../../../../core';
 import { Acount, Category } from '../../../models';
-import { AccountMapService } from '../../services/account-map/account-map.service';
-import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-account-manager',
   templateUrl: './account-manager.component.html',
   styleUrls: ['./account-manager.component.css']
 })
-export class AccountManagerComponent implements OnInit {
-  accForm = new FormGroup({
-    head: new FormControl(''),
-    group: new FormControl(undefined, Validators.required),
-    name: new FormControl('', Validators.required),
-    desc: new FormControl('')
-  });
+export class AccountManagerComponent {
+  accForm: FormGroup;
   @ViewChild(AutofocusDirective) autofocus: AutofocusDirective;
-  @Output() submitAction: EventEmitter<Acount> = new EventEmitter<Acount>();
+  @Output() addRequest: EventEmitter<Acount> = new EventEmitter<Acount>();
+  @Output() updateRequest: EventEmitter<Acount> = new EventEmitter<Acount>();
   show = false;
   isAlter = false;
 
-  accGroups: Category[];
+  currentGroup: Category;
   catgsLoading = false;
 
-  constructor(private el: ElementRef,
-    private accountServ: AccountMapService) {
-  }
-  ngOnInit(): void {
-    this.loadCategories();
-  }
-  private loadCategories() {
-    this.catgsLoading = true;
-    this.accountServ.getAccountGroups().subscribe(grps => {
-      this.accGroups = grps;
-      this.catgsLoading = false;
+  constructor(private el: ElementRef, private fb: FormBuilder) {
+    this.accForm = this.fb.group({
+      id: [null],
+      name: ['', Validators.required],
+      desc: [''],
+      type: [undefined, Validators.required]
     });
   }
 
@@ -43,35 +33,33 @@ export class AccountManagerComponent implements OnInit {
     return item.name.toLowerCase().indexOf(strSearch) > -1;
   }
 
-  open(accGroup: Category = null, accParam: Acount = null) {
+  open(accGroup: Category, accParam: Acount = null, currTypeId: string = null) {
     this.accForm.reset();
-    this.show = true;
+    this.currentGroup = accGroup;
+    let currAccTyp: Category;
+    if (accParam || currTypeId) {
+      currAccTyp = (
+        Object.assign({},
+          this.currentGroup.subCategories.filter(x =>
+            x.id === currTypeId || x.id === accParam?._CategoryId)[0]) as Category);
+    }
 
     if (accParam) {
-      const currGrp = this.accGroups.filter(ag => ag.id === accParam._CategoryId)[0];
       this.accForm.patchValue({
+        id: accParam.id,
         name: accParam.name,
         desc: accParam.description,
-        group: currGrp,
-        head: currGrp.parent
+        type: currAccTyp
       });
       this.isAlter = true;
     } else {
-      if (accGroup) {
-        if (accGroup._ParentId) {
-          const currGrp = this.accGroups.filter(ag => ag.id === accGroup.id)[0];
-          this.accForm.patchValue({
-            group: currGrp,
-            head: currGrp.parent
-          });
-        } else {
-          this.accForm.patchValue({
-            head: (Object.assign({}, accGroup) as Category)
-          });
-        }
-      }
+      this.accForm.patchValue({
+        type: currAccTyp
+      });
       this.isAlter = false;
     }
+
+    this.show = true;
 
     setTimeout(() => {
       if (this.autofocus) {
@@ -90,22 +78,18 @@ export class AccountManagerComponent implements OnInit {
     }
   }
   onSubmit() {
-    if (this.accForm.valid) {
+    if (this.accForm.dirty && this.accForm.valid) {
       const acc = <Acount>{
+        id: this.accForm.value.id,
         name: this.accForm.value.name,
         description: this.accForm.value.desc,
-        _CategoryId: this.accForm.value.group.id
+        _CategoryId: this.accForm.value.type.id
       };
-      this.submitAction.emit(acc);
-    }
-  }
-
-  @HostListener('submit')
-  onFormSubmit() {
-    const invalidControl = this.el.nativeElement.querySelector('.ng-invalid');
-
-    if (invalidControl) {
-      invalidControl.focus();
+      if (acc.id && acc.id?.trim().length > 0) {
+        this.updateRequest.emit(acc);
+      } else {
+        this.addRequest.emit(acc);
+      }
     }
   }
 }

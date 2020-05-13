@@ -4,6 +4,6 @@ export interface Category {
     isReadOnly: boolean;
     sequenceNo: number;
     subCategories: Category[];
-    _ParentId: string;
+    _parentId: string;
     parent: Category;
 }

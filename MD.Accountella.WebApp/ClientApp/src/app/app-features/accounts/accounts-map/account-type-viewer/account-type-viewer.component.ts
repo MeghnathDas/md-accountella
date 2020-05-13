@@ -4,13 +4,14 @@ import { AccountMapService } from '../../services/account-map/account-map.servic
 import { AccountManagerComponent } from '../account-manager/account-manager.component';
 
 @Component({
-  selector: 'app-account-group-viewer',
-  templateUrl: './account-group-viewer.component.html',
-  styleUrls: ['./account-group-viewer.component.css']
+  selector: 'app-account-type-viewer',
+  templateUrl: './account-type-viewer.component.html',
+  styleUrls: ['./account-type-viewer.component.css']
 })
-export class AccountGroupViewerComponent implements OnInit {
+export class AccountTypeViewerComponent implements OnInit {
   @Input() accGroup: Category;
-  @Output() editRequest: EventEmitter<Account> = new EventEmitter<Account>();
+  @Output() accountMangerOpenRequest: EventEmitter<Account> = new EventEmitter<Account>();
+  @Output() accountTypeDeleteRequest: EventEmitter<Category> = new EventEmitter<Category>();
 
   @Input() accountManager: AccountManagerComponent;
   accounts: Acount[];
@@ -18,7 +19,7 @@ export class AccountGroupViewerComponent implements OnInit {
   constructor(private accMapServ: AccountMapService) { }
 
   ngOnInit(): void {
-    this.accMapServ.getAccountsBySubCategory(this.accGroup.id).subscribe(accs => {
+    this.accMapServ.getAccountsByType(this.accGroup.id).subscribe(accs => {
       this.accounts = accs;
     });
   }
