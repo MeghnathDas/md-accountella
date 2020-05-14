@@ -1,0 +1,17 @@
+<div class="expander-icon" (click)="toggle()">
+    <div *ngIf="expanded === false" class="caption">
+        <ng-container *ngTemplateOutlet="caption"></ng-container>
+    </div>
+    <clr-icon shape="angle-double" [attr.dir]="currentDirection" title="Collapse">
+    </clr-icon>
+</div>
+<div *ngIf="expanded === true">
+    <ng-container *ngTemplateOutlet="body"></ng-container>
+</div>
+
+<ng-template #caption>
+    <ng-content select="caption"></ng-content>
+</ng-template>
+<ng-template #body>
+    <ng-content></ng-content>
+</ng-template>
