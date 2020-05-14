@@ -9,10 +9,6 @@
     max-height: 90%;
     overflow-y: auto;
 }
-/* ::ng-deep .nav {    
-    flex-wrap: wrap;
-    height: auto;
-} */
 .action-link-button {
     width: fit-content;
 }
@@ -23,7 +19,7 @@
     background-color: lightgray;
     padding: .4rem;
     align-items: baseline;
-    justify-content: end;
+    justify-content: center;
     min-width: 42%;
 }
 .add-type-area input {
