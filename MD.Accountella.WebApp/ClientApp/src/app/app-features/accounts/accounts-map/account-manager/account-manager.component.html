@@ -3,7 +3,7 @@
     <form class="modal-body" clrForm [formGroup]="accForm" (ngSubmit)="onSubmit()">
         <clr-input-container>
             <label for="name">Name</label>
-            <input class="inp-custom" clrInput type="text" formControlName="name" (keypress)="onKeyPress($event)"
+            <input class="available-space-fill" clrInput type="text" formControlName="name" (keypress)="onKeyPress($event)"
                 required />
             <clr-control-error>
                 Name required
@@ -11,31 +11,28 @@
         </clr-input-container>
         <clr-textarea-container>
             <label>Description</label>
-            <textarea class="inp-custom" clrTextarea formControlName="desc" (keypress)="onKeyPress($event)">
+            <textarea class="available-space-fill" clrTextarea formControlName="desc" (keypress)="onKeyPress($event)">
             </textarea>
         </clr-textarea-container>
         <clr-input-container>
-            <label for="headName">Type</label>
-            <input name="headName" class="inp-custom" clrInput type="text" [attr.disabled]="true"
+            <label for="headName">Group</label>
+            <input name="headName" class="available-space-fill" clrInput type="text" [attr.disabled]="true"
                 [value]="currentGroup?.name" />
         </clr-input-container>
         <div class="clr-form-control clr-row">
-            <label for="select-catg" class="clr-control-label">Group</label>
-            <div class="clr-control-container padl-6"
-                [ngClass]="{'clr-error':accForm.get('type').invalid && (accForm.get('type').dirty || accForm.get('type').touched)}">
-                <div class="clr-input-wrapper custom-wrapper">
-                    <ng-select class="clr-input inp-custom" formControlName="type" [items]="currentGroup?.subCategories" bindLabel="name"
-                        [loading]="catgsLoading" [searchFn]="catgSearchFn" editableSearchTerm="true">
+            <label for="sel-catg" class="clr-control-label">Type</label>
+            <div class="clr-control-container catg-selection-container"
+            [ngClass]="{'clr-error':accForm.get('type').invalid && (accForm.get('type').dirty || accForm.get('type').touched)}">
+                <div class="clr-input-wrapper">
+                    <ng-select id="sel-catg" class="clr-input inp-custom available-space-fill" formControlName="type"
+                        [items]="currentGroup?.subCategories" bindLabel="name" [loading]="catgsLoading"
+                        [searchFn]="catgSearchFn" editableSearchTerm="true">
                         <ng-template ng-option-tmp let-item="item">
                             {{item.name}} <br />
                             <small>{{item.parent.name}}</small>
                         </ng-template>
-                        <!-- <ng-template ng-header-tmp>
-                            <input placeholder="New group name" type="text" required />
-                            <button class="btn btn-primary" (click)="addTempGroup($event)">Add Group</button>
-                        </ng-template> -->
                     </ng-select>
-                    <clr-icon class="clr-validate-icon sp-icon" shape="exclamation-circle"></clr-icon>
+                    <clr-icon class="clr-validate-icon" shape="exclamation-circle"></clr-icon>
                 </div>
                 <span class="clr-subtext"
                     *ngIf="accForm.get('type').invalid && (accForm.get('type').dirty || accForm.get('type').touched)">

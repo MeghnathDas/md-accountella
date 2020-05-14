@@ -4,17 +4,21 @@
 .modal-body {
     overflow: visible;
 }
-.inp-custom {
-    min-width: 90%;
+.available-space-fill {
+    flex-grow: 1;
 }
-.padl-6 {
-    padding: 0 0.6rem;
+.catg-selection-container {
+    padding: 0 .6rem;
+    flex-grow: 1;
+}
+::ng-deep .clr-input-wrapper {
+    display: flex;
+}
+#sel-catg {
+    padding: 0;
 }
 .custom-wrapper {
     display: flex;
-}
-.sp-icon {
-    margin-left: -1.2rem;
 }
 ::ng-deep .ng-option:not(:last-of-type) {
     box-shadow: 0 -0.05rem 0 #ccc inset;
