@@ -6,11 +6,11 @@ A basic accounting application
 - .Net Core
 - .Net Web API
 - Angular
-- Clarity Design
 - Ng Container, Ng Template
 - Routing
 - Dependency Injection
 - Feature Module
+- Clarity Design
 - Git Branching & Merging
 - Azure Pipeline
 
