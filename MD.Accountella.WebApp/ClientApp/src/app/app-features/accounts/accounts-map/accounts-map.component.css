@@ -20,7 +20,8 @@
     padding: .4rem;
     align-items: baseline;
     justify-content: center;
-    min-width: 42%;
+    min-width: 42vw;
+    cursor: auto;
 }
 .add-type-area input {
     margin-right: .2rem;

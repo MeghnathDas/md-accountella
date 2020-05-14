@@ -1,0 +1,21 @@
+:host {
+    display: flex;
+    background-color: var(--clr-vertical-nav-bg-color, #e8e8e8);
+    transition: 2s;
+}
+:host > *:first-child {
+    cursor: pointer;
+}
+:host > *:nth-child(2) {
+    flex: 1;
+}
+.expander-icon {
+    padding: 0.2rem;
+    display: flex;
+    align-items: center;
+}
+.caption {
+    font-size: smaller;
+    display: flex;
+    margin-right: .1rem;
+}

@@ -5,6 +5,7 @@ import { ClarityModule } from '@clr/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { CoreModule } from 'src/app/core';
 
 @NgModule({
     declarations: [BaseLandingComponent, BaseCollectionComponent],
@@ -12,7 +13,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
         FormsModule,
         ClarityModule,
         ReactiveFormsModule,
-        NgSelectModule
+        NgSelectModule,
+        CoreModule
     ],
     providers: [],
     exports: [
@@ -21,7 +23,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
         ReactiveFormsModule,
         BaseLandingComponent,
         BaseCollectionComponent,
-        NgSelectModule
+        NgSelectModule,
+        CoreModule
     ]
 })
 export class SharedModule {

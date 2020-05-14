@@ -7,7 +7,8 @@
                 <div class="account-groups">
                     <ng-container *ngFor="let accTyp of accGroup.subCategories">
                         <app-account-type-viewer [accGroup]="accTyp"></app-account-type-viewer>
-                        <a class="action-link-button l-mar1" (click)="accManager.open(accGroup, null, accTyp.id)">Add new
+                        <a class="action-link-button l-mar1" (click)="accManager.open(accGroup, null, accTyp.id)">Add
+                            new
                             account</a>
                     </ng-container>
                 </div>
@@ -16,14 +17,17 @@
         </clr-tab>
     </clr-tabs>
 
-    <form [formGroup]="accTypeForm" clrForm class="add-type-area float" (ngSubmit)="addAccType()"
-        [ngClass]="{'clr-error': accTypeForm.dirty && accTypeForm.invalid}">
-        <input class="clr-input" [placeholder]="'Enter new type name for ' + selectedAccGroup?.name"
-        formControlName="name" name="accTypInput" />
-        <button type="submit"
-            class="btn btn-icon btn-primary btn-sm" aria-label="add type" title="Add Account Type">
-            <clr-icon shape="plus"></clr-icon>Add Type
-        </button>
-    </form>
+    <app-expander direction="right" class="float">
+        <caption>Add Type</caption>
+        <form [formGroup]="accTypeForm" clrForm class="add-type-area" (ngSubmit)="addAccType()"
+            [ngClass]="{'clr-error': accTypeForm.dirty && accTypeForm.invalid}">
+            <input class="clr-input" [placeholder]="'Enter new type name for ' + selectedAccGroup?.name"
+                formControlName="name" name="accTypInput" />
+            <button type="submit" class="btn btn-icon btn-primary btn-sm" aria-label="add type"
+                title="Add Account Type">
+                <clr-icon shape="plus"></clr-icon>Add Type
+            </button>
+        </form>
+    </app-expander>
 </div>
 <app-account-manager></app-account-manager>
