@@ -1,4 +1,4 @@
-name: MD-Notes-CI
+name: MD-Accountella-Heroku-CI
 #Trigger
 on:
   push:
