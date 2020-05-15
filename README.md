@@ -22,7 +22,7 @@ Azure Hosted URL -> [https://accountella.azurewebsites.net/](https://accountella
 
 Heroku Hosted URL -> [https://md-accountella.herokuapp.com/](https://md-accountella.herokuapp.com/)
 
-<!-- Azure DevOps URL -> [https://dev.azure.com/md-poc/Accountella](https://dev.azure.com/md-poc/Accountella) -->
+Azure DevOps URL -> [https://dev.azure.com/md-poc/Accountella](https://dev.azure.com/md-poc/Accountella)
 # Editor
 
 ![](https://meghnathdas.github.io/public/images/MD_Logo_138X138.png)
