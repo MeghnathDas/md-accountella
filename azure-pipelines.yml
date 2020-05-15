@@ -18,6 +18,6 @@ steps:
 
 - task: PublishPipelineArtifact@1
   inputs:
-    targetPath: '$(Pipeline.Workspace)/out'
+    targetPath: '$(Pipeline.Workspace)/s/out'
     artifact: 'md-accountella-artifact'
     publishLocation: 'pipeline'
