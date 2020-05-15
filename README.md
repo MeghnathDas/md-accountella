@@ -18,8 +18,9 @@ A basic accounting application
 <!-- - Azure Pipeline -->
 
 
-Hosted URL Azure -> [https://accountella.azurewebsites.net/](https://accountella.azurewebsites.net/)
-Hosted URL Heroku -> [https://md-accountella.herokuapp.com/](https://md-accountella.herokuapp.com/)
+Azure Hosted URL -> [https://accountella.azurewebsites.net/](https://accountella.azurewebsites.net/)
+
+Heroku Hosted URL -> [https://md-accountella.herokuapp.com/](https://md-accountella.herokuapp.com/)
 
 <!-- Azure DevOps URL -> [https://dev.azure.com/md-poc/Accountella](https://dev.azure.com/md-poc/Accountella) -->
 # Editor
