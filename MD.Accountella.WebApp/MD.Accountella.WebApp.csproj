@@ -12,6 +12,7 @@
     <BuildServerSideRenderer>false</BuildServerSideRenderer>
     <RootNamespace>MD.Accountella.WebApp</RootNamespace>
     <AssemblyName>MD.Accountella.WebApp</AssemblyName>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
     
   </PropertyGroup>
 
