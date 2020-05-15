@@ -1,4 +1,4 @@
-https://vsrm.dev.azure.com/md-poc/_apis/public/Release/badge/d9143510-e782-4875-b398-f652199ea9d6/1/1
+[![Build Status](https://dev.azure.com/md-poc/Accountella/_apis/build/status/MeghnathDas.md-accountella?branchName=master)](https://dev.azure.com/md-poc/Accountella/_build/latest?definitionId=1&branchName=master)
 # Accountella
 A basic accounting application
 ###### Author: Meghnath Das
