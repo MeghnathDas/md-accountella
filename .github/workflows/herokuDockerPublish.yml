@@ -1,41 +1,41 @@
-# name: MD-Notes-CI
-# #Trigger
-# on:
-#   push:
-#     # Publish `master` as Docker `latest` image.
-#     branches:
-#       - master
+name: MD-Notes-CI
+#Trigger
+on:
+  push:
+    # Publish `master` as Docker `latest` image.
+    branches:
+      - master
 
-#     # Publish `v1.2.3` tags as releases.
-#     tags:
-#       - v*
-# # Environment variable setup
-# env:
-#   uses: actions/heroku@master
-#   HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-#   HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
+    # Publish `v1.2.3` tags as releases.
+    tags:
+      - v*
+# Environment variable setup
+env:
+  uses: actions/heroku@master
+  HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+  HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
 
-# jobs:
-#   build-and-publish-docker-image:
-#     runs-on: ubuntu-latest
-#     steps:
-#     # Checkout code
-#     - name: Checkout code repo
-#       uses: actions/checkout@v2
+jobs:
+  build-and-publish-docker-image:
+    runs-on: ubuntu-latest
+    steps:
+    # Checkout code
+    - name: Checkout code repo
+      uses: actions/checkout@v2
 
-#     #Docker image building
-#     - name: Build Docker image
-#       id: stepBdi      
-#       run: docker build . --file Dockerfile --tag $HEROKU_APP_NAME
+    #Docker image building
+    - name: Build Docker image
+      id: stepBdi      
+      run: docker build . --file Dockerfile --tag $HEROKU_APP_NAME
 
 
-#     #Pushing docker image to heroku
-#     - name: Deploy docker image
-#       # if: steps.stepBdi.outputs.status == 'success'
-#       run: |
-#           docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
-#           docker tag $HEROKU_APP_NAME registry.heroku.com/$HEROKU_APP_NAME/web
-#           docker push registry.heroku.com/$HEROKU_APP_NAME/web
-#           curl https://cli-assets.heroku.com/install.sh | sh
-#           heroku container:release web -a $HEROKU_APP_NAME
+    #Pushing docker image to heroku
+    - name: Deploy docker image
+      # if: steps.stepBdi.outputs.status == 'success'
+      run: |
+          docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
+          docker tag $HEROKU_APP_NAME registry.heroku.com/$HEROKU_APP_NAME/web
+          docker push registry.heroku.com/$HEROKU_APP_NAME/web
+          curl https://cli-assets.heroku.com/install.sh | sh
+          heroku container:release web -a $HEROKU_APP_NAME
 
