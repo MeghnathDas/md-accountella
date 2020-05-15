@@ -47,7 +47,7 @@ export class ChevronToggleComponent implements OnInit {
     if (!this._expanded) { this._expanded = true; }
     this.setStyle();
   }
-  private get currentDirection(): string {
+  get currentDirection(): string {
     if (this._expanded === true) {
       return this.direction;
     } else if (this._expanded === false) {
