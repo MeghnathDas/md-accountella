@@ -8,10 +8,14 @@ import { HttpInterceptorService } from './http-interceptor/http-intercept.servic
 import { AutofocusDirective } from './directives/autofocus/autofocus.directive';
 import { ChevronToggleComponent } from './controls/chevron-toggle/chevron-toggle.component';
 import { CommonModule } from '@angular/common';
+import { ClarityModule } from '@clr/angular';
 
 @NgModule({
     declarations: [AutofocusDirective, ChevronToggleComponent],
-    imports: [CommonModule],
+    imports: [
+        CommonModule,
+        ClarityModule
+    ],
     providers: [
         Title,
         TitleService,
