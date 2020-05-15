@@ -16,8 +16,8 @@ steps:
 - script: dotnet publish --configuration $(buildConfiguration) -o out
   displayName: 'dotnet build - $(buildConfiguration)'
 
-- task: PublishBuildArtifacts@1
+- task: PublishPipelineArtifact@1
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)/out'
-    ArtifactName: 'md-accountella-artifact'
-    publishLocation: 'Container'
+    targetPath: '$(Pipeline.Workspace)'
+    artifact: 'md-accountella-artifact1'
+    publishLocation: 'pipeline'
