@@ -17,7 +17,7 @@
         </clr-tab>
     </clr-tabs>
 
-    <app-expander direction="right" class="float">
+    <app-expander direction="right" [expanded]="isTypeAdderExpanded" class="float">
         <caption>Add Type</caption>
         <form [formGroup]="accTypeForm" clrForm class="add-type-area" (ngSubmit)="addAccType()"
             [ngClass]="{'clr-error': accTypeForm.dirty && accTypeForm.invalid}">

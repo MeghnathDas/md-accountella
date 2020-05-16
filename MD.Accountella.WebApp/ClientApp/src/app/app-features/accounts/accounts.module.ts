@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared';
 import { AccountsRoutingModule } from './accounts.routing.module';
@@ -33,6 +33,7 @@ import { AccountTypeViewerComponent } from './accounts-map/account-type-viewer/a
     AccountMapService,
     AccountBookService,
     AccountTransactionService
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AccountsModule { }

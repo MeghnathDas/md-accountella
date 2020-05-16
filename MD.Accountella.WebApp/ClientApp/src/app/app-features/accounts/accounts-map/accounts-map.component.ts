@@ -2,7 +2,7 @@ import {
   Component, OnInit, ViewChildren, QueryList, AfterViewChecked,
   ViewChild, ElementRef, HostListener, AfterViewInit, OnDestroy
 } from '@angular/core';
-import { TitleService } from 'src/app/core';
+import { TitleService } from '../../../core';
 import { AccountMapService } from '../services/account-map/account-map.service';
 import { Category, Acount } from '../../models';
 import { ClrTabLink } from '@clr/angular';
@@ -33,6 +33,7 @@ export class AccountsMapComponent implements OnInit, AfterViewChecked, AfterView
   @ViewChild('accTabContainer', { static: true }) accTabContainer: ElementRef;
   private autoTabSelectionRequired = false;
   private tabIndexToSelect = 0;
+  isTypeAdderExpanded = true;
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -112,6 +113,7 @@ export class AccountsMapComponent implements OnInit, AfterViewChecked, AfterView
   ngOnInit(): void {
     this.titleServ.updateTitleWithSuffix(this.caption);
     this.loadAccountHeads();
+    this.isTypeAdderExpanded = !(window.innerWidth < 400);
   }
   loadAccountHeads() {
     this.tabIndexToSelect = this.accountGroups?.length > 0 && this.selectedAccGroup ?
