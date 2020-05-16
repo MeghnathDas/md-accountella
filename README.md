@@ -15,7 +15,8 @@ A basic accounting application
 - Git Branching & Merging
 - Git Workflow/Action
 - Heroku Hosting (Docker Image Deployment)
-<!-- - Azure Pipeline -->
+- Azure DevOps Pipeline
+- Azure Hosting
 
 
 Azure Hosted URL -> [https://accountella.azurewebsites.net/](https://accountella.azurewebsites.net/)
