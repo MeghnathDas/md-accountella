@@ -3,8 +3,8 @@
     <form class="modal-body" clrForm [formGroup]="accForm" (ngSubmit)="onSubmit()">
         <clr-input-container>
             <label for="name">Name</label>
-            <input class="available-space-fill" clrInput type="text" formControlName="name" (keypress)="onKeyPress($event)"
-                required />
+            <input class="available-space-fill" clrInput type="text" formControlName="name"
+                (keypress)="onKeyPress($event)" />
             <clr-control-error>
                 Name required
             </clr-control-error>
@@ -22,7 +22,7 @@
         <div class="clr-form-control clr-row">
             <label for="sel-catg" class="clr-control-label">Type</label>
             <div class="clr-control-container catg-selection-container"
-            [ngClass]="{'clr-error':accForm.get('type').invalid && (accForm.get('type').dirty || accForm.get('type').touched)}">
+                [ngClass]="{'clr-error':accForm.get('type').invalid && (accForm.get('type').dirty || accForm.get('type').touched)}">
                 <div class="clr-input-wrapper">
                     <ng-select id="sel-catg" class="clr-input inp-custom available-space-fill" formControlName="type"
                         [items]="currentGroup?.subCategories" bindLabel="name" [loading]="catgsLoading"

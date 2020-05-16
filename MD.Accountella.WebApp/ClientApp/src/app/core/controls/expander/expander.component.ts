@@ -7,7 +7,7 @@ export const DEFAULT_VALUE_ACCESSOR: any = {
   useExisting: forwardRef(() => ExpanderComponent),
   multi: true
 };
-export enum ChevronDirection {
+export enum ExpanderDirection {
   right = 'right',
   left = 'left'
 }
@@ -19,12 +19,12 @@ export enum ChevronDirection {
 export class ExpanderComponent implements OnInit {
   @HostBinding('style') style: SafeStyle;
   @HostBinding('attr.disabled') isDisabled: any;
-  private _direction: ChevronDirection;
-  @Input() set direction(value: ChevronDirection) {
+  private _direction: ExpanderDirection;
+  @Input() set direction(value: ExpanderDirection) {
     this._direction = value;
     this.setStyle();
   }
-  get direction(): ChevronDirection {
+  get direction(): ExpanderDirection {
     return this._direction;
   }
   private _expanded = true;
@@ -36,7 +36,7 @@ export class ExpanderComponent implements OnInit {
     return this._expanded;
   }
   private setStyle(): void {
-    let strStyle = this.direction === ChevronDirection.left ?
+    let strStyle = this.direction === ExpanderDirection.left ?
       'flex-direction: row-reverse' : 'flex-direction: row';
     strStyle += '';
     this.style = this.sanitizer.bypassSecurityTrustStyle(strStyle);
@@ -49,7 +49,7 @@ export class ExpanderComponent implements OnInit {
     if (this._expanded === true) {
       return this.direction;
     } else if (this._expanded === false) {
-      return this.direction === ChevronDirection.left ? ChevronDirection.right : ChevronDirection.left;
+      return this.direction === ExpanderDirection.left ? ExpanderDirection.right : ExpanderDirection.left;
     }
   }
   toggle(): void {
