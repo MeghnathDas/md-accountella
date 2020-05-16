@@ -32,7 +32,15 @@ body p {
   line-height: 1.2rem;
   margin-bottom: 0;
 }
-
+@media (max-width: 400px) {
+  .main-container .content-container .content-area {
+    padding: 0;
+  }
+  .float {
+    right: 0.8rem !important;
+    bottom: .6rem !important;
+  }
+}
 .action-link-button {
   cursor: pointer;
 }
@@ -52,7 +60,12 @@ body p {
   box-shadow: 0px 37px 20px -15px rgba(0, 0, 0, 0.2);
   transform: translate(0px, -10px);
 }
-
+.datagrid-header {
+  z-index: 3;
+}
+.datagrid-row .datagrid-row-sticky {
+  z-index: 3;
+}
 .ng-dropdown-panel {
   box-sizing: border-box;
   position: absolute;
@@ -71,9 +84,9 @@ body p {
   bottom: 1.5rem;
 }
 .ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
-    position: relative;
-    text-align: left;
-    padding: .4rem;
+  position: relative;
+  text-align: left;
+  padding: 0.4rem;
 }
 .ng-option.ng-option-selected {
   background-color: var(--clr-global-selection-color);

@@ -4,7 +4,7 @@ import { SafeStyle, DomSanitizer } from '@angular/platform-browser';
 
 export const DEFAULT_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => ChevronToggleComponent),
+  useExisting: forwardRef(() => ExpanderComponent),
   multi: true
 };
 export enum ChevronDirection {
@@ -13,12 +13,12 @@ export enum ChevronDirection {
 }
 @Component({
   selector: 'app-expander',
-  templateUrl: './chevron-toggle.component.html',
-  styleUrls: ['./chevron-toggle.component.css']
+  templateUrl: './expander.component.html',
+  styleUrls: ['./expander.component.css']
 })
-export class ChevronToggleComponent implements OnInit {
+export class ExpanderComponent implements OnInit {
   @HostBinding('style') style: SafeStyle;
-  @HostBinding('disabled') isDisabled: any;
+  @HostBinding('attr.disabled') isDisabled: any;
   private _direction: ChevronDirection;
   @Input() set direction(value: ChevronDirection) {
     this._direction = value;
@@ -27,7 +27,7 @@ export class ChevronToggleComponent implements OnInit {
   get direction(): ChevronDirection {
     return this._direction;
   }
-  private _expanded: boolean;
+  private _expanded = true;
   @Input() set expanded(value: boolean) {
     this._expanded = value;
     this.setStyle();
@@ -44,8 +44,6 @@ export class ChevronToggleComponent implements OnInit {
 
   constructor(private sanitizer: DomSanitizer) { }
   ngOnInit(): void {
-    if (!this._expanded) { this._expanded = true; }
-    this.setStyle();
   }
   get currentDirection(): string {
     if (this._expanded === true) {
@@ -58,10 +56,10 @@ export class ChevronToggleComponent implements OnInit {
     // if (this.isDisabled === true) { return; }
     this.expanded = !this.expanded;
   }
-  @HostListener('click', ['$event'])
-  onMouseEnter(event: any) {
-    console.log('Is disabled:', this.isDisabled);
-    console.log('Is expanded: ', this._expanded);
-    console.log('Direction: ', this.currentDirection);
-  }
+  // @HostListener('click', ['$event'])
+  // onMouseEnter(event: any) {
+  //   console.log('Is disabled:', this.isDisabled);
+  //   console.log('Is expanded: ', this._expanded);
+  //   console.log('Direction: ', this.currentDirection);
+  // }
 }

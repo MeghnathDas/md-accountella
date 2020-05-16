@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ChevronToggleComponent } from './chevron-toggle.component';
+import { ExpanderComponent } from './expander.component';
 
-describe('ChevronToggleComponent', () => {
-  let component: ChevronToggleComponent;
-  let fixture: ComponentFixture<ChevronToggleComponent>;
+describe('Expander', () => {
+  let component: ExpanderComponent;
+  let fixture: ComponentFixture<ExpanderComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ChevronToggleComponent ]
+      declarations: [ ExpanderComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ChevronToggleComponent);
+    fixture = TestBed.createComponent(ExpanderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

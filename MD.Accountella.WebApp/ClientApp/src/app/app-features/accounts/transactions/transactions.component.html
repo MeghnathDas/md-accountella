@@ -1,1 +1,30 @@
-<p>transactions works!</p>
+<app-base-landing [caption]="caption">
+    <header-actions>
+        <clr-dropdown>
+            <button class="dropdown-toggle btn btn-primary" clrDropdownTrigger>
+                Add
+                <clr-icon shape="caret down"></clr-icon>
+            </button>
+            <clr-dropdown-menu clrPosition="bottom-right" *clrIfOpen>
+                <div clrDropdownItem>Income</div>
+                <div clrDropdownItem>Expence</div>
+                <div clrDropdownItem>Journal</div>
+                <div clrDropdownItem>Contra</div>
+            </clr-dropdown-menu>
+        </clr-dropdown>
+    </header-actions>
+    <div class="trans-container">
+        <clr-datagrid [(clrDgSingleSelected)]="selected" (clrDgSingleSelectedChange)="selectionChanged($event)">
+            <clr-dg-column *ngFor="let column of columnSpecs" [clrDgField]="column.key">{{column.value}}</clr-dg-column>
+            <clr-dg-placeholder>Couldn't find any item!</clr-dg-placeholder>
+            <clr-dg-row *ngFor="let record of dataSource" [clrDgItem]="record">
+                <clr-dg-cell *ngFor="let column of columnSpecs">
+                    {{record[column.key]}}
+                </clr-dg-cell>
+            </clr-dg-row>
+        </clr-datagrid>
+        <div class="entry-form-container">
+    
+        </div>
+    </div>
+</app-base-landing>

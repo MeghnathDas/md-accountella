@@ -6,12 +6,12 @@ import { BlockInteractionService } from './block-interaction/block-interaction.s
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpInterceptorService } from './http-interceptor/http-intercept.service';
 import { AutofocusDirective } from './directives/autofocus/autofocus.directive';
-import { ChevronToggleComponent } from './controls/chevron-toggle/chevron-toggle.component';
+import { ExpanderComponent } from './controls/expander/expander.component';
 import { CommonModule } from '@angular/common';
 import { ClarityModule } from '@clr/angular';
 
 @NgModule({
-    declarations: [AutofocusDirective, ChevronToggleComponent],
+    declarations: [AutofocusDirective, ExpanderComponent],
     imports: [
         CommonModule,
         ClarityModule
@@ -23,7 +23,7 @@ import { ClarityModule } from '@clr/angular';
         BlockInteractionService,
         { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true }
     ],
-    exports: [AutofocusDirective, ChevronToggleComponent]
+    exports: [AutofocusDirective, ExpanderComponent]
 })
 export class CoreModule {
 }
