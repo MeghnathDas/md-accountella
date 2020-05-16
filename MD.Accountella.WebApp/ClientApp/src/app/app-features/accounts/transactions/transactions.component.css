@@ -1,4 +1,54 @@
 .trans-container {
     max-width: 80vw;
+    overflow-x: hidden;
+    display: flex;
+    min-height: 100%;
+}
+::ng-deep .trans-container .datagrid {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.datagrid-area {
+    flex: 1 1;
     overflow-x: auto;
+}
+.datagrid-area .datagrid-host {
+    height: 100%;
+    flex: 1 1;
+    overflow: hidden;
+}
+.entry-form-area {
+    min-width: 14rem;
+    margin-top: 0.6rem;
+    background-color: #e8e8e8;
+    /* box-shadow: inset -1px -1px 6px 1px rgba(0, 21, 41, 0.35); */
+
+    border-collapse: separate;
+    border-style: solid;
+    border-width: 0.05rem;
+    border-color: #ccc;
+    border-color: var(--clr-table-border-color, #cccccc);
+
+    border-top-right-radius: 0.15rem;
+    border-bottom-right-radius: 0.15rem;
+    border-top-right-radius: var(--clr-table-border-radius, 0.15rem);
+    border-bottom-right-radius: var(--clr-table-border-radius, 0.15rem);
+
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.entry-form-area > header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: auto;
+    min-height: 1.9rem;
+    padding: 0.3rem;
+    box-shadow: 0 -0.05rem 0 #ccc inset;
+}
+header > clr-icon {
+    cursor: pointer;
+}
+.entry-form-area form {
+    padding: 0.3rem 0.6rem;
 }

@@ -6,25 +6,53 @@
                 <clr-icon shape="caret down"></clr-icon>
             </button>
             <clr-dropdown-menu clrPosition="bottom-right" *clrIfOpen>
-                <div clrDropdownItem>Income</div>
-                <div clrDropdownItem>Expence</div>
-                <div clrDropdownItem>Journal</div>
-                <div clrDropdownItem>Contra</div>
+                <div clrDropdownItem (click)="openTxnMaster('income')">Income</div>
+                <div clrDropdownItem (click)="openTxnMaster('expence')">Expence</div>
+                <div clrDropdownItem (click)="openTxnMaster('journal')">Journal</div>
+                <div clrDropdownItem (click)="openTxnMaster('contra')">Contra</div>
             </clr-dropdown-menu>
         </clr-dropdown>
     </header-actions>
     <div class="trans-container">
-        <clr-datagrid [(clrDgSingleSelected)]="selected" (clrDgSingleSelectedChange)="selectionChanged($event)">
-            <clr-dg-column *ngFor="let column of columnSpecs" [clrDgField]="column.key">{{column.value}}</clr-dg-column>
-            <clr-dg-placeholder>Couldn't find any item!</clr-dg-placeholder>
-            <clr-dg-row *ngFor="let record of dataSource" [clrDgItem]="record">
-                <clr-dg-cell *ngFor="let column of columnSpecs">
-                    {{record[column.key]}}
-                </clr-dg-cell>
-            </clr-dg-row>
-        </clr-datagrid>
-        <div class="entry-form-container">
-    
+        <div class="datagrid-area">
+            <clr-datagrid [(clrDgSingleSelected)]="selected" (clrDgSingleSelectedChange)="selectionChanged($event)">
+                <clr-dg-column *ngFor="let column of columnSpecs" [clrDgField]="column.key">{{column.value}}
+                </clr-dg-column>
+                <clr-dg-placeholder>Couldn't find any transaction!</clr-dg-placeholder>
+                <clr-dg-row *ngFor="let record of dataSource" [clrDgItem]="record">
+                    <clr-dg-cell *ngFor="let column of columnSpecs">
+                        {{record[column.key]}}
+                    </clr-dg-cell>
+                </clr-dg-row>
+            </clr-datagrid>
+        </div>
+        <div class="entry-form-area" [hidden]="entryFormVisible === false">
+            <header>
+                <label>New Transaction</label>
+                <clr-icon shape="window-close" (click)="entryFormVisible = false;"></clr-icon>
+            </header>
+            <form clrForm clrLayout="vertical" [formGroup]="accTxnForm" (ngSubmit)="addTrans()">
+                <clr-date-container>
+                    <label for="date">Date</label>
+                    <input type="date" name="date" clrDate formControlName="txnDate">
+                </clr-date-container>
+                <clr-input-container>
+                    <label for="description">Description/Particulars</label>
+                    <input class="available-space-fill" clrInput type="text" formControlName="txnDesc"
+                        name="description" (keypress)="onKeyPress($event)" />
+                    <clr-control-error>
+                        Description required
+                    </clr-control-error>
+                </clr-input-container>
+                <clr-input-container>
+                    <label for="amount">Amount</label>
+                    <input class="available-space-fill" clrInput type="number" formControlName="txnAmount" name="amount"
+                        (keypress)="onKeyPress($event)" />
+                    <clr-control-error>
+                        Amount required
+                    </clr-control-error>
+                </clr-input-container>
+            </form>
         </div>
     </div>
 </app-base-landing>

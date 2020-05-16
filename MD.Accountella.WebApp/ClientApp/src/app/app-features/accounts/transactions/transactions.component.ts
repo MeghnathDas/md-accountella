@@ -1,6 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { MasterEntityInfoModel } from '../../models';
 import { TitleService } from '../../../core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+
+export enum TxnEntryType {
+  income = 'income',
+  expence = 'expence',
+  journal = 'journal',
+  contra = 'contra'
+}
 
 @Component({
   selector: 'app-transactions',
@@ -9,6 +17,8 @@ import { TitleService } from '../../../core';
 })
 export class TransactionsComponent implements OnInit {
   caption = 'Account Transactions';
+  accTxnForm: FormGroup;
+  entryFormVisible = false;
   entity = <MasterEntityInfoModel>{
     caption: 'Transactions',
     visibleColumns: [
@@ -27,7 +37,19 @@ export class TransactionsComponent implements OnInit {
     return this.entity.visibleColumns;
   }
 
-  constructor(private titleServ: TitleService) { }
+  constructor(private titleServ: TitleService, fb: FormBuilder) {
+    this.accTxnForm = fb.group({
+      txnDate: [new Date().toLocaleDateString(), Validators.required],
+      txnDesc: [''],
+      txnAmount: [0],
+      crDr: [null, Validators.required],
+      acc1: [null, Validators.required],
+      acc2: [null, Validators.required],
+      vendors: [null],
+      customers: [null],
+      taxes: [null]
+    });
+  }
 
   ngOnInit(): void {
     this.titleServ.updateTitleWithSuffix(this.caption);
@@ -45,4 +67,15 @@ export class TransactionsComponent implements OnInit {
     console.log(selected);
   }
 
+  onKeyPress(event) {
+    if (event.keyCode === 13) {
+      this.addTrans();
+    }
+  }
+  addTrans() {
+
+  }
+  openTxnMaster(entryTyp: TxnEntryType) {
+    this.entryFormVisible = true;
+  }
 }
