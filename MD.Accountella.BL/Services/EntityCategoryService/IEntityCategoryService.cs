@@ -1,6 +1,6 @@
 ﻿/// <summary>
 /// Author: Meghnath Das
-/// Description: Account repository interface
+/// Description: Category Service interface
 /// URL: http://meghnathdas.github.io/
 /// </summary>
 namespace MD.Accountella.BL

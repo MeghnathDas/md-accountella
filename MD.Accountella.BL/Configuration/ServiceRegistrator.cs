@@ -15,6 +15,7 @@ namespace MD.Accountella.BL.Configuration
             services.AddTransient<INavMenuService, NavMenuService>();
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IEntityCategoryService, EntityCategoryService>();
+            services.AddTransient<IAccountTransactionService, AccountTransactionService>();
 
             return services;
         }

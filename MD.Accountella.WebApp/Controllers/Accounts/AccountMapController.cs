@@ -16,90 +16,33 @@ namespace MD.Accountella.WebApp.Controllers
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
 
-    [Route(RoutePrefix + "account-map")]
-    public class AccountMapController: AccountellaControllerBase
+    [Route(RoutePrefix + "account-txns")]
+    public class AccountTransactionController: AccountellaControllerBase
     {
-        IAccountService _accountService;
-        public AccountMapController(IAccountService accountService)
+        IAccountTransactionService _accTxnService;
+        public AccountTransactionController(IAccountTransactionService accTxnService)
         {
-            this._accountService = accountService;
+            this._accTxnService = accTxnService;
         }
 
-        #region "Account Management"
-        // GET: api/account-map/accounts
-        [HttpGet("accounts", Name = "GetAllAccounts")]
-        public ICollection<AccountDto> GetAllAccounts()
+        // GET: api/account-txns
+        [HttpGet()]
+        public async Task<IList<AccTxnDto>> GetAccountTypes()
         {
-            return _accountService.GetAccounts(null).ToList();
+            return await _accTxnService.GetTransactions(null);
+        }
+        // GET: api/account-txns/2
+        [HttpGet("{id}", Name = "GetAccountTypeById")]
+        public async Task<AccTxnDto> GetAccountType(string id)
+        {
+            return (await _accTxnService.GetTransactions(id)).FirstOrDefault();
         }
 
-        // GET: api/account-map/accounts/5
-        [HttpGet("accounts/{id}", Name = "GetAccountById")]
-        public AccountDto GetAccountById(string id)
+        // POST: api/account-txns
+        [HttpPost()]
+        public async Task<AccTxnDto> AddTransaction(AccTxnDto txnToAdd)
         {
-            return _accountService.GetAccounts(id).FirstOrDefault();
+            return await _accTxnService.AddTransaction(txnToAdd);
         }
-
-        // GET: api/account-map/accounts-by-type/2
-        [HttpGet("accounts-by-type/{accTypeId}")]
-        public ICollection<AccountDto> GetAccountsByType(string accTypeId)
-        {
-            return _accountService.GetAccountsByCategory(accTypeId).ToList();
-        }
-
-        // POST: api/account-map/accounts
-        [HttpPost("accounts")]
-        public AccountDto Post(AccountDto value)
-        {
-            return _accountService.AddAccount(value);
-        }
-
-        // PUT: api/account-map/accounts/5
-        [HttpPut("accounts/{id}")]
-        public void Put(string id, AccountDto value)
-        {
-            _accountService.UpdateAccount(id, value);
-        }
-
-        //// DELETE: api/account-map/accounts/5
-        //[HttpDelete("accounts/{id}")]
-        //public void Delete(string id)
-        //{
-        //    _accountService.RemoveAccount(id);
-        //}
-        #endregion
-
-        #region "Account Groups and Types"
-        // GET: api/account-map/account-groups
-        [HttpGet("account-groups")]
-        public ICollection<EntityCategoryDto> GetAccountGroups()
-        {
-            return _accountService.GetGroups().ToList();
-        }
-
-        // GET: api/account-map/account-types
-        [HttpGet("account-types")]
-        public ICollection<EntityCategoryDto> GetAccountTypes()
-        {
-            var subCatgs = _accountService.GetGroups()
-                .Where(x => x.SubCategories != null && x.SubCategories.Any())
-                .SelectMany(catg => catg.SubCategories);
-            return subCatgs.ToList();
-        }
-
-        // POST: api/account-map/account-types
-        [HttpPost("account-types")]
-        public EntityCategoryDto AddAccountType(EntityCategoryDto typeToAdd)
-        {
-            return _accountService.AddSubCategory(typeToAdd);
-        }
-
-        // DELETE: api/account-map/account-types/3
-        [HttpDelete("account-types/{accTypeId}")]
-        public void RemoveAccountType(string accTypeId)
-        {
-            _accountService.RemoveSubCategory(accTypeId);
-        }
-        #endregion
     }
 }

@@ -22,6 +22,8 @@ namespace MD.Accountella.BL.Configuration
             });
             CreateMap<EntityCategoryDto, EntityCategory>();
             CreateMap<Account, AccountDto>().ReverseMap();
+            CreateMap<Ledger, LedgerDto>().ReverseMap();
+            CreateMap<AccTxn, AccTxnDto>().ReverseMap();
         }
     }
 }

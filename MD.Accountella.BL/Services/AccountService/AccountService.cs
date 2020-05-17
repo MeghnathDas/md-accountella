@@ -12,7 +12,7 @@ namespace MD.Accountella.BL
     using System;
     using System.Collections.Generic;
     using System.Text;
-    public class AccountService : IAccountService
+    internal class AccountService : IAccountService
     {
         private readonly IMapper _mapper;
         private readonly IAccountsRepository _repository;

@@ -16,6 +16,8 @@ namespace MD.Accountella.DL.Configuration
             services.AddSingleton<AccountellaDbContext>();
             services.AddTransient<IAccountsRepository, AccountsRepository>();
             services.AddTransient<IEntityCategoryRepository, EntityCategoryRepository>();
+            services.AddTransient<IAccountTransactionRepository, AccountTransactionRepository>();
+            services.AddTransient<ICurrencyTypeRepository, CurrencyTypeRepository>();
 
             return services;
         }

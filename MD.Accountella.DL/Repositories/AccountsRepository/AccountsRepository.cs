@@ -16,7 +16,7 @@ namespace MD.Accountella.DL
     using MongoDB.Driver.Linq;
     using System.Data;
 
-    public class AccountsRepository : IAccountsRepository
+    internal class AccountsRepository : IAccountsRepository
     {
         private readonly IMongoCollection<Account> _accColl;
         private readonly IEntityCategoryRepository _categoryRepo;
