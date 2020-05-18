@@ -9,6 +9,7 @@ namespace MD.Accountella.DomainObjects
     using MD.Accountella.Core.MongoDb;
     using MongoDB.Bson.Serialization.Attributes;
     
+    public enum CreditDebitEnum { CR = 1, DR = -1 }
     public enum AccTxnType { income, expence, journal, contra }
     public enum AccTxnRefType { sale, purchase }
     public class AccTxn
@@ -22,6 +23,8 @@ namespace MD.Accountella.DomainObjects
 
         [BsonDateTimeOptions(Kind = DateTimeKind.Utc)]
         public DateTime? LastModifiedOn { get; set; }
+        public string _CustomerId { get; set; }
+        public string _VendorId { get; set; }
         public string Narration { get; set; }
         public string Note { get; set; }
         public string SourceCurrencyName { get; set; }
@@ -30,7 +33,10 @@ namespace MD.Accountella.DomainObjects
 
         [BsonRequired]
         public double TxnAmt { get; set; }
-        
+
+        [BsonRequired]
+        public CreditDebitEnum TxnAmtFactor { get; set; }
+
         [BsonIgnore]
         public virtual Ledger[] LedgerEntries { get; set; }
 

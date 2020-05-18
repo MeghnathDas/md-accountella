@@ -13,14 +13,18 @@ namespace MD.Accountella.DataTransferObjects
         public string AccTxnType { get; set; }
         public DateTime? CreatedOn { get; set; }
         public DateTime? LastModifiedOn { get; set; }
+        public string _OnAccountId { get; set; }
+        public string _ToAccountId { get; set; }
+        public string _CustomerId { get; set; }
+        public string _VendorId { get; set; }
         public string Narration { get; set; }
-        public string Note { get; set; }
         public string SourceCurrencyName { get; set; }
         public string SourceCurrencyRate { get; set; }
         public string TransactionCurrencyName { get; set; }
         public double TxnAmt { get; set; }
+        public string Note { get; set; }
+        public bool IsEditable { get; set; }
         public string _refId { get; set; }
         public string RefType { get; set; }
-        public virtual LedgerDto[] LedgerEntries { get; set; }
     }
 }

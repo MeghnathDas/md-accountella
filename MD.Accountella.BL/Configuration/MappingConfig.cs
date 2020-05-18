@@ -23,7 +23,25 @@ namespace MD.Accountella.BL.Configuration
             CreateMap<EntityCategoryDto, EntityCategory>();
             CreateMap<Account, AccountDto>().ReverseMap();
             CreateMap<Ledger, LedgerDto>().ReverseMap();
-            CreateMap<AccTxn, AccTxnDto>().ReverseMap();
+            CreateMap<AccTxn, AccTxnDto>();
+            CreateMap<AccTxnDto, AccTxn>()
+                .ForMember(dest => dest.LedgerEntries,
+                    opt => opt.MapFrom<LedgerEntryCollectionResolver>());
+        }
+        private class LedgerEntryCollectionResolver : IValueResolver<AccTxnDto, AccTxn, Ledger[]>
+        {
+            public Ledger[] Resolve(AccTxnDto source, AccTxn dest, Ledger[] member, ResolutionContext context)
+            {
+                var lstLdgrEntries = new List<Ledger> { 
+                    new Ledger
+                    {
+                        _AccountId = source._OnAccountId,
+                        Amount = source.
+                    }
+                };
+
+                return lstLdgrEntries.ToArray();
+            }
         }
     }
 }
